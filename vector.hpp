@@ -8,7 +8,7 @@ namespace ft {
 			typedef typename Allocator::reference           reference;
 			typedef typename Allocator::const_reference     const_reference;
 
-			typedef typename std::size_t					size_type;
+			typedef typename Allocator::size_type			size_type;
 			// typedef implementation defined                  difference_type;
 
 			typedef T                                       value_type;
@@ -17,13 +17,12 @@ namespace ft {
 			typedef typename Allocator::const_pointer       const_pointer;
 
             // 23.2.4.1 construct/copy/destroy:
-            explicit vector(const Allocator& = Allocator()) : _array(), _size(), _capacity(){}
-			explicit vector(size_type n, const T& value = T(), const Allocator& = Allocator()): _size(n), _capacity(n)
+            explicit vector(const allocator_type& alloc = Allocator()) : _alloc(alloc), _array(), _size(), _capacity(){}
+			explicit vector(size_type n, const T& value = T(), const allocator_type& alloc = Allocator()): _alloc(alloc), _size(n), _capacity(n)
 			{
-				// _array = _alloc.allocate(_size);
-                
-				for(int i = 0; i < _size; i++)
-					_array[i] = value;
+				_array = _alloc.allocate(_size);
+				for (size_type i = 0; i < _size; i++)
+					_alloc.construct(_array + i, value);
 			}
 			// template <class InputIterator>
 			// vector(InputIterator first, InputIterator last, const Allocator& = Allocator());
@@ -32,8 +31,80 @@ namespace ft {
 
             // 23.2.4.2 capacity:
 			size_type   size() const{return _size;}
-			size_type   max_size() const{return _max_size;} // is the theoretical maximum number of items that could be put in your vector
+			size_type   max_size() const{return _alloc.max_size();} // is the theoretical maximum number of items that could be put in your vector
+            size_type	capacity() const{return _capacity;}
+			void resize (size_type n, value_type value = value_type())
+            {
+                if (n < _size)
+                {
+                    for (size_type i = n; i < _size; i++)
+                        _alloc.destroy(_array + i);
+                    _size = n;
+                }
+                if (n > _size)
+                {
+                    for (size_type i = _size; i < n; i++)
+						push_back(value);
+					    // _alloc.construct(_array + i, value);
+                }
+                // else if (n > _size && n > _capacity)
+                // {
 
+                // }
+            }
+			bool        empty()const;
+			void        reserve(size_type n);
+
+			// element access:
+			reference       operator[](size_type n){return _array[n];}
+			const_reference operator[](size_type n) const{return _array[n];}
+			const_reference at(size_type n) const;
+			reference       at(size_type n);
+			reference       front();
+			const_reference front() const;
+			reference       back();
+			const_reference back() const;
+
+			// 23.2.4.3 modifiers:
+			void push_back (const value_type& val)
+			{
+				if (_capacity == 0 && (_capacity = 1))
+				{
+					_array = _alloc.allocate(_capacity);
+					_alloc.construct(_array, val);
+				}
+				if (_size < _capacity)
+					_alloc.construct(_array + _size, val);
+				//TODO : realloc double capacity for array
+				else
+				{
+					pointer _new = _alloc.allocate(_capacity * 2);
+					for (size_type i = 0; i < _size; i++)
+					{
+						_alloc.construct(_new + i, _array[i]);
+						_alloc.destroy(_array + i);
+					}
+					_alloc.deallocate(_array, _capacity);
+					_array = _new;
+					_capacity *= 2;
+					_alloc.construct(_array + _size, val);
+				}
+				_size++;
+			}
+
+			void pop_back()
+			{
+				_alloc.destroy(_array + _size);
+				_size--;
+			}
+			// iterator insert(iterator position, const T& x);
+			// void insert(iterator position, size_type n, const T& x);
+			// template <class InputIterator>
+			// void insert(iterator position, InputIterator first, InputIterator last);
+			// iterator erase(iterator position);
+			// iterator erase(iterator first, iterator last);
+			void     swap(vector<T,Allocator>&);
+			void     clear();
 
             private:
                 pointer     _array;

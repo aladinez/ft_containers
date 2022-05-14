@@ -49,7 +49,8 @@ namespace ft {
 			// 23.2.4.2 capacity:
 			size_type   size() const{return _size;}
 			size_type   max_size() const{return _max_size;}
-			void        resize(size_type sz, T c = T()); size_type capacity() const;
+			size_type	capacity() const;
+			void        resize(size_type sz, T c = T());
 			bool        empty()const;
 			void        reserve(size_type n);
 
