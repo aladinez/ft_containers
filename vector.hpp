@@ -52,18 +52,30 @@ namespace ft {
 
                 // }
             }
-			bool        empty()const;
+			bool        empty()const{return !_size;}
 			void        reserve(size_type n);
 
 			// element access:
 			reference       operator[](size_type n){return _array[n];}
 			const_reference operator[](size_type n) const{return _array[n];}
-			const_reference at(size_type n) const;
-			reference       at(size_type n);
-			reference       front();
-			const_reference front() const;
-			reference       back();
-			const_reference back() const;
+			const_reference at(size_type n) const
+			{
+				if (n >= _size)
+					throw std::out_of_range("vector");
+				else
+					return (_array[n]);
+			}
+			reference       at(size_type n)
+			{
+				if (n >= _size)
+					throw std::out_of_range("vector");
+				else
+					return (_array[n]);
+			}
+			reference       front(){return _array[0];}
+			const_reference front() const{return _array[0];}
+			reference       back(){return _array[_size - 1];}
+			const_reference back() const{return _array[_size - 1];}
 
 			// 23.2.4.3 modifiers:
 			void push_back (const value_type& val)
@@ -73,7 +85,7 @@ namespace ft {
 					_array = _alloc.allocate(_capacity);
 					_alloc.construct(_array, val);
 				}
-				if (_size < _capacity)
+				else if (_size < _capacity)
 					_alloc.construct(_array + _size, val);
 				//TODO : realloc double capacity for array
 				else
