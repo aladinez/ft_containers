@@ -1,6 +1,6 @@
 #include <memory>
 #include <cstddef>
-// #include "Iterator.hpp"
+#include "Iterator.hpp"
 
 namespace ft {
 	template <class T, class Allocator = std::allocator<T> >
@@ -8,7 +8,7 @@ namespace ft {
 		public: 
 			typedef typename Allocator::reference           reference;
 			typedef typename Allocator::const_reference     const_reference;
-			// typedef ft::iterator<T>                  			iterator;
+			typedef ft::iterator<T>                  			iterator;
 			// typedef ft::const_iterator                		const_iterator;
 
 			typedef typename Allocator::size_type			size_type;
@@ -31,6 +31,16 @@ namespace ft {
 			// vector(InputIterator first, InputIterator last, const Allocator& = Allocator());
 			// vector(const vector<T,Allocator>& x);
 			~vector(){}
+
+
+			// iterators:
+			iterator begin(){return iterator(_array);}
+			// const_iterator begin()const;
+			// iterator end(); const_iterator end()const;
+			// reverse_iterator rbegin();
+			// const_reverse_iterator rbegin() const;
+			// reverse_iterator rend();
+			// const_reverse_iterator rend() const;
 
             // 23.2.4.2 capacity:
 			size_type   size() const{return _size;}

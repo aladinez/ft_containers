@@ -1,13 +1,14 @@
 #include "vector.hpp"
 #include <iostream>
 #include <vector>
+// #include "Iterator.hpp"
 
 int main()
 {
     // ft::vector<int> second(4,100);
     // std::cout << second.capacity() << std::endl;
 
-    ft::Vector<int>::iterator  myvector;
+    ft::vector<int>  myvector;
     std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
     myvector.push_back(1);
     std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
@@ -34,5 +35,14 @@ int main()
     std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
 
     std::cout << !myvector.empty() << std::endl;
+
+    //iterator tests:
+    ft::vector<int>::iterator it = myvector.begin();
+    std::cout << *it << std::endl;
+    it++;
+    it++;
+    std::cout << *it << std::endl;
+    
+    std::cout << *(it + 4) << std::endl;
     return (0);    
 }

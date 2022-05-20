@@ -5,14 +5,12 @@ namespace ft
     template <class T>
     class iterator
     {
-        
-
         public:
             typedef T                               value_type;
             typedef std::ptrdiff_t                  difference_type;
             typedef T*                              pointer;   
             typedef T&                              reference;
-            typedef std::random_acess_iterator_tag  iterator_category;
+            typedef std::random_access_iterator_tag  iterator_category;
 
             iterator(): _ptr(){}
             iterator(pointer ptr): _ptr(ptr){}
@@ -30,7 +28,7 @@ namespace ft
             }
 
             bool operator==(iterator const& it){return _ptr == it._ptr;}
-            bool operator==(iterator const& it){return _ptr != it._ptr;}
+            bool operator!=(iterator const& it){return _ptr != it._ptr;}
 
             iterator  operator++(int) /* postfix */         {iterator it(*this); _ptr++; return it;}
             iterator& operator++()    /* prefix */          {_ptr++; return *this;}
