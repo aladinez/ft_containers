@@ -1,5 +1,6 @@
 #include <memory>
 #include <cstddef>
+// #include "Iterator.hpp"
 
 namespace ft {
 	template <class T, class Allocator = std::allocator<T> >
@@ -7,6 +8,8 @@ namespace ft {
 		public: 
 			typedef typename Allocator::reference           reference;
 			typedef typename Allocator::const_reference     const_reference;
+			// typedef ft::iterator<T>                  			iterator;
+			// typedef ft::const_iterator                		const_iterator;
 
 			typedef typename Allocator::size_type			size_type;
 			// typedef implementation defined                  difference_type;
@@ -56,7 +59,7 @@ namespace ft {
 			void        reserve(size_type n);
 
 			// element access:
-			reference       operator[](size_type n){return _array[n];}
+			reference       operator[](size_type n){return _array[n];} 
 			const_reference operator[](size_type n) const{return _array[n];}
 			const_reference at(size_type n) const
 			{
@@ -109,6 +112,8 @@ namespace ft {
 				_alloc.destroy(_array + _size);
 				_size--;
 			}
+
+
 			// iterator insert(iterator position, const T& x);
 			// void insert(iterator position, size_type n, const T& x);
 			// template <class InputIterator>

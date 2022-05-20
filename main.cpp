@@ -7,7 +7,7 @@ int main()
     // ft::vector<int> second(4,100);
     // std::cout << second.capacity() << std::endl;
 
-    ft::Vector<int> myvector;
+    ft::Vector<int>::iterator  myvector;
     std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
     myvector.push_back(1);
     std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
