@@ -9,7 +9,7 @@ namespace ft {
 			typedef typename Allocator::reference           reference;
 			typedef typename Allocator::const_reference     const_reference;
 			typedef ft::iterator<T>                  			iterator;
-			// typedef ft::const_iterator                		const_iterator;
+			typedef ft::iterator<T>                			const_iterator;
 
 			typedef typename Allocator::size_type			size_type;
 			// typedef implementation defined                  difference_type;
@@ -29,14 +29,15 @@ namespace ft {
 			}
 			// template <class InputIterator>
 			// vector(InputIterator first, InputIterator last, const Allocator& = Allocator());
-			// vector(const vector<T,Allocator>& x);
+			vector(const vector<T,Allocator>& x);
 			~vector(){}
 
 
 			// iterators:
 			iterator begin(){return iterator(_array);}
-			// const_iterator begin()const;
-			// iterator end(); const_iterator end()const;
+			const_iterator begin()const{return iterator(_array);}
+			iterator end(){return iterator(_array + _size);}
+			const_iterator end()const{return iterator(_array + _size);}
 			// reverse_iterator rbegin();
 			// const_reverse_iterator rbegin() const;
 			// reverse_iterator rend();
@@ -116,18 +117,15 @@ namespace ft {
 				}
 				_size++;
 			}
-
 			void pop_back()
 			{
 				_alloc.destroy(_array + _size);
 				_size--;
 			}
-
-
-			// iterator insert(iterator position, const T& x);
-			// void insert(iterator position, size_type n, const T& x);
-			// template <class InputIterator>
-			// void insert(iterator position, InputIterator first, InputIterator last);
+			iterator insert (iterator position, const value_type& val);
+    		void insert (iterator position, size_type n, const value_type& val);
+			template <class InputIterator>
+			void insert (iterator position, InputIterator first, InputIterator last);
 			// iterator erase(iterator position);
 			// iterator erase(iterator first, iterator last);
 			void     swap(vector<T,Allocator>&);
@@ -142,4 +140,48 @@ namespace ft {
 			
 	};
 
+	template <class InputIterator1, class InputIterator2>
+		bool equal ( InputIterator1 first1, InputIterator1 last1, InputIterator2 first2 ) 
+		{
+			while (first1!=last1) {
+				if (!(*first1 == *first2))   // or: if (!pred(*first1,*first2)), for version 2
+				return false;
+				++first1; ++first2;
+			}
+			return true;
+		}
+	template <class InputIterator1, class InputIterator2, class BinaryPredicate>
+  		bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, BinaryPredicate pred);
+	
+
+	template <class T, class Allocator>
+		bool operator==(const vector<T,Allocator>& x, const vector<T,Allocator>& y)
+		{
+			if (x.size() == y.size()){
+				return (equal(x.begin(), x.end(), y.begin()));
+			}
+			else
+				return false;
+		}
+	template <class T, class Allocator>
+		bool operator!=(const vector<T,Allocator>& x, const vector<T,Allocator>& y)
+		{
+			if (x.size() == y.size()){
+				return (!equal(x.begin(), x.end(), y.begin()));
+			}
+			else
+				return true;
+		}
+	template <class T, class Allocator>
+		bool operator< (const vector<T,Allocator>& x, const vector<T,Allocator>& y);
+	template <class T, class Allocator>
+		bool operator> (const vector<T,Allocator>& x, const vector<T,Allocator>& y);
+	template <class T, class Allocator>
+		bool operator>=(const vector<T,Allocator>& x, const vector<T,Allocator>& y);
+	template <class T, class Allocator>
+		bool operator<=(const vector<T,Allocator>& x, const vector<T,Allocator>& y);
+
+	// specialized algorithms:
+	template <class T, class Allocator>
+	void swap(vector<T,Allocator>& x, vector<T,Allocator>& y);
 }

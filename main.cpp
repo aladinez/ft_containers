@@ -36,13 +36,18 @@ int main()
 
     std::cout << !myvector.empty() << std::endl;
 
-    //iterator tests:
-    ft::vector<int>::iterator it = myvector.begin();
-    std::cout << *it << std::endl;
-    it++;
-    it++;
-    std::cout << *it << std::endl;
+    ft::vector<int> vec;
+    vec.resize(10, 88);
     
-    std::cout << *(it + 4) << std::endl;
+    if (vec != myvector) 
+        std::cout << "Equal\n";
+    //iterator tests:
+    // ft::vector<int>::iterator it = myvector.begin();
+    // std::cout << *it << std::endl;
+    // it++;
+    // it++;
+    // std::cout << *it << std::endl;
+    
+    // std::cout << *(it + 4) << std::endl;
     return (0);    
 }

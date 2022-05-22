@@ -21,6 +21,11 @@ namespace ft
                 _ptr = it._ptr;
             }
 
+            operator iterator<const value_type>() const
+            { 
+                return iterator<const value_type>(_ptr);
+            }
+
             iterator &operator=(iterator const& it)
             {
                 _ptr = it._ptr;
@@ -32,9 +37,12 @@ namespace ft
 
             iterator  operator++(int) /* postfix */         {iterator it(*this); _ptr++; return it;}
             iterator& operator++()    /* prefix */          {_ptr++; return *this;}
+            iterator  operator--(int) /* postfix */         {iterator it(*this); _ptr--; return it;}
+            iterator& operator--()    /* prefix */          {_ptr--; return *this;}
             reference operator* () const                    {return *_ptr;}
             pointer   operator->() const                    {return _ptr;}
             iterator  operator+ (difference_type diff)const {return _ptr + diff;}
+            iterator  operator- (difference_type diff)const {return _ptr - diff;}
         
         private:
             pointer _ptr;
