@@ -1,6 +1,7 @@
 #include "vector.hpp"
 #include <iostream>
 #include <vector>
+
 // #include "Iterator.hpp"
 
 int main()
@@ -25,22 +26,31 @@ int main()
         std::cout << ' ' << myvector[i];
     std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
 
-    myvector.pop_back();
-    myvector.pop_back();
-    myvector.pop_back();
+    // myvector.pop_back();
+    // myvector.pop_back();
+    // myvector.pop_back();
 
-    std::cout << "myvector contains:";
-    for (int i=0;i<myvector.size();i++)
-        std::cout << ' ' << myvector[i];
-    std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+    // std::cout << "myvector contains:";
+    // for (int i=0;i<myvector.size();i++)
+    //     std::cout << ' ' << myvector[i];
+    // std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
 
-    std::cout << !myvector.empty() << std::endl;
+    // std::cout << !myvector.empty() << std::endl;
 
-    ft::vector<int> vec;
-    vec.resize(10, 88);
+    ft::vector<int> vec(myvector.begin(), myvector.end());
+    std::cout << "vec contains:";
+    for (int i=0;i<vec.size();i++)
+        std::cout << ' ' << vec[i];
+    std::cout << "\ncapacity: " << vec.capacity() << "\nsize : " << vec.size()<< '\n';
+
+    // ft::vector<int>::iterator it1 = myvector.begin();
+    // ft::vector<int>::iterator it2 = myvector.begin();
     
-    if (vec != myvector) 
-        std::cout << "Equal\n";
+
+    // for (;it1 != myvector.end(); it1++)
+    //     std::cout << *it1 << " : " << *it2++ << std::endl;
+    // if (vec == myvector) 
+    //     std::cout << "Equal\n";
     //iterator tests:
     // ft::vector<int>::iterator it = myvector.begin();
     // std::cout << *it << std::endl;

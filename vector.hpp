@@ -1,6 +1,7 @@
 #include <memory>
 #include <cstddef>
 #include "Iterator.hpp"
+#include <iostream>
 
 namespace ft {
 	template <class T, class Allocator = std::allocator<T> >
@@ -8,12 +9,10 @@ namespace ft {
 		public: 
 			typedef typename Allocator::reference           reference;
 			typedef typename Allocator::const_reference     const_reference;
-			typedef ft::iterator<T>                  			iterator;
+			typedef ft::iterator<T>                  		iterator;
 			typedef ft::iterator<T>                			const_iterator;
-
 			typedef typename Allocator::size_type			size_type;
-			// typedef implementation defined                  difference_type;
-
+			typedef std::ptrdiff_t                  		difference_type;
 			typedef T                                       value_type;
 			typedef Allocator                               allocator_type;
 			typedef typename Allocator::pointer             pointer;
@@ -27,9 +26,20 @@ namespace ft {
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(_array + i, value);
 			}
-			// template <class InputIterator>
-			// vector(InputIterator first, InputIterator last, const Allocator& = Allocator());
-			vector(const vector<T,Allocator>& x);
+			template <class InputIterator>
+         		vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()): _array(), _alloc(alloc), _size(), _capacity()
+				{
+					//TODO : capacity should be equal to size , (first to last)
+					for (; first != last; first++)
+						push_back(*first);
+				}
+
+			vector(const vector<T,Allocator>& x) : _size(x._size), _capacity(x._capacity), _alloc(x._alloc)
+			{
+				_array = _alloc.allocate(_capacity);
+				for (size_type i = 0; i < _size; i++)
+					_alloc.construct(_array + i, *(x._array + i));
+			}
 			~vector(){}
 
 
@@ -55,7 +65,7 @@ namespace ft {
                         _alloc.destroy(_array + i);
                     _size = n;
                 }
-                if (n > _size)
+                else if (n > _size )
                 {
                     for (size_type i = _size; i < n; i++)
 						push_back(value);
@@ -63,7 +73,17 @@ namespace ft {
                 }
                 // else if (n > _size && n > _capacity)
                 // {
-
+				// 	pointer _new = _alloc.allocate(n);
+				// 	for (size_type i = 0; i < _size; i++)
+				// 	{
+				// 		_alloc.construct(_new + i, _array[i]);
+				// 		_alloc.destroy(_array + i);
+				// 	}
+				// 	for (size_type i = _size; i < n; i++)
+				// 		_alloc.construct(_new + i, value_type());
+				// 	_alloc.deallocate(_array, _capacity);
+				// 	_array = _new;
+				// 	_capacity = _size = n;
                 // }
             }
 			bool        empty()const{return !_size;}
