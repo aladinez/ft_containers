@@ -1,7 +1,9 @@
 #include <memory>
 #include <cstddef>
 #include "Iterator.hpp"
+#include "iterator_traits.hpp"
 #include <iostream>
+#include <typeinfo>
 
 namespace ft {
 	template <class T, class Allocator = std::allocator<T> >
@@ -30,6 +32,14 @@ namespace ft {
          		vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()): _array(), _alloc(alloc), _size(), _capacity()
 				{
 					//TODO : capacity should be equal to size , (first to last)
+					typedef std::iterator_traits<InputIterator> traits;
+					if (typeid(typename traits::iterator_category)==typeid(std::random_access_iterator_tag)
+					|| typeid(typename traits::iterator_category)==typeid(std::bidirectional_iterator_tag)
+					|| typeid(typename traits::iterator_category)==typeid(std::forward_iterator_tag))
+    				{
+						_capacity = std::distance(first, last);
+						_array = _alloc.allocate(_capacity);
+					}
 					for (; first != last; first++)
 						push_back(*first);
 				}
@@ -151,12 +161,12 @@ namespace ft {
 			void     swap(vector<T,Allocator>&);
 			void     clear();
 
-            private:
-                pointer     _array;
-                size_type   _size;
-                size_type   _max_size;
-                size_type   _capacity;
-                Allocator   _alloc;
+		private:
+			pointer     _array;
+			size_type   _size;
+			size_type   _max_size;
+			size_type   _capacity;
+			Allocator   _alloc;
 			
 	};
 
