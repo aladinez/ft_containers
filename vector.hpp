@@ -28,10 +28,10 @@ namespace ft {
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(_array + i, value);
 			}
+			//TODO : enable_if
 			template <class InputIterator>
          		vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()): _array(), _alloc(alloc), _size(), _capacity()
 				{
-					//TODO : capacity should be equal to size , (first to last)
 					typedef std::iterator_traits<InputIterator> traits;
 					if (typeid(typename traits::iterator_category)==typeid(std::random_access_iterator_tag)
 					|| typeid(typename traits::iterator_category)==typeid(std::bidirectional_iterator_tag)
