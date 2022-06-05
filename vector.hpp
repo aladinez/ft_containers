@@ -12,7 +12,7 @@ namespace ft {
 			typedef typename Allocator::reference           reference;
 			typedef typename Allocator::const_reference     const_reference;
 			typedef ft::iterator<T>                  		iterator;
-			typedef ft::iterator<T>                			const_iterator;
+			typedef ft::iterator<const T>                	const_iterator;
 			typedef typename Allocator::size_type			size_type;
 			typedef std::ptrdiff_t                  		difference_type;
 			typedef T                                       value_type;
@@ -55,9 +55,9 @@ namespace ft {
 
 			// iterators:
 			iterator begin(){return iterator(_array);}
-			const_iterator begin()const{return iterator(_array);}
+			const_iterator begin()const{return const_iterator(_array);}
 			iterator end(){return iterator(_array + _size);}
-			const_iterator end()const{return iterator(_array + _size);}
+			const_iterator end()const{return const_iterator(_array + _size);}
 			// reverse_iterator rbegin();
 			// const_reverse_iterator rbegin() const;
 			// reverse_iterator rend();
@@ -190,8 +190,7 @@ namespace ft {
 			if (x.size() == y.size()){
 				return (equal(x.begin(), x.end(), y.begin()));
 			}
-			else
-				return false;
+			return false;
 		}
 	template <class T, class Allocator>
 		bool operator!=(const vector<T,Allocator>& x, const vector<T,Allocator>& y)
@@ -199,8 +198,7 @@ namespace ft {
 			if (x.size() == y.size()){
 				return (!equal(x.begin(), x.end(), y.begin()));
 			}
-			else
-				return true;
+			return true;
 		}
 	template <class T, class Allocator>
 		bool operator< (const vector<T,Allocator>& x, const vector<T,Allocator>& y);

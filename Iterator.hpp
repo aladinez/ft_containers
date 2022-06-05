@@ -42,8 +42,9 @@ namespace ft
             reference operator* () const                    {return *_ptr;}
             pointer   operator->() const                    {return _ptr;}
             iterator  operator+ (difference_type diff)const {return _ptr + diff;}
+            iterator  operator+ (iterator const& it)const {return _ptr + it._ptr;}
             iterator  operator- (difference_type diff)const {return _ptr - diff;}
-            difference_type  operator- (iterator const& diff)const {return _ptr - diff._ptr;}
+            difference_type  operator- (iterator const& it)const {return _ptr - it._ptr;}
         
         private:
             pointer _ptr;
