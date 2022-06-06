@@ -75,7 +75,23 @@ namespace ft {
 				return *this;
 			}
 			template <class InputIterator>
-			void assign(InputIterator first, InputIterator last);
+			void assign(InputIterator first, InputIterator last)
+			{
+				clear();
+				// to implement tag dispatching using private functions
+				typedef std::iterator_traits<InputIterator> traits;
+				if (typeid(typename traits::iterator_category)==typeid(std::random_access_iterator_tag)
+				|| typeid(typename traits::iterator_category)==typeid(std::bidirectional_iterator_tag)
+				|| typeid(typename traits::iterator_category)==typeid(std::forward_iterator_tag))
+				{
+					if (_array)
+						_alloc.deallocate(_array, _capacity);
+					_capacity = std::distance(first, last);
+					_array = _alloc.allocate(_capacity);
+				}
+				for (; first != last; first++)
+					push_back(*first);
+			}
 			void assign(size_type n, const T& u);
 			allocator_type get_allocator() const;
 
