@@ -56,7 +56,13 @@ namespace ft {
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(_array + i, *(x._array + i));
 			}
-			~vector(){}
+			~vector()
+			{
+				clear();
+				_alloc.deallocate(_array, _capacity);
+				_capacity = 0;
+
+			}
 			vector<T,Allocator>& operator=(const vector<T,Allocator>& x);
 			template <class InputIterator>
 			void assign(InputIterator first, InputIterator last);
@@ -80,35 +86,54 @@ namespace ft {
             size_type	capacity() const{return _capacity;}
 			void resize (size_type n, value_type value = value_type())
             {
+				if (n > _alloc.max_size())
+					throw std::length_error("vector");
                 if (n < _size)
                 {
                     for (size_type i = n; i < _size; i++)
                         _alloc.destroy(_array + i);
                     _size = n;
                 }
-                else if (n > _size )
+                else if (n <= _capacity )
                 {
-                    for (size_type i = _size; i < n; i++)
-						push_back(value);
-					    // _alloc.construct(_array + i, value);
+                    for (;_size < n; _size++)
+					    _alloc.construct(_array + _size, value);
                 }
-                // else if (n > _size && n > _capacity)
-                // {
-				// 	pointer _new = _alloc.allocate(n);
-				// 	for (size_type i = 0; i < _size; i++)
-				// 	{
-				// 		_alloc.construct(_new + i, _array[i]);
-				// 		_alloc.destroy(_array + i);
-				// 	}
-				// 	for (size_type i = _size; i < n; i++)
-				// 		_alloc.construct(_new + i, value_type());
-				// 	_alloc.deallocate(_array, _capacity);
-				// 	_array = _new;
-				// 	_capacity = _size = n;
-                // }
+                else
+                {
+					// size_type new_cap = _capacity*2 < n ? n : _capacity*2; //TODO : check the behaviour of the standard vector in this case
+					pointer _new = _alloc.allocate(n);
+					for (size_type i = 0; i < _size; i++)
+					{
+						_alloc.construct(_new + i, _array[i]);
+						_alloc.destroy(_array + i);
+					}
+					for (;_size < n; _size++)
+						_alloc.construct(_new + _size, value_type());
+					if (_array) // in case capacity == 0
+						_alloc.deallocate(_array, _capacity);
+					_array = _new;
+					_capacity = n;
+                }
             }
 			bool        empty()const{return !_size;}
-			void        reserve(size_type n);
+			void        reserve(size_type n)
+			{
+				if (n > _alloc.max_size())
+					throw std::length_error("vector");
+				else if (n > _capacity)
+				{
+					pointer _new = _alloc.allocate(n);
+					for (size_type i = 0; i < _size; i++)
+					{
+						_alloc.construct(_new + i, _array[i]);
+						_alloc.destroy(_array + i);
+					}
+					_alloc.deallocate(_array, _capacity);
+					_array = _new;
+					_capacity = n;	
+				}
+			}
 
 			// element access:
 			reference       operator[](size_type n){return _array[n];} 
@@ -136,11 +161,8 @@ namespace ft {
 			void push_back (const value_type& val)
 			{
 				if (_capacity == 0 && (_capacity = 1))
-				{
 					_array = _alloc.allocate(_capacity);
-					_alloc.construct(_array, val);
-				}
-				else if (_size < _capacity)
+				if (_size < _capacity)
 					_alloc.construct(_array + _size, val);
 				else
 				{
@@ -159,8 +181,11 @@ namespace ft {
 			}
 			void pop_back()
 			{
-				_alloc.destroy(_array + _size);
-				_size--;
+				if (_size > 0)
+				{
+					_alloc.destroy(_array + _size);
+					_size--;
+				}
 			}
 			iterator insert (iterator position, const value_type& val);
     		void insert (iterator position, size_type n, const value_type& val);
@@ -173,12 +198,12 @@ namespace ft {
 			{
 				for (size_type i = 0; i < _size; i++)
 					_alloc.destroy(_array + i);
+				_size = 0;
 			}
 
 		private:
 			pointer     _array;
 			size_type   _size;
-			size_type   _max_size;
 			size_type   _capacity;
 			Allocator   _alloc;
 			
