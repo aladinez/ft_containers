@@ -144,7 +144,6 @@ namespace ft {
 					_capacity = n;	
 				}
 			}
-
 			// element access:
 			reference       operator[](size_type n){return _array[n];} 
 			const_reference operator[](size_type n) const{return _array[n];}
