@@ -1,3 +1,6 @@
+#ifndef _ITERATOR_HPP
+#define _ITERATOR_HPP
+
 #include <iterator>
 
 namespace ft
@@ -32,22 +35,31 @@ namespace ft
                 return *this;
             }
 
-            bool operator==(iterator const& it){return _ptr == it._ptr;}
-            bool operator!=(iterator const& it){return _ptr != it._ptr;}
+            bool operator== (iterator const& it){return _ptr == it._ptr;}
+            bool operator!= (iterator const& it){return _ptr != it._ptr;}
+            bool operator> (iterator const& it){return _ptr > it._ptr;}
+            bool operator< (iterator const& it){return _ptr < it._ptr;}
+            bool operator>= (iterator const& it){return _ptr >= it._ptr;}
+            bool operator<= (iterator const& it){return _ptr <= it._ptr;}
 
             iterator  operator++(int) /* postfix */         {iterator it(*this); _ptr++; return it;}
             iterator& operator++()    /* prefix */          {_ptr++; return *this;}
             iterator  operator--(int) /* postfix */         {iterator it(*this); _ptr--; return it;}
             iterator& operator--()    /* prefix */          {_ptr--; return *this;}
             reference operator* () const                    {return *_ptr;}
+            reference operator[] (difference_type diff)     {return *(_ptr + diff);}
             pointer   operator->() const                    {return _ptr;}
             iterator  operator+ (difference_type diff)const {return _ptr + diff;}
             iterator  operator+ (iterator const& it)const {return _ptr + it._ptr;}
             iterator  operator- (difference_type diff)const {return _ptr - diff;}
             difference_type  operator- (iterator const& it)const {return _ptr - it._ptr;}
+
         
         private:
             pointer _ptr;
 
     };
+
 }
+
+#endif

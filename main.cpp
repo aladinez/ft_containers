@@ -43,14 +43,18 @@ int main()
         std::cout << ' ' << vec[i];
     std::cout << "\ncapacity: " << vec.capacity() << "\nsize : " << vec.size()<< '\n';
 
-    // ft::vector<int>::iterator it1 = myvector.begin();
-    // ft::vector<int>::iterator it2 = myvector.begin();
-    
+    ft::vector<int>::reverse_iterator it1 = myvector.rbegin();
+    ft::vector<int>::reverse_iterator it2 = vec.rbegin();
 
-    // for (;it1 != myvector.end(); it1++)
-    //     std::cout << *it1 << " : " << *it2++ << std::endl;
-    // if (vec == myvector) 
-    //     std::cout << "Equal\n";
+
+    while (it1 != myvector.rend())
+    {
+        std::cout << *it1 << " : " << *it2 << std::endl;
+        ++it1;
+        ++it2;
+    }
+    if (vec == myvector) 
+        std::cout << "Equal\n";
     //iterator tests:
     // ft::vector<int>::iterator it = myvector.begin();
     // std::cout << *it << std::endl;

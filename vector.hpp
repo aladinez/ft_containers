@@ -1,7 +1,11 @@
+#ifndef _VECTOR_HPP
+#define _VECTOR_HPP
+
 #include <memory>
 #include <cstddef>
 #include "Iterator.hpp"
 #include "iterator_traits.hpp"
+#include "reverse_iterator.hpp"
 #include <iostream>
 #include <typeinfo>
 
@@ -19,6 +23,8 @@ namespace ft {
 			typedef Allocator                               allocator_type;
 			typedef typename Allocator::pointer             pointer;
 			typedef typename Allocator::const_pointer       const_pointer;
+			typedef ft::reverse_iterator<iterator>			reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
             // 23.2.4.1 construct/copy/destroy:
             explicit vector(const allocator_type& alloc = Allocator()) : _alloc(alloc), _array(), _size(), _capacity(){}
@@ -58,10 +64,10 @@ namespace ft {
 			const_iterator begin()const{return const_iterator(_array);}
 			iterator end(){return iterator(_array + _size);}
 			const_iterator end()const{return const_iterator(_array + _size);}
-			// reverse_iterator rbegin();
-			// const_reverse_iterator rbegin() const;
-			// reverse_iterator rend();
-			// const_reverse_iterator rend() const;
+			reverse_iterator rbegin(){return reverse_iterator(end());}
+			const_reverse_iterator rbegin() const{return const_reverse_iterator(end());}
+			reverse_iterator rend(){return reverse_iterator(begin());}
+			const_reverse_iterator rend() const{return const_reverse_iterator(begin());}
 
             // 23.2.4.2 capacity:
 			size_type   size() const{return _size;}
@@ -159,7 +165,11 @@ namespace ft {
 			// iterator erase(iterator position);
 			// iterator erase(iterator first, iterator last);
 			void     swap(vector<T,Allocator>&);
-			void     clear();
+			void     clear()
+			{
+				for (size_type i = 0; i < _size; i++)
+					_alloc.destroy(_array + i);
+			}
 
 		private:
 			pointer     _array;
@@ -213,3 +223,5 @@ namespace ft {
 	template <class T, class Allocator>
 	void swap(vector<T,Allocator>& x, vector<T,Allocator>& y);
 }
+
+#endif
