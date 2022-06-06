@@ -59,11 +59,21 @@ namespace ft {
 			~vector()
 			{
 				clear();
-				_alloc.deallocate(_array, _capacity);
-				_capacity = 0;
-
+				if (_array)
+					_alloc.deallocate(_array, _capacity);
 			}
-			vector<T,Allocator>& operator=(const vector<T,Allocator>& x);
+			vector<T,Allocator>& operator=(const vector<T,Allocator>& x)
+			{
+				clear();
+				if (_array)
+					_alloc.deallocate(_array, _capacity);
+				_alloc = x._alloc;
+				_capacity = x._capacity;
+				_array = _alloc.allocate(_capacity);
+				for (_size = 0; _size < x._size; _size++)
+					_alloc.construct(_array + _size, *(x._array + _size));
+				return *this;
+			}
 			template <class InputIterator>
 			void assign(InputIterator first, InputIterator last);
 			void assign(size_type n, const T& u);
