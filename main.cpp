@@ -53,6 +53,7 @@ int main()
         ++it1;
         ++it2;
     }
+    
     if (vec == myvector) 
         std::cout << "Equal\n";
     //iterator tests:

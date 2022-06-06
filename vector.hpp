@@ -57,6 +57,11 @@ namespace ft {
 					_alloc.construct(_array + i, *(x._array + i));
 			}
 			~vector(){}
+			vector<T,Allocator>& operator=(const vector<T,Allocator>& x);
+			template <class InputIterator>
+			void assign(InputIterator first, InputIterator last);
+			void assign(size_type n, const T& u);
+			allocator_type get_allocator() const;
 
 
 			// iterators:
@@ -137,7 +142,6 @@ namespace ft {
 				}
 				else if (_size < _capacity)
 					_alloc.construct(_array + _size, val);
-				//TODO : realloc double capacity for array
 				else
 				{
 					pointer _new = _alloc.allocate(_capacity * 2);
@@ -162,8 +166,8 @@ namespace ft {
     		void insert (iterator position, size_type n, const value_type& val);
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last);
-			// iterator erase(iterator position);
-			// iterator erase(iterator first, iterator last);
+			iterator erase(iterator position);
+			iterator erase(iterator first, iterator last);
 			void     swap(vector<T,Allocator>&);
 			void     clear()
 			{
@@ -191,7 +195,15 @@ namespace ft {
 			return true;
 		}
 	template <class InputIterator1, class InputIterator2, class BinaryPredicate>
-  		bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, BinaryPredicate pred);
+  		bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, BinaryPredicate pred)
+		{
+			while (first1!=last1) {
+				if (!pred(*first1,*first2))   // or: if (!pred(*first1,*first2)), for version 2
+				return false;
+				++first1; ++first2;
+			}
+			return true;
+		}
 	
 
 	template <class T, class Allocator>
