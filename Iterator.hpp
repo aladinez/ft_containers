@@ -19,10 +19,7 @@ namespace ft
             iterator(pointer ptr): _ptr(ptr){}
             ~iterator(){}
 
-            iterator(iterator const& it)
-            {
-                _ptr = it._ptr;
-            }
+            iterator(iterator const& it) {_ptr = it._ptr;}
 
             operator iterator<const value_type>() const
             { 

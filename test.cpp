@@ -30,12 +30,13 @@ int main (void)
     std::vector<int> second;
     std::vector<int> third;
 
-    vec.assign (7,100); 
+    // vec.assign (7,100);
     for (int i=0;i<vec.size();i++)
         std::cout << ' ' << vec[i];
     std::cout << "\ncapacity: " << vec.capacity() << "\nsize : " << vec.size()<< '\n';
 
     vec.assign (myvector.begin(), myvector.end());
+    std::cout << "vec contains:";
     for (int i=0;i<vec.size();i++)
         std::cout << ' ' << vec[i];
     std::cout << "\ncapacity: " << vec.capacity() << "\nsize : " << vec.size()<< '\n';

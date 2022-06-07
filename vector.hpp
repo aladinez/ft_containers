@@ -38,14 +38,10 @@ namespace ft {
 			template <class InputIterator>
          		vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()): _array(), _alloc(alloc), _size(), _capacity()
 				{
-					typedef std::iterator_traits<InputIterator> traits;
-					if (typeid(typename traits::iterator_category)==typeid(std::random_access_iterator_tag)
-					|| typeid(typename traits::iterator_category)==typeid(std::bidirectional_iterator_tag)
-					|| typeid(typename traits::iterator_category)==typeid(std::forward_iterator_tag))
-    				{
-						_capacity = std::distance(first, last);
+					// typedef typename std::iterator_traits<InputIterator>::iterator_category() _category;
+					difference_type ret = _distance(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
+					if (ret != -1 && (_capacity = last - first))
 						_array = _alloc.allocate(_capacity);
-					}
 					for (; first != last; first++)
 						push_back(*first);
 				}
@@ -79,20 +75,35 @@ namespace ft {
 			{
 				clear();
 				// to implement tag dispatching using private functions
-				typedef std::iterator_traits<InputIterator> traits;
-				if (typeid(typename traits::iterator_category)==typeid(std::random_access_iterator_tag)
-				|| typeid(typename traits::iterator_category)==typeid(std::bidirectional_iterator_tag)
-				|| typeid(typename traits::iterator_category)==typeid(std::forward_iterator_tag))
+				// typedef std::iterator_traits<InputIterator> traits;
+				// if (typeid(typename traits::iterator_category)==typeid(std::random_access_iterator_tag)
+				// || typeid(typename traits::iterator_category)==typeid(std::bidirectional_iterator_tag)
+				// || typeid(typename traits::iterator_category)==typeid(std::forward_iterator_tag))
+				
+				difference_type ret = _distance(first, last, typename std::iterator_traits<InputIterator>::iterator_category());
+				if (ret != -1)
 				{
 					if (_array)
 						_alloc.deallocate(_array, _capacity);
-					_capacity = std::distance(first, last);
+					_capacity = last - first;
 					_array = _alloc.allocate(_capacity);
 				}
 				for (; first != last; first++)
 					push_back(*first);
 			}
-			void assign(size_type n, const T& u);
+			void assign (size_type n, const value_type& val)
+			{
+				clear();
+				if (n > _capacity)
+				{
+					if (_array)
+						_alloc.deallocate(_array, _capacity);
+					_capacity = n;
+					_array = _alloc.allocate(_capacity);
+				}
+				for (_size = 0; _size < n; _size++)
+					_alloc.construct(_array + _size, val);
+			}
 			allocator_type get_allocator() const;
 
 
@@ -231,6 +242,26 @@ namespace ft {
 			size_type   _size;
 			size_type   _capacity;
 			Allocator   _alloc;
+
+			template <class InputIterator>
+			difference_type _distance(InputIterator first, InputIterator last, std::random_access_iterator_tag) {
+				return std::distance(first, last);
+			}
+
+			template <class InputIterator>
+			difference_type _distance(InputIterator first, InputIterator last, std::bidirectional_iterator_tag) {
+				return std::distance(first, last);
+			}
+
+			template <class InputIterator>
+			difference_type _distance(InputIterator first, InputIterator last, std::forward_iterator_tag) {
+				return std::distance(first, last);
+			}
+
+			template <class InputIterator>
+			difference_type _distance(InputIterator first, InputIterator last, std::input_iterator_tag) {
+				return -1;
+			}
 			
 	};
 
