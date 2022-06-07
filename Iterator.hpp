@@ -17,9 +17,8 @@ namespace ft
 
             iterator(): _ptr(){}
             iterator(pointer ptr): _ptr(ptr){}
-            ~iterator(){}
-
             iterator(iterator const& it) {_ptr = it._ptr;}
+            ~iterator(){}
 
             operator iterator<const value_type>() const
             { 
@@ -51,12 +50,9 @@ namespace ft
             iterator  operator- (difference_type diff)const {return _ptr - diff;}
             difference_type  operator- (iterator const& it)const {return _ptr - it._ptr;}
 
-        
         private:
             pointer _ptr;
-
     };
-
 }
 
 #endif
