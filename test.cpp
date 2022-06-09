@@ -3,9 +3,13 @@
 #include "vector.hpp" 
 #include <vector>       // std::vector
 
+
+bool mycomp (char c1, char c2)
+{ return std::tolower(c1)<std::tolower(c2); }
+
 int main (void)
 {
-    //  resize test
+    /* resize test
     ft::vector<int> myvector;
     for (int i=1;i<18;i++) myvector.push_back(i);
     std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
@@ -26,6 +30,7 @@ int main (void)
     std::cout << "\ncapacity: " << vec.capacity() << "\nsize : " << vec.size()<< '\n';
     */
 
+   /*
     ft::vector<int> vec;
     std::vector<int> second;
     std::vector<int> third;
@@ -40,6 +45,43 @@ int main (void)
     for (int i=0;i<vec.size();i++)
         std::cout << ' ' << vec[i];
     std::cout << "\ncapacity: " << vec.capacity() << "\nsize : " << vec.size()<< '\n';
+    */
 
+/* erase
+
+  // set some values (from 1 to 10)
+  for (int i=1; i<=10; i++) myvector.push_back(i);
+
+  // erase the 6th element
+  myvector.erase (myvector.begin()+5);
+    std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+
+
+  // erase the first 3 elements:
+  myvector.erase (myvector.begin(),myvector.begin()+3);
+    std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+
+  std::cout << "myvector contains:";
+  for (unsigned i=0; i<myvector.size(); ++i)
+    std::cout << ' ' << myvector[i];
+  std::cout << '\n';
+
+*/
+  //  std::vector<int> myvector;
+
+  std::vector<int> foo;   // three ints with a value of 100
+  for (int i=0; i<3; i++) foo.push_back(100);
+
+  std::vector<int> bar;   // two ints with a value of 200
+  for (int i=0; i<2; i++) bar.push_back(200);
+
+
+  if (foo==bar) std::cout << "foo and bar are equal\n";
+  if (foo!=bar) std::cout << "foo and bar are not equal\n";
+  if (foo< bar) std::cout << "foo is less than bar\n";
+  if (foo> bar) std::cout << "foo is greater than bar\n";
+  if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+  if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+  
     return 0;
 }

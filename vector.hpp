@@ -229,7 +229,12 @@ namespace ft {
 			void insert (iterator position, InputIterator first, InputIterator last);
 			iterator erase(iterator position);
 			iterator erase(iterator first, iterator last);
-			void     swap(vector<T,Allocator>&);
+			void swap (vector& x)
+			{
+				vector tmp(x);
+				x = *this;
+				*this = tmp;
+			}
 			void     clear()
 			{
 				for (size_type i = 0; i < _size; i++)
@@ -285,7 +290,33 @@ namespace ft {
 			}
 			return true;
 		}
-	
+	template <class InputIterator1, class InputIterator2>
+	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2)
+	{
+		while (first1!=last1)
+		{
+			if (first2==last2 || *first2<*first1)
+				return false;
+			else if (*first1<*first2) 
+				return true;
+			++first1; ++first2;
+		}
+		return (first2!=last2);
+	}
+
+	template <class InputIterator1, class InputIterator2, class Compare>
+	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2, Compare comp)
+	{
+		while (first1!=last1)
+		{
+			if (first2==last2 || comp(*first2, *first1))
+				return false;
+			else if (comp(*first1, *first2)) 
+				return true;
+			++first1; ++first2;
+		}
+		return (first2!=last2);
+	}
 
 	template <class T, class Allocator>
 		bool operator==(const vector<T,Allocator>& x, const vector<T,Allocator>& y)
@@ -304,17 +335,32 @@ namespace ft {
 			return true;
 		}
 	template <class T, class Allocator>
-		bool operator< (const vector<T,Allocator>& x, const vector<T,Allocator>& y);
+		bool operator< (const vector<T,Allocator>& x, const vector<T,Allocator>& y)
+		{
+			return lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
+		}
 	template <class T, class Allocator>
-		bool operator> (const vector<T,Allocator>& x, const vector<T,Allocator>& y);
+		bool operator> (const vector<T,Allocator>& x, const vector<T,Allocator>& y)
+		{
+			return lexicographical_compare(y.begin(), y.end(), x.begin(), x.end());
+		}
 	template <class T, class Allocator>
-		bool operator>=(const vector<T,Allocator>& x, const vector<T,Allocator>& y);
+		bool operator>=(const vector<T,Allocator>& x, const vector<T,Allocator>& y)
+		{
+			return !(lexicographical_compare(x.begin(), x.end(), y.begin(), y.end()));
+		}
 	template <class T, class Allocator>
-		bool operator<=(const vector<T,Allocator>& x, const vector<T,Allocator>& y);
+		bool operator<=(const vector<T,Allocator>& x, const vector<T,Allocator>& y)
+		{
+			return !(lexicographical_compare(y.begin(), y.end(), x.begin(), x.end()));
+		}
 
 	// specialized algorithms:
 	template <class T, class Allocator>
-	void swap(vector<T,Allocator>& x, vector<T,Allocator>& y);
+	void swap(vector<T,Allocator>& x, vector<T,Allocator>& y)
+	{
+		x.swap(y);
+	}
 }
 
 #endif
