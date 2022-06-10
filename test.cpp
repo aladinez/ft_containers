@@ -68,20 +68,23 @@ int main (void)
 
 */
   //  std::vector<int> myvector;
+ft::vector<int> myvector;
+  int * p;
+  unsigned int i;
 
-  std::vector<int> foo;   // three ints with a value of 100
-  for (int i=0; i<3; i++) foo.push_back(100);
+  // allocate an array with space for 5 elements using vector's allocator:
+  p = myvector.get_allocator().allocate(5);
 
-  std::vector<int> bar;   // two ints with a value of 200
-  for (int i=0; i<2; i++) bar.push_back(200);
+  // construct values in-place on the array:
+  for (i=0; i<5; i++) myvector.get_allocator().construct(&p[i],i);
 
+  std::cout << "The allocated array contains:";
+  for (i=0; i<5; i++) std::cout << ' ' << p[i];
+  std::cout << '\n';
 
-  if (foo==bar) std::cout << "foo and bar are equal\n";
-  if (foo!=bar) std::cout << "foo and bar are not equal\n";
-  if (foo< bar) std::cout << "foo is less than bar\n";
-  if (foo> bar) std::cout << "foo is greater than bar\n";
-  if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
-  if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+  // destroy and deallocate:
+  for (i=0; i<5; i++) myvector.get_allocator().destroy(&p[i]);
+  myvector.get_allocator().deallocate(p,5);
   
     return 0;
 }

@@ -104,7 +104,7 @@ namespace ft {
 				for (_size = 0; _size < n; _size++)
 					_alloc.construct(_array + _size, val);
 			}
-			allocator_type get_allocator() const;
+			allocator_type get_allocator() const{return _alloc;}
 
 
 			// iterators:
@@ -243,10 +243,10 @@ namespace ft {
 			}
 
 		private:
-			pointer     _array;
-			size_type   _size;
-			size_type   _capacity;
-			Allocator   _alloc;
+			pointer			_array;
+			size_type		_size;
+			size_type   	_capacity;
+			allocator_type	_alloc;
 
 			template <class InputIterator>
 			difference_type _distance(InputIterator first, InputIterator last, std::random_access_iterator_tag) {
