@@ -49,6 +49,9 @@ namespace ft
             iterator  operator+ (iterator const& it)const {return _ptr + it._ptr;}
             iterator  operator- (difference_type diff)const {return _ptr - diff;}
             difference_type  operator- (iterator const& it)const {return _ptr - it._ptr;}
+            iterator  operator-= (difference_type diff) {_ptr = _ptr - diff; return *this;}
+            iterator  operator+= (difference_type diff) {_ptr = _ptr + diff; return *this;}
+
 
         private:
             pointer _ptr;

@@ -68,23 +68,23 @@ int main (void)
 
 */
   //  std::vector<int> myvector;
-ft::vector<int> myvector;
-  int * p;
-  unsigned int i;
+  ft::vector<int> first(7, 100);
+  ft::vector<int> second;
+  ft::vector<int> third;
 
-  // allocate an array with space for 5 elements using vector's allocator:
-  p = myvector.get_allocator().allocate(5);
+  // first.assign (7,100);             // 7 ints with a value of 100
 
-  // construct values in-place on the array:
-  for (i=0; i<5; i++) myvector.get_allocator().construct(&p[i],i);
+  ft::vector<int>::iterator it;
+  it=first.begin()+1;
 
-  std::cout << "The allocated array contains:";
-  for (i=0; i<5; i++) std::cout << ' ' << p[i];
-  std::cout << '\n';
+  second.assign (it,first.end()-1); // the 5 central values of first
 
-  // destroy and deallocate:
-  for (i=0; i<5; i++) myvector.get_allocator().destroy(&p[i]);
-  myvector.get_allocator().deallocate(p,5);
+  int myints[] = {1776,7,4};
+  third.assign (myints,myints+3);   // assigning from array.
+
+  std::cout << "Size of first: " << int (first.size()) << '\n';
+  std::cout << "Size of second: " << int (second.size()) << '\n';
+  std::cout << "Size of third: " << int (third.size()) << '\n';
   
     return 0;
 }

@@ -5,7 +5,12 @@
 
 namespace ft 
 {
-	
+	template <class T>
+	class Identify
+	{
+		public:
+			static const bool is_true = true;
+	};
 
 	template<bool Cond, class T = void>
 	struct enable_if {};

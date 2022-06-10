@@ -34,11 +34,9 @@ namespace ft {
 				for (size_type i = 0; i < _size; i++)
 					_alloc.construct(_array + i, value);
 			}
-			//TODO : enable_if
 			template <class InputIterator>
-         		vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()): _array(), _alloc(alloc), _size(), _capacity()
+         		vector (InputIterator first, typename enable_if<Identify<typename std::iterator_traits<InputIterator>::iterator_category>::is_true, InputIterator>::type last, const allocator_type& alloc = allocator_type()): _array(), _alloc(alloc), _size(), _capacity()
 				{
-					// typedef typename std::iterator_traits<InputIterator>::iterator_category() _category;
 					difference_type ret = _distance(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
 					if (ret != -1 && (_capacity = last - first))
 						_array = _alloc.allocate(_capacity);
@@ -71,15 +69,9 @@ namespace ft {
 				return *this;
 			}
 			template <class InputIterator>
-			void assign(InputIterator first, InputIterator last)
+			void assign(InputIterator first, typename enable_if<Identify<typename std::iterator_traits<InputIterator>::iterator_category>::is_true, InputIterator>::type last)
 			{
 				clear();
-				// to implement tag dispatching using private functions
-				// typedef std::iterator_traits<InputIterator> traits;
-				// if (typeid(typename traits::iterator_category)==typeid(std::random_access_iterator_tag)
-				// || typeid(typename traits::iterator_category)==typeid(std::bidirectional_iterator_tag)
-				// || typeid(typename traits::iterator_category)==typeid(std::forward_iterator_tag))
-				
 				difference_type ret = _distance(first, last, typename std::iterator_traits<InputIterator>::iterator_category());
 				if (ret != -1)
 				{
