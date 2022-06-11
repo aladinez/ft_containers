@@ -215,7 +215,23 @@ namespace ft {
 					_size--;
 				}
 			}
-			iterator insert (iterator position, const value_type& val);
+			iterator insert (iterator position, const value_type& val)
+			{
+				if (_size < _capacity)
+				{	
+					size_type pos = position - this->begin();
+					value_type tmp1 = val;
+					value_type tmp2 = _array[pos];
+					_size++;
+					for (; pos < _size; pos++;)
+					{
+						arr[pos] = tmp1;
+						tmp1 = tmp2;
+						tmp2  = arr[++pos];
+					}
+				}
+				return position;
+			}
     		void insert (iterator position, size_type n, const value_type& val);
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last);
@@ -314,7 +330,7 @@ namespace ft {
 		bool operator==(const vector<T,Allocator>& x, const vector<T,Allocator>& y)
 		{
 			if (x.size() == y.size()){
-				return (equal(x.begin(), x.end(), y.begin()));
+				return (ft::equal(x.begin(), x.end(), y.begin()));
 			}
 			return false;
 		}
@@ -322,29 +338,29 @@ namespace ft {
 		bool operator!=(const vector<T,Allocator>& x, const vector<T,Allocator>& y)
 		{
 			if (x.size() == y.size()){
-				return (!equal(x.begin(), x.end(), y.begin()));
+				return (!ft::equal(x.begin(), x.end(), y.begin()));
 			}
 			return true;
 		}
 	template <class T, class Allocator>
 		bool operator< (const vector<T,Allocator>& x, const vector<T,Allocator>& y)
 		{
-			return lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
+			return ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
 		}
 	template <class T, class Allocator>
 		bool operator> (const vector<T,Allocator>& x, const vector<T,Allocator>& y)
 		{
-			return lexicographical_compare(y.begin(), y.end(), x.begin(), x.end());
+			return ft::lexicographical_compare(y.begin(), y.end(), x.begin(), x.end());
 		}
 	template <class T, class Allocator>
 		bool operator>=(const vector<T,Allocator>& x, const vector<T,Allocator>& y)
 		{
-			return !(lexicographical_compare(x.begin(), x.end(), y.begin(), y.end()));
+			return !(ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end()));
 		}
 	template <class T, class Allocator>
 		bool operator<=(const vector<T,Allocator>& x, const vector<T,Allocator>& y)
 		{
-			return !(lexicographical_compare(y.begin(), y.end(), x.begin(), x.end()));
+			return !(ft::lexicographical_compare(y.begin(), y.end(), x.begin(), x.end()));
 		}
 
 	// specialized algorithms:
