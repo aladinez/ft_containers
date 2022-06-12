@@ -67,14 +67,38 @@ int main (void)
   std::cout << '\n';
 
 */
-  //  std::vector<int> myvector;
-  ft::vector<int> first(7, 100);
-  ft::vector<int>::iterator it = first.begin();
-  it += 4;
-  int a = 2;
+  std::vector<int> myvector;
+  for (int i=1;i<10;i++) myvector.push_back(i);
+  std::vector<int>::iterator it = myvector.begin();
+  it += 5;
+     std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+  std::cout << "myvector contains:";
+    for (int i=0;i<myvector.size();i++)
+        std::cout << ' ' << myvector[i];
+  std::cout << "\nafter" << std::endl;
+  myvector.insert(it, 99);
+    std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+  std::cout << "myvector contains:";
+    for (int i=0;i<myvector.size();i++)
+        std::cout << ' ' << myvector[i];
 
-  first.insert(it, a);
+
+
+  // int _size = 9;
+  // int val = 99;
+  // int arr[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8,};
+  // int pos = 5;
+  // arr[_size] = val;
+  // int it  = _size;
+  // _size++;
+  // for (; it != pos; it--)
+  // {
+  //   arr[it] = arr[it - 1];
+	// }
+  // arr[it] = val;
   
-  
+  // for (int i = 0; i < _size; i++)
+  //   std::cout << arr[i] << " " ;
+  // std::cout << std::endl;
     return 0;
 }

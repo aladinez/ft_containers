@@ -220,15 +220,14 @@ namespace ft {
 				if (_size < _capacity)
 				{	
 					size_type pos = position - this->begin();
-					value_type tmp1 = val;
-					value_type tmp2 = _array[pos];
+					size_type _end = _size;
 					_size++;
-					for (; pos < _size; pos++;)
+					for (; _end != pos; _end--)
 					{
-						arr[pos] = tmp1;
-						tmp1 = tmp2;
-						tmp2  = arr[++pos];
+						_alloc.construct(_array + _end, _array[_end - 1]);
+						_alloc.destroy(_array + _end - 1);
 					}
+					_alloc.construct(_array + _end, val);
 				}
 				return position;
 			}
