@@ -119,22 +119,32 @@ int main (void)
   //       std::cout << ' ' << myvector[i];
   
 /* ERASE TESTS*/
-  mine::vector<int> myvector;
+  // ft::vector<int> _vector;
+  // std::vector<int> v;
+  //   for (int i = 0; i < 9900 * 10000; ++i)
+  //       _vector.push_back(i);
+  //   // v.push_back(*(_vector.erase(_vector.begin() + 8 * 10000, _vector.end() - 1500 * 10000)));
+  //   ft::vector<int>::iterator it = _vector.end() - 1500 * 10000;
+  //   std::cout << *it << std::endl;
+
+  //   _vector.erase(_vector.begin() , _vector.begin() + 9900 * 9999);
+
+
+  std::vector<int> myvector;
 
   // set some values (from 1 to 10)
   for (int i=1; i<=10; i++) myvector.push_back(i);
 
   // erase the 6th element
-  mine::vector<int>::iterator it = myvector.erase (myvector.begin()+5);
+  myvector.erase (myvector.begin()+5);
 
   // erase the first 3 elements:
   myvector.erase (myvector.begin(),myvector.begin()+3);
-
-  std::cout << "myvector contains:" << *it << std::endl;
-  for (unsigned i=0; i<myvector.size() + 3; ++i)
+  std::cout << "capacity : " << myvector.capacity()  << "size : " << 
+  std::cout << "myvector contains:";
+  for (unsigned i=0; i<myvector.size(); ++i)
     std::cout << ' ' << myvector[i];
   std::cout << '\n';
-
 
   // int _size = 9;
   // int val = 99;

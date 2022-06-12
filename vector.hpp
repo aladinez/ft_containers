@@ -344,15 +344,15 @@ namespace ft {
 			{
 				size_type sz = last - first;
 				size_type pos = first - this->begin();
-				std::cout << pos << " hola " << last - first<< std::endl;
 				_alloc.destroy(_array + pos);
-				for (size_type i = pos; i < pos + sz; i++)
+				_size -= sz;
+				for (size_type i = pos; i < _size; i++)
 				{
 					_alloc.construct(_array + i, _array[i + sz]);
-					_alloc.destroy(_array + i + 1);
+					if (i < pos + sz)
+						_alloc.destroy(_array + i + 1);
 				}
-				_size -= sz;
-				return iterator(_array + pos + sz);
+				return iterator(_array + pos);
 			}
 			void swap (vector& x)
 			{
