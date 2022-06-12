@@ -330,18 +330,30 @@ namespace ft {
 			iterator erase(iterator position)
 			{
 				size_type pos = position - this->begin();
-				size_type ret = pos;
-				
-				
-				for (; pos < _size; pos++)
+				size_type i = pos;
+				_alloc.destroy(_array + i);
+				for (; i < _size; i++)
 				{
-					_alloc.construct(_array + pos, _array[pos + 1]);
-					_alloc.destroy(_array + pos + 1);
+					_alloc.construct(_array + i, _array[i + 1]);
+					_alloc.destroy(_array + i + 1);
 				}
 				_size--;
-				return iterator(_array + ret);
+				return iterator(_array + pos);
 			}
-			iterator erase(iterator first, iterator last);
+			iterator erase(iterator first, iterator last)
+			{
+				size_type sz = last - first;
+				size_type pos = first - this->begin();
+				std::cout << pos << " hola " << last - first<< std::endl;
+				_alloc.destroy(_array + pos);
+				for (size_type i = pos; i < pos + sz; i++)
+				{
+					_alloc.construct(_array + i, _array[i + sz]);
+					_alloc.destroy(_array + i + 1);
+				}
+				_size -= sz;
+				return iterator(_array + pos + sz);
+			}
 			void swap (vector& x)
 			{
 				vector tmp(x);
