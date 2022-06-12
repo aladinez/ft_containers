@@ -69,20 +69,43 @@ int main (void)
   std::cout << '\n';
 
 */
-  mine::vector<int> myvector;
-  for (int i=1;i<10;i++) myvector.push_back(i);
-  mine::vector<int>::iterator it = myvector.begin();
-  it += 4;
-  std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
-  std::cout << "myvector contains:";
-  for (int i=0;i<myvector.size();i++)
-      std::cout << ' ' << myvector[i];
+  // other::vector<int> myvector;
+  // for (int i=1;i<10;i++) myvector.push_back(i);
+  // other::vector<int>::iterator it = myvector.begin();
+  // it += 4;
+  // std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+  // std::cout << "myvector contains:";
+  // for (int i=0;i<myvector.size();i++)
+  //     std::cout << ' ' << myvector[i];
 
-  myvector.insert(it, 4, 0);
-  std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
-  std::cout << "myvector contains:";
-  for (int i=0;i<myvector.size();i++)
-      std::cout << ' ' << myvector[i];
+  // myvector.insert(it, 4, 0);
+  // std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+  // std::cout << "myvector contains:";
+  // for (int i=0;i<myvector.size();i++)
+  //     std::cout << ' ' << myvector[i];
+  
+  // other::vector<int> vec(7, 99);
+  // vec.insert(vec.begin(), myvector.begin(), myvector.end());
+  // std::cout << "\ncapacity: " << vec.capacity() << "\nsize : " << vec.size()<< '\n';
+  // std::cout << "vec contains:";
+  // for (int i=0;i<vec.size();i++)
+  //     std::cout << ' ' << vec[i];
+
+  // std::vector<int> v;
+  // ft::vector<int> _vector;
+
+  //   _vector.assign(1000, 1);
+  //   _vector.insert(_vector.end() - 50, 4200 * 10000 , 2);
+    // v.push_back(_vector[2121]);
+    // v.push_back(_vector.size());
+    // v.push_back(_vector.capacity());
+
+    std::vector<int> tmp;
+    std::vector<int> _vector;
+
+    tmp.assign(2600 * 10000, 1);
+    _vector.assign(4200 * 10000, 1);
+    _vector.insert(_vector.end() - 1000 * 10000, tmp.begin(), tmp.end());
   
 
   // other::vector<int> vec;
@@ -90,7 +113,7 @@ int main (void)
   // other::vector<int>::iterator vec_it = vec.begin();
 
   // myvector.insert(it, 99);
-  //   std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+    std::cout << "\ncapacity: " << _vector.capacity() << "\nsize : " << _vector.size()<< '\n';
   // std::cout << "myvector contains:";
   //   for (int i=0;i<myvector.size();i++)
   //       std::cout << ' ' << myvector[i];

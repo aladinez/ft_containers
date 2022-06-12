@@ -38,7 +38,7 @@ namespace ft {
          		vector (InputIterator first, typename enable_if<Identify<typename std::iterator_traits<InputIterator>::iterator_category>::is_true, InputIterator>::type last, const allocator_type& alloc = allocator_type()): _array(), _alloc(alloc), _size(), _capacity()
 				{
 					difference_type ret = _distance(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
-					if (ret != -1 && (_capacity = last - first))
+					if (ret != -1 && (_capacity = (size_type)ret))
 						_array = _alloc.allocate(_capacity);
 					for (; first != last; first++)
 						push_back(*first);
@@ -77,7 +77,7 @@ namespace ft {
 				{
 					if (_array)
 						_alloc.deallocate(_array, _capacity);
-					_capacity = last - first;
+					_capacity = (size_type)ret;
 					_array = _alloc.allocate(_capacity);
 				}
 				for (; first != last; first++)
@@ -301,9 +301,31 @@ namespace ft {
 				}
 			}
 			template <class InputIterator>
-			void insert (iterator position, InputIterator first, InputIterator last)
+			void insert (iterator position, InputIterator first, typename enable_if<Identify<typename std::iterator_traits<InputIterator>::iterator_category>::is_true, InputIterator>::type last)
 			{
-				
+				difference_type dist = _distance(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
+				pointer _new;
+				size_type pos = position - this->begin();
+				size_type i = 0;
+				size_type cap = _capacity;
+				size_type sz = _size;
+
+				if (dist != -1 && _size + dist > _capacity)
+						cap = _size + dist;
+				_new = _array;
+				_size = 0;
+				_array = _alloc.allocate(cap);
+				for (;i < pos; i++)
+					push_back(_new[i]);
+				for (; first != last; first++)
+					push_back(*first);	
+				for (; i < sz; i++)
+					push_back(_new[i]);
+				// free _new
+				for (i = 0; i < sz; i++)
+					_alloc.destroy(_new + i);
+				_alloc.deallocate(_new, _capacity);
+				_capacity = cap;
 			}
 			iterator erase(iterator position);
 			iterator erase(iterator first, iterator last);
