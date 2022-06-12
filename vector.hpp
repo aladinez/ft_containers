@@ -247,17 +247,64 @@ namespace ft {
 						_alloc.construct(_new + i, _array[i - 1]);
 					clear();
 					_alloc.deallocate(_array, _capacity);
-					_size++;
+					_size = i;
 					_capacity *= 2;
+					_array = _new;
 				}
 				return iterator(_array + pos);
 			}
     		void insert (iterator position, size_type n, const value_type& val)
 			{
-
+				if (_capacity == 0 && (_capacity = n))
+				{
+					_array = _alloc.allocate(_capacity);
+					for (_size = 0; _size < n; _size++)
+						_alloc.construct(_array + _size, val);
+				}
+				else if (n + _size > _capacity)
+				{
+					size_type pos = position - this->begin();
+					size_type cap = _capacity * 2;
+					if (cap < n + _size)
+						cap = n + _size;
+					pointer _new = _alloc.allocate(cap);
+					size_type i = 0;
+					//fill the first part
+					for (; i < pos; i++)
+						_alloc.construct(_new + i, _array[i]);
+					//fill the range
+					size_type x = i;
+					for (; i < x + n; i++)
+						_alloc.construct(_new + i, val);
+					//fill the second part
+					for (; i < _size + n; i++)
+						_alloc.construct(_new + i, _array[i - x]);
+					// assing _new to _array
+					clear();
+					_alloc.deallocate(_array, _capacity);
+					_size = i;
+					_array = _new;
+					_capacity = cap;
+				}
+				else
+				{
+					size_type pos = position - this->begin();
+					size_type _end = _size + n;
+					for (; _end != pos + n - 1; _end--)
+					{
+						_alloc.construct(_array + _end, _array[_end - n]);
+						_alloc.destroy(_array + _end - n);
+					}
+					for (; _end != pos - 1; _end--)
+						_alloc.construct(_array + _end, val);
+					_size += n;
+				}
 			}
 			template <class InputIterator>
-			void insert (iterator position, InputIterator first, InputIterator last);
+			void insert (iterator position, InputIterator first, InputIterator last)
+			{
+				
+			}
 			iterator erase(iterator position);
 			iterator erase(iterator first, iterator last);
 			void swap (vector& x)

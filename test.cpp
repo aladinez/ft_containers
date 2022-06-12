@@ -2,6 +2,8 @@
 #include <stdexcept>      // std::length_error
 #include "vector.hpp" 
 #include <vector>       // std::vector
+#define mine ft
+#define other std
 
 
 bool mycomp (char c1, char c2)
@@ -67,20 +69,32 @@ int main (void)
   std::cout << '\n';
 
 */
-  std::vector<int> myvector;
-  // for (int i=1;i<10;i++) myvector.push_back(i);
-  std::vector<int>::iterator it = myvector.begin();
-  // it += 0;
-     std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+  mine::vector<int> myvector;
+  for (int i=1;i<10;i++) myvector.push_back(i);
+  mine::vector<int>::iterator it = myvector.begin();
+  it += 4;
+  std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
   std::cout << "myvector contains:";
-    for (int i=0;i<myvector.size();i++)
-        std::cout << ' ' << myvector[i];
-  std::cout << "\nastder" << std::endl;
-  std::vector<int>::iterator ret = myvector.insert(it, 99);
-    std::cout << *ret << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+  for (int i=0;i<myvector.size();i++)
+      std::cout << ' ' << myvector[i];
+
+  myvector.insert(it, 4, 0);
+  std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
   std::cout << "myvector contains:";
-    for (int i=0;i<myvector.size();i++)
-        std::cout << ' ' << myvector[i];
+  for (int i=0;i<myvector.size();i++)
+      std::cout << ' ' << myvector[i];
+  
+
+  // other::vector<int> vec;
+  // for (int i=1;i<10;i++) vec.push_back(i);
+  // other::vector<int>::iterator vec_it = vec.begin();
+
+  // myvector.insert(it, 99);
+  //   std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+  // std::cout << "myvector contains:";
+  //   for (int i=0;i<myvector.size();i++)
+  //       std::cout << ' ' << myvector[i];
+  
 
 
 
