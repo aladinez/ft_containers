@@ -327,7 +327,20 @@ namespace ft {
 				_alloc.deallocate(_new, _capacity);
 				_capacity = cap;
 			}
-			iterator erase(iterator position);
+			iterator erase(iterator position)
+			{
+				size_type pos = position - this->begin();
+				size_type ret = pos;
+				
+				
+				for (; pos < _size; pos++)
+				{
+					_alloc.construct(_array + pos, _array[pos + 1]);
+					_alloc.destroy(_array + pos + 1);
+				}
+				_size--;
+				return iterator(_array + ret);
+			}
 			iterator erase(iterator first, iterator last);
 			void swap (vector& x)
 			{

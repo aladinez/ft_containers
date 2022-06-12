@@ -100,12 +100,12 @@ int main (void)
     // v.push_back(_vector.size());
     // v.push_back(_vector.capacity());
 
-    std::vector<int> tmp;
-    std::vector<int> _vector;
+    // std::vector<int> tmp;
+    // std::vector<int> _vector;
 
-    tmp.assign(2600 * 10000, 1);
-    _vector.assign(4200 * 10000, 1);
-    _vector.insert(_vector.end() - 1000 * 10000, tmp.begin(), tmp.end());
+    // tmp.assign(2600 * 10000, 1);
+    // _vector.assign(4200 * 10000, 1);
+    // _vector.insert(_vector.end() - 1000 * 10000, tmp.begin(), tmp.end());
   
 
   // other::vector<int> vec;
@@ -113,12 +113,27 @@ int main (void)
   // other::vector<int>::iterator vec_it = vec.begin();
 
   // myvector.insert(it, 99);
-    std::cout << "\ncapacity: " << _vector.capacity() << "\nsize : " << _vector.size()<< '\n';
+    // std::cout << "\ncapacity: " << _vector.capacity() << "\nsize : " << _vector.size()<< '\n';
   // std::cout << "myvector contains:";
   //   for (int i=0;i<myvector.size();i++)
   //       std::cout << ' ' << myvector[i];
   
+/* ERASE TESTS*/
+  mine::vector<int> myvector;
 
+  // set some values (from 1 to 10)
+  for (int i=1; i<=10; i++) myvector.push_back(i);
+
+  // erase the 6th element
+  mine::vector<int>::iterator it = myvector.erase (myvector.begin()+5);
+
+  // erase the first 3 elements:
+  // myvector.erase (myvector.begin(),myvector.begin()+3);
+
+  std::cout << "myvector contains:" << *it << std::endl;
+  for (unsigned i=0; i<myvector.size(); ++i)
+    std::cout << ' ' << myvector[i];
+  std::cout << '\n';
 
 
   // int _size = 9;
