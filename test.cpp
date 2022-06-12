@@ -68,16 +68,16 @@ int main (void)
 
 */
   std::vector<int> myvector;
-  for (int i=1;i<10;i++) myvector.push_back(i);
+  // for (int i=1;i<10;i++) myvector.push_back(i);
   std::vector<int>::iterator it = myvector.begin();
-  it += 5;
+  // it += 0;
      std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
   std::cout << "myvector contains:";
     for (int i=0;i<myvector.size();i++)
         std::cout << ' ' << myvector[i];
-  std::cout << "\nafter" << std::endl;
-  myvector.insert(it, 99);
-    std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+  std::cout << "\nastder" << std::endl;
+  std::vector<int>::iterator ret = myvector.insert(it, 99);
+    std::cout << *ret << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
   std::cout << "myvector contains:";
     for (int i=0;i<myvector.size();i++)
         std::cout << ' ' << myvector[i];

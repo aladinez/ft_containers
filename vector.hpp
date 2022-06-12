@@ -217,9 +217,15 @@ namespace ft {
 			}
 			iterator insert (iterator position, const value_type& val)
 			{
+				if (_capacity == 0 && (_capacity = 1) && (_size = 1))
+				{
+					_array = _alloc.allocate(_capacity);
+					_alloc.construct(_array, val);
+					return iterator(_array);
+				}
+				size_type pos = position - this->begin();
 				if (_size < _capacity)
 				{	
-					size_type pos = position - this->begin();
 					size_type _end = _size;
 					_size++;
 					for (; _end != pos; _end--)
@@ -229,9 +235,27 @@ namespace ft {
 					}
 					_alloc.construct(_array + _end, val);
 				}
-				return position;
+				else
+				{
+					pointer _new = _alloc.allocate(_capacity * 2);
+					size_type i = 0;
+					for (; i < pos; i++)
+						_alloc.construct(_new + i, _array[i]);
+					_alloc.construct(_new + i, val);
+					i++;
+					for (; i < _size + 1; i++)
+						_alloc.construct(_new + i, _array[i - 1]);
+					clear();
+					_alloc.deallocate(_array, _capacity);
+					_size++;
+					_capacity *= 2;
+				}
+				return iterator(_array + pos);
 			}
-    		void insert (iterator position, size_type n, const value_type& val);
+    		void insert (iterator position, size_type n, const value_type& val)
+			{
+
+			}
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last);
 			iterator erase(iterator position);
