@@ -278,7 +278,10 @@ namespace ft {
 						_alloc.construct(_new + i, val);
 					//fill the second part
 					for (; i < _size + n; i++)
-						_alloc.construct(_new + i, _array[i - x]);
+					{
+						_alloc.construct(_new + i, _array[x]);
+						x++;
+					}
 					// assing _new to _array
 					clear();
 					_alloc.deallocate(_array, _capacity);
@@ -349,7 +352,7 @@ namespace ft {
 				for (size_type i = pos; i < _size; i++)
 				{
 					_alloc.construct(_array + i, _array[i + sz]);
-					if (i < pos + sz)
+					// if (i < pos + sz)
 						_alloc.destroy(_array + i + 1);
 				}
 				return iterator(_array + pos);

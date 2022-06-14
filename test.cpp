@@ -4,6 +4,7 @@
 #include <vector>       // std::vector
 #define mine ft
 #define other std
+#define _ratio 10000
 
 
 bool mycomp (char c1, char c2)
@@ -129,23 +130,9 @@ int main (void)
 
   //   _vector.erase(_vector.begin() , _vector.begin() + 9900 * 9999);
 
-
-  std::vector<int> myvector;
-
-  // set some values (from 1 to 10)
-  for (int i=1; i<=10; i++) myvector.push_back(i);
-
-  // erase the 6th element
-  myvector.erase (myvector.begin()+5);
-
-  // erase the first 3 elements:
-  myvector.erase (myvector.begin(),myvector.begin()+3);
-  std::cout << "capacity : " << myvector.capacity()  << "size : " << 
-  std::cout << "myvector contains:";
-  for (unsigned i=0; i<myvector.size(); ++i)
-    std::cout << ' ' << myvector[i];
-  std::cout << '\n';
-
+    ft::vector<int> v;
+    v.assign(1000, 1);
+    v.insert(v.end() - 50, 4200 * _ratio , 2);
   // int _size = 9;
   // int val = 99;
   // int arr[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8,};
