@@ -1,6 +1,7 @@
 #include <iostream>       // std::cerr
 #include <stdexcept>      // std::length_error
 #include "vector.hpp" 
+#include "stack.hpp"
 #include <vector>       // std::vector
 #define mine ft
 #define other std
@@ -132,7 +133,11 @@ int main (void)
 
     ft::vector<int> v;
     v.assign(1000, 1);
-    v.insert(v.end() - 50, 4200 * _ratio , 2);
+    ft::stack<int> _stack(v);
+    ft::stack<int> _stack2(v);
+    std::cout << (_stack == _stack2) << std::endl;
+    
+
   // int _size = 9;
   // int val = 99;
   // int arr[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8,};
