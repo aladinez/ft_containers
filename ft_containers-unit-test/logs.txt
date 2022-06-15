@@ -1,7 +1,7 @@
-Undefined symbols for architecture x86_64:
-  "ft::operator>=(ft::stack<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, ft::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > > > const&, ft::stack<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, ft::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > > > const&)", referenced from:
-      stack_more_or_equal_test() in operator >=-a26979.o
-  "ft::operator>=(ft::stack<int, ft::vector<int, std::__1::allocator<int> > > const&, ft::stack<int, ft::vector<int, std::__1::allocator<int> > > const&)", referenced from:
-      stack_more_or_equal_test() in operator >=-a26979.o
-ld: symbol(s) not found for architecture x86_64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
+In file included from ../stack_tests/operator !=.cpp:1:
+In file included from ../stack_tests/../system/system_methods.ipp:2:
+In file included from ../stack_tests/../system/lib.hpp:30:
+../stack_tests/../system/Alloc.hpp:6:10: fatal error: '__config' file not found
+#include <__config>
+         ^~~~~~~~~~
+1 error generated.
