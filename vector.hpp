@@ -268,9 +268,7 @@ namespace ft {
 				else if (n + _size > _capacity)
 				{
 					size_type pos = position - this->begin();
-					size_type cap = _capacity * 2;
-					if (cap < n + _size)
-						cap = n + _size;
+					size_type cap = _size * 2 > _size + n ? _size * 2 : _size + n;
 					pointer _new = _alloc.allocate(cap);
 					size_type i = 0;
 					//fill the first part
@@ -296,15 +294,32 @@ namespace ft {
 				else
 				{
 					size_type pos = position - this->begin();
-					size_type _end = _size + n;
-					for (; _end != pos + n - 1; _end--)
+					for (iterator it = end() - 1; it >= position; it--)
 					{
-						_alloc.construct(_array + _end, _array[_end - n]);
-						_alloc.destroy(_array + _end - n);
+						if (it + n < end())
+							*(it + n) = *it;
+						else
+							_alloc.construct (&(*(it + n)), *it);
 					}
-					for (; _end != pos - 1; _end--)
-						_alloc.construct(_array + _end, val);
+					// for (iterator it = _range.begin(); it != _range.end(); it++)
+					for (size_type i = pos; pos < i + n; pos++)
+					{
+						if (pos >= _size)
+							_alloc.construct(_array + pos, val);
+						else
+							_array[pos] = val;
+					}
 					_size += n;
+					// size_type pos = position - this->begin();
+					// size_type _end = _size + n;
+					// for (; _end != pos + n - 1; _end--)
+					// {
+					// 	_alloc.construct(_array + _end, _array[_end - n]);
+					// 	_alloc.destroy(_array + _end - n);
+					// }
+					// for (; _end != pos - 1; _end--)
+					// 	_alloc.construct(_array + _end, val);
+					// _size += n;
 				}
 			}
 			template <class InputIterator>
@@ -338,7 +353,7 @@ namespace ft {
 				else // if (_size + dist > _capacity) // reallocation
 				{
 					vector _vec;
-					size_type cap = _capacity * 2 > _size + dist ? _capacity * 2 : _size + dist;
+					size_type cap = _size * 2 > _size + dist ? _size * 2 : _size + dist;
 					_vec.reserve(cap);
 					for (iterator it = begin(); it != position; it++)
 						_vec.push_back(*it);

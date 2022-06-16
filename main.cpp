@@ -10,8 +10,8 @@ int main()
 {
     // ft::vector<int> second(4,100);
     // std::cout << second.capacity() << std::endl;
-  mine::vector<int> myvector (3,100);
-  mine::vector<int>::iterator it;
+  other::vector<int> myvector (3,100);
+  other::vector<int>::iterator it;
 
 std::cout << "\nmyvector contains: cap= " << myvector.capacity() << "\n";
   for (it=myvector.begin(); it<myvector.end(); it++)
@@ -20,16 +20,14 @@ std::cout << "\nmyvector contains: cap= " << myvector.capacity() << "\n";
   it = myvector.begin();
   it = myvector.insert ( it , 200 );
 
-  std::cout << "\nmyvector contains: cap= " << myvector.capacity() << "\n";
-  for (it=myvector.begin(); it<myvector.end(); it++)
-    std::cout << ' ' << *it;
-//   myvector.insert (it,2,300);
+
+  myvector.insert (it,2,300);
 
   // "it" no longer valid, get a new one:
   it = myvector.begin();
 
 
-  mine::vector<int> anothervector (2,400);
+  other::vector<int> anothervector (2,400);
   myvector.insert (it+2,anothervector.begin(),anothervector.end());
 
   std::cout << "\nmyvector contains: cap= " << myvector.capacity() << "\n";
