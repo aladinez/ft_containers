@@ -161,7 +161,8 @@ namespace ft {
 						_alloc.construct(_new + i, _array[i]);
 						_alloc.destroy(_array + i);
 					}
-					_alloc.deallocate(_array, _capacity);
+					if (_capacity)
+						_alloc.deallocate(_array, _capacity);
 					_array = _new;
 					_capacity = n;	
 				}
@@ -309,56 +310,44 @@ namespace ft {
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, typename enable_if<Identify<typename std::iterator_traits<InputIterator>::iterator_category>::is_true, InputIterator>::type last)
 			{
-				difference_type dist = _distance(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
-				pointer _new;
+				vector _range(first, last);
+				// difference_type dist = _distance(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
+				difference_type dist = _range.size();
 				size_type pos = position - this->begin();
-				size_type i = 0;
-				size_type cap = _capacity;
-				
-				if (dist != -1 && _size + dist <= _capacity)
+
+				// if (dist == -1) // input iterator
+				if (_size + dist <= _capacity) // no reallocation
 				{
-					for (i = _size - 1; i >= pos; i--)
+					for (iterator it = end() - 1; it >= position; it--)
 					{
-						if (i + dist < _size)
-							_array[i + dist] = _array[i];
+						if (it + dist < end())
+							*(it + dist) = *it;
 						else
-							_alloc.construct(_array + i + dist, _array[i]);
+							_alloc.construct (&(*(it + dist)), *it);
 					}
-					for (i = pos; i < pos + dist; i++)
+					for (iterator it = _range.begin(); it != _range.end(); it++)
 					{
-						if (i < _size)
-							_array[i] = *first;
+						if (pos >= _size)
+							_alloc.construct(_array + pos, *it);
 						else
-							_alloc.construct(_array + i, *first);
-						first++;
+							_array[pos] = *it;
+						pos++;
 					}
 					_size += dist;
 				}
-				else if (dist != -1 && _size + dist > _capacity)
+				else // if (_size + dist > _capacity) // reallocation
 				{
-					cap = _size + dist;
-					_new = _array;
-					if (cap)
-						_array = _alloc.allocate(cap);
-					for (i = 0; i < pos; i++)
-						_alloc.construct(_array + i, _new[i]);
-						// push_back(_new[i]);
-					for (; first != last; first++){
-						// push_back(*first);	
-						_alloc.construct(_array + i, *first);
-						i++;
-					}
-					for (; i < _size + dist; i++)
-						_alloc.construct(_array + i, _new[i - dist]);
-						// push_back(_new[i]);
-					// free _new
-					size_type sz = _size;
-					_size = i;
-					for (i = 0; i < sz; i++)
-						_alloc.destroy(_new + i);
-					if (_capacity)
-						_alloc.deallocate(_new, _capacity); // to check if capacity was equal to 0
-					_capacity = cap;
+					vector _vec;
+					size_type cap = _capacity * 2 > _size + dist ? _capacity * 2 : _size + dist;
+					_vec.reserve(cap);
+					for (iterator it = begin(); it != position; it++)
+						_vec.push_back(*it);
+					for (iterator it = _range.begin(); it != _range.end(); it++)
+						_vec.push_back(*it);
+					for (; position != end(); position++)
+						_vec.push_back(*position);
+					this->swap(_vec);
+
 				}
 			}
 			iterator erase(iterator position)
