@@ -126,27 +126,12 @@ namespace ft {
                         _alloc.destroy(_array + i);
                     _size = n;
                 }
-                else if (n <= _capacity )
-                {
-                    for (;_size < n; _size++)
-					    _alloc.construct(_array + _size, value);
-                }
-                else
-                {
-					// size_type new_cap = _capacity*2 < n ? n : _capacity*2; //TODO : check the behaviour of the standard vector in this case
-					pointer _new = _alloc.allocate(n);
-					for (size_type i = 0; i < _size; i++)
-					{
-						_alloc.construct(_new + i, _array[i]);
-						_alloc.destroy(_array + i);
-					}
-					for (;_size < n; _size++)
-						_alloc.construct(_new + _size, value_type());
-					if (_array) // in case capacity == 0
-						_alloc.deallocate(_array, _capacity);
-					_array = _new;
-					_capacity = n;
-                }
+				else
+				{
+					this->reserve(n);
+					for (size_type i = _size; i < n; i++)
+						push_back(value);
+				}
             }
 			bool        empty()const{return !_size;}
 			void        reserve(size_type n)
