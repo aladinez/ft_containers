@@ -301,7 +301,6 @@ namespace ft {
 						else
 							_alloc.construct (&(*(it + n)), *it);
 					}
-					// for (iterator it = _range.begin(); it != _range.end(); it++)
 					for (size_type i = pos; pos < i + n; pos++)
 					{
 						if (pos >= _size)
@@ -310,27 +309,15 @@ namespace ft {
 							_array[pos] = val;
 					}
 					_size += n;
-					// size_type pos = position - this->begin();
-					// size_type _end = _size + n;
-					// for (; _end != pos + n - 1; _end--)
-					// {
-					// 	_alloc.construct(_array + _end, _array[_end - n]);
-					// 	_alloc.destroy(_array + _end - n);
-					// }
-					// for (; _end != pos - 1; _end--)
-					// 	_alloc.construct(_array + _end, val);
-					// _size += n;
 				}
 			}
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, typename enable_if<Identify<typename std::iterator_traits<InputIterator>::iterator_category>::is_true, InputIterator>::type last)
 			{
 				vector _range(first, last);
-				// difference_type dist = _distance(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
 				difference_type dist = _range.size();
 				size_type pos = position - this->begin();
 
-				// if (dist == -1) // input iterator
 				if (_size + dist <= _capacity) // no reallocation
 				{
 					for (iterator it = end() - 1; it >= position; it--)
