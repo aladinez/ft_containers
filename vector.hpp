@@ -46,9 +46,12 @@ namespace ft {
 
 			vector(const vector<T,Allocator>& x) : _size(x._size), _capacity(x._capacity), _alloc(x._alloc)
 			{
-				_array = _alloc.allocate(_capacity);
-				for (size_type i = 0; i < _size; i++)
-					_alloc.construct(_array + i, *(x._array + i));
+				if (_capacity)
+				{
+					_array = _alloc.allocate(_capacity);
+					for (size_type i = 0; i < _size; i++)
+						_alloc.construct(_array + i, *(x._array + i));
+				}
 			}
 			~vector()
 			{
@@ -327,7 +330,7 @@ namespace ft {
 				// free _new
 				for (i = 0; i < sz; i++)
 					_alloc.destroy(_new + i);
-				_alloc.deallocate(_new, _capacity);
+				_alloc.deallocate(_new, _capacity); // to check if capacity was equal to 0
 				_capacity = cap;
 			}
 			iterator erase(iterator position)
