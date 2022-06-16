@@ -47,7 +47,7 @@ namespace ft
             reference operator[] (difference_type diff)     {return *(_ptr + diff);}
             pointer   operator->() const                    {return _ptr;}
             iterator  operator+ (difference_type diff)const {return _ptr + diff;}
-            iterator  operator+ (iterator const& it)const {return _ptr + it._ptr;}
+            // iterator  operator+ (iterator const& it)const {return _ptr + it._ptr;}
             iterator  operator- (difference_type diff)const {return _ptr - diff;}
             difference_type  operator- (iterator const& it)const {return _ptr - it._ptr;}
             iterator  operator-= (difference_type diff) {_ptr = _ptr - diff; return *this;}
@@ -57,6 +57,11 @@ namespace ft
         private:
             pointer _ptr;
     };
+    template <class T>
+    iterator<T> operator+ (typename iterator<T>::difference_type n, const iterator<T>& it)
+    {
+        return (it + n);
+    }
 }
 
 #endif

@@ -214,8 +214,8 @@ namespace ft {
 			{
 				if (_size > 0)
 				{
-					_alloc.destroy(_array + _size);
 					_size--;
+					_alloc.destroy(_array + _size);
 				}
 			}
 			iterator insert (iterator position, const value_type& val)
@@ -314,24 +314,52 @@ namespace ft {
 				size_type pos = position - this->begin();
 				size_type i = 0;
 				size_type cap = _capacity;
-				size_type sz = _size;
-
-				if (dist != -1 && _size + dist > _capacity)
-						cap = _size + dist;
-				_new = _array;
-				_size = 0;
-				_array = _alloc.allocate(cap);
-				for (;i < pos; i++)
-					push_back(_new[i]);
-				for (; first != last; first++)
-					push_back(*first);	
-				for (; i < sz; i++)
-					push_back(_new[i]);
-				// free _new
-				for (i = 0; i < sz; i++)
-					_alloc.destroy(_new + i);
-				_alloc.deallocate(_new, _capacity); // to check if capacity was equal to 0
-				_capacity = cap;
+				
+				if (dist != -1 && _size + dist <= _capacity)
+				{
+					for (i = _size - 1; i >= pos; i--)
+					{
+						if (i + dist < _size)
+							_array[i + dist] = _array[i];
+						else
+							_alloc.construct(_array + i + dist, _array[i]);
+					}
+					for (i = pos; i < pos + dist; i++)
+					{
+						if (i < _size)
+							_array[i] = *first;
+						else
+							_alloc.construct(_array + i, *first);
+						first++;
+					}
+					_size += dist;
+				}
+				else if (dist != -1 && _size + dist > _capacity)
+				{
+					cap = _size + dist;
+					_new = _array;
+					if (cap)
+						_array = _alloc.allocate(cap);
+					for (i = 0; i < pos; i++)
+						_alloc.construct(_array + i, _new[i]);
+						// push_back(_new[i]);
+					for (; first != last; first++){
+						// push_back(*first);	
+						_alloc.construct(_array + i, *first);
+						i++;
+					}
+					for (; i < _size + dist; i++)
+						_alloc.construct(_array + i, _new[i - dist]);
+						// push_back(_new[i]);
+					// free _new
+					size_type sz = _size;
+					_size = i;
+					for (i = 0; i < sz; i++)
+						_alloc.destroy(_new + i);
+					if (_capacity)
+						_alloc.deallocate(_new, _capacity); // to check if capacity was equal to 0
+					_capacity = cap;
+				}
 			}
 			iterator erase(iterator position)
 			{
@@ -362,9 +390,10 @@ namespace ft {
 			}
 			void swap (vector& x)
 			{
-				vector tmp(x);
-				x = *this;
-				*this = tmp;
+				std::swap(this->_array, x._array);
+				std::swap(this->_alloc, x._alloc);
+				std::swap(this->_capacity, x._capacity);
+				std::swap(this->_size, x._size);
 			}
 			void     clear()
 			{

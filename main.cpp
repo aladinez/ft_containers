@@ -1,6 +1,8 @@
 #include "vector.hpp"
 #include <iostream>
 #include <vector>
+#define mine ft
+#define other std
 
 // #include "Iterator.hpp"
 
@@ -8,61 +10,27 @@ int main()
 {
     // ft::vector<int> second(4,100);
     // std::cout << second.capacity() << std::endl;
+  mine::vector<int> myvector (3,100);
+  mine::vector<int>::iterator it;
 
-    ft::vector<int>  myvector;
-    std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
-    myvector.push_back(1);
-    std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+  it = myvector.begin();
+  it = myvector.insert ( it , 200 );
 
-  // set some initial content:
-    for (int i=1;i<10;i++) myvector.push_back(i);
+  myvector.insert (it,2,300);
 
-    myvector.resize(10, 88);
-    myvector.resize(8,100);
-    myvector.resize(18);
+  // "it" no longer valid, get a new one:
+  it = myvector.begin();
 
-    std::cout << "myvector contains:";
-    for (int i=0;i<myvector.size();i++)
-        std::cout << ' ' << myvector[i];
-    std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
+  mine::vector<int> anothervector (2,400);
+  myvector.insert (it+2,anothervector.begin(),anothervector.end());
 
-    // myvector.pop_back();
-    // myvector.pop_back();
-    // myvector.pop_back();
+  int myarray [] = { 501,502,503 };
+  myvector.insert (myvector.begin(), myarray, myarray+3);
 
-    // std::cout << "myvector contains:";
-    // for (int i=0;i<myvector.size();i++)
-    //     std::cout << ' ' << myvector[i];
-    // std::cout << "\ncapacity: " << myvector.capacity() << "\nsize : " << myvector.size()<< '\n';
-
-    // std::cout << !myvector.empty() << std::endl;
-
-    ft::vector<int> vec(myvector.begin(), myvector.end());
-    std::cout << "vec contains:";
-    for (int i=0;i<vec.size();i++)
-        std::cout << ' ' << vec[i];
-    std::cout << "\ncapacity: " << vec.capacity() << "\nsize : " << vec.size()<< '\n';
-
-    ft::vector<int>::reverse_iterator it1 = myvector.rbegin();
-    ft::vector<int>::reverse_iterator it2 = vec.rbegin();
-
-
-    while (it1 != myvector.rend())
-    {
-        std::cout << *it1 << " : " << *it2 << std::endl;
-        ++it1;
-        ++it2;
-    }
-    
-    if (vec == myvector) 
-        std::cout << "Equal\n";
-    //iterator tests:
-    // ft::vector<int>::iterator it = myvector.begin();
-    // std::cout << *it << std::endl;
-    // it++;
-    // it++;
-    // std::cout << *it << std::endl;
-    
-    // std::cout << *(it + 4) << std::endl;
+  std::cout << "myvector contains:";
+  for (it=myvector.begin(); it<myvector.end(); it++)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
+   
     return (0);    
 }
