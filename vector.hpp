@@ -367,7 +367,6 @@ namespace ft {
 			void swap (vector& x)
 			{
 				std::swap(this->_array, x._array);
-				std::swap(this->_alloc, x._alloc);
 				std::swap(this->_capacity, x._capacity);
 				std::swap(this->_size, x._size);
 			}
