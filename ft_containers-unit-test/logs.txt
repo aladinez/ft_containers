@@ -1,7 +1,1 @@
-In file included from ../stack_tests/operator !=.cpp:1:
-In file included from ../stack_tests/../system/system_methods.ipp:2:
-In file included from ../stack_tests/../system/lib.hpp:30:
-../stack_tests/../system/Alloc.hpp:6:10: fatal error: '__config' file not found
-#include <__config>
-         ^~~~~~~~~~
-1 error generated.
+

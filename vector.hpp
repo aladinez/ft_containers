@@ -56,7 +56,7 @@ namespace ft {
 			~vector()
 			{
 				clear();
-				if (_array)
+				if (_capacity)
 					_alloc.deallocate(_array, _capacity);
 			}
 			vector<T,Allocator>& operator=(const vector<T,Allocator>& x)
