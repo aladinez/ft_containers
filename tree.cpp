@@ -12,21 +12,13 @@ struct Node {
 template <class T>
 class BS_tree
 {
-    typedef Node<T> node;
-    private:
-        node* _root;
-        void _print(node* root)
-        {
-            if (root)
-            {
-                _print(root->left);
-                std::cout << root->key << std::endl;
-                _print(root->right);
-            }
-        }
+    
+
     public:
+        typedef Node<T>     node;
+        typedef T           value_type;
         BS_tree (): _root() {}
-        void insert(T new_key)
+        void insert(value_type new_key)
         {
             node* y = nullptr;
             node* x = _root;
@@ -52,18 +44,58 @@ class BS_tree
                 y->right = z;
         }
         void print() {_print(_root);}
-        node* search(int new_key);   
+        node* search(value_type new_key)
+        {
+            node* x = _root;
+            while (x && x->key != new_key)
+            {
+                if (x->key < new_key)
+                    x = x->left;
+                else    
+                    x = x->right;
+            }
+            return x;
+        }
+        value_type minimum()
+        {
+            node* x = _root;
+            while (x->left)
+                x = x->left;
+            return x->key;
+        }
+        value_type maximum()
+        {
+            node* x = _root;
+            while (x->right)
+                x = x->right;
+            return x->key;
+        }
+    private:
+        node* _root;
+        void _print(node* root)
+        {
+            if (root)
+            {
+                _print(root->left);
+                std::cout << root->key << std::endl;
+                _print(root->right);
+            }
+        }
 };
 
 
 int main()
 {
-    BS_tree<char> tree;
-    tree.insert('q');
-    tree.insert('b');
-    tree.insert('a');
-    tree.insert('z');
+    BS_tree<int> tree;
+    tree.insert(23);
+    tree.insert(3);
+    tree.insert(14);
+    tree.insert(6);
     tree.print();
+
+    BS_tree<int>::node* a = tree.search(3);
+    std::cout << "min is : " << tree.minimum() << std::endl;
+    std::cout << "max is : " << tree.maximum() << std::endl;
 
     return (0);
 }
