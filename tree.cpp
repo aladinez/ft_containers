@@ -104,6 +104,31 @@ class BS_tree
             return x;
         }
 
+        void remove(node* z)
+        {
+            if (z)
+            {
+                if (!z->left)
+                    _transplant(z, z->right);
+                else if (!z->right)
+                    _transplant(z, z->left);
+                else
+                {
+                    node* y = _most_left(z->right); //successor of z;
+                    if (y->p != z)
+                    {
+                        _transplant(y, y->right);
+                        y->right = z->right;
+                        y->right->p = y;
+                    }
+                    _transplant(z, y);
+                    y->left = z->left;
+                    y->left->p = y;
+                }
+                delete z;
+            }
+        }
+
         void print_tree()
         {
             printTree(_root);
@@ -130,6 +155,20 @@ class BS_tree
             while (x->right)
                 x = x->right;
             return x;
+        }
+        void _transplant(node* u, node* v)
+        {
+            if (v && u)
+            {
+                if (u->p == nullptr)
+                    _root = v;
+                else if (u == u->p->left)
+                    u->p->left = v;
+                else
+                    u->p->right = v;
+                if (v)
+                    v->p = u->p;
+            }
         }
 };
 int rec[1000006];
@@ -162,6 +201,10 @@ int main()
     tree.insert(3);
     tree.insert(30);
     tree.insert(6);
+    tree.insert(15);
+    tree.insert(0);
+    tree.insert(99);
+    tree.insert(4);
     // tree.print();
     tree.print_tree();
 
@@ -177,6 +220,12 @@ int main()
         std::cout << "successor of " << 23 << " is : " << succ->key << std::endl;
     if (pred)
         std::cout << "predecessor of " << 23 << " is : " << pred->key << std::endl;
+    tree.remove(pred);
+    tree.remove(succ);
+
+    tree.print_tree();
+
+
 
     return (0);
 }
