@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 
 
 template <typename T>
@@ -50,9 +51,9 @@ class BS_tree
             while (x && x->key != new_key)
             {
                 if (x->key < new_key)
-                    x = x->left;
-                else    
                     x = x->right;
+                else    
+                    x = x->left;
             }
             return x;
         }
@@ -101,6 +102,11 @@ class BS_tree
             }
             return y->key;
         }
+
+        void print_tree()
+        {
+            printTree(_root);
+        }
     private:
         node* _root;
         void _print(node* root)
@@ -125,6 +131,28 @@ class BS_tree
             return x->key;
         }
 };
+int rec[1000006];
+template <typename T>
+void printTree(struct Node<T>* curr,int depth = 0)
+{
+    int i;
+    if(!curr)return;
+    printf("\t");
+    for(i=0;i<depth;i++)
+    {
+        if(i==depth-1)
+            printf("%s\u2014\u2014\u2014",rec[depth-1]?"\u0371":"\u221F");
+        else
+            printf("%s   ",rec[i]?"\u23B8":"  ");
+    }
+    printf("%d\n", curr->key);
+    // std::cout << curr->key << std::endl;
+    rec[depth]=1;
+    printTree(curr->left,depth+1);
+    rec[depth]=0;
+    printTree(curr->right,depth+1);
+}
+
 
 
 int main()
@@ -132,16 +160,16 @@ int main()
     BS_tree<int> tree;
     tree.insert(23);
     tree.insert(3);
-    tree.insert(14);
+    tree.insert(30);
     tree.insert(6);
-    tree.print();
+    // tree.print();
+    tree.print_tree();
 
     BS_tree<int>::node* a = tree.search(3);
     std::cout << "min is : " << tree.minimum() << std::endl;
     std::cout << "max is : " << tree.maximum() << std::endl;
-    std::cout << "successor of " << 3 << " is : " << tree.successor(3) << std::endl;
-    std::cout << "predecessor of " << 14 << " is : " << tree.predecessor(14) << std::endl;
-
+    // std::cout << "successor of " << 14 << " is : " << tree.successor(14) << std::endl;
+    // std::cout << "predecessor of " << 14 << " is : " << tree.predecessor(14) << std::endl;
 
     return (0);
 }
