@@ -1,17 +1,21 @@
 #include <iostream>
 
-typedef struct Node {
+
+template <typename T>
+struct Node {
     Node* p;
-    int key;
+    T key;
     Node* left;
     Node* right;
-}Node;
+};
 
+template <class T>
 class BS_tree
 {
+    typedef Node<T> node;
     private:
-        Node* _root;
-        void _print(Node* root)
+        node* _root;
+        void _print(node* root)
         {
             if (root)
             {
@@ -21,28 +25,11 @@ class BS_tree
             }
         }
     public:
-        BS_tree (): _root() {
-            // _root = new Node;
-            // Node* r = new Node; //new node to insert
-            // Node* l = new Node;
-            // _root->left = l;
-            // _root->right = r;
-            // _root->key = 10;
-
-            // r->p = l->p = _root;
-            // r->key = 20;
-            // l->key = 5;
-
-
-            // r->left = r->right = nullptr;
-            // l->left = l->right = nullptr;
-
-
-        }
-        void insert(int new_key)
+        BS_tree (): _root() {}
+        void insert(T new_key)
         {
-            Node* y = nullptr;
-            Node* x = _root;
+            node* y = nullptr;
+            node* x = _root;
             while (x)
             {
                 y = x;
@@ -53,7 +40,7 @@ class BS_tree
                 else // TO NOT INSERT DUPPLICATE
                     return;
             }
-            Node* z = new Node; //new node to insert
+            node* z = new node; //new node to insert
             z->key = new_key;
             z->p = y;
             z->left = z->right = nullptr;
@@ -65,17 +52,17 @@ class BS_tree
                 y->right = z;
         }
         void print() {_print(_root);}
-        
+        node* search(int new_key);   
 };
 
 
 int main()
 {
-    BS_tree tree;
-    tree.insert(7);
-    tree.insert(3);
-    tree.insert(4);
-    tree.insert(2);
+    BS_tree<char> tree;
+    tree.insert('q');
+    tree.insert('b');
+    tree.insert('a');
+    tree.insert('z');
     tree.print();
 
     return (0);
