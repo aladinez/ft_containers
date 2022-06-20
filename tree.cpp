@@ -13,8 +13,6 @@ struct Node {
 template <class T>
 class BS_tree
 {
-    
-
     public:
         typedef Node<T>     node;
         typedef T           value_type;
@@ -57,50 +55,53 @@ class BS_tree
             }
             return x;
         }
-        value_type minimum()
+        node* most_left()
         {
             node* x = _root;
             while (x->left)
                 x = x->left;
-            return x->key;
+            return x;
         }
-        value_type maximum()
+        node* most_right()
         {
             node* x = _root;
             while (x->right)
                 x = x->right;
-            return x->key;
+            return x;
         }
-        value_type successor(value_type new_key)
+        node* successor(value_type new_key)
         {
             node* x = search(new_key);
             if (x)
             {   
                 if (x->right)
-                    return _minimum(x->right);
+                    return _most_left(x->right);
                 node* y = x->p;
                 while (y && x == y->right)
                 {
                     x = y;
                     y = y->p;
                 }
-                return y->key;
+                return y;
             }
-            return 0;
+            return x;
         }
-        value_type predecessor(value_type new_key)
+        node* predecessor(value_type new_key)
         {
             node* x = search(new_key);
-
-            if (x->left)
-                return _maximum(x->left);
-            node* y = x->p;
-            while (y && x == y->left)
+            if (x)
             {
-                x = y;
-                y = y->p;
+                if (x->left)
+                    return _most_right(x->left);
+                node* y = x->p;
+                while (y && x == y->left)
+                {
+                    x = y;
+                    y = y->p;
+                }
+                return y;
             }
-            return y->key;
+            return x;
         }
 
         void print_tree()
@@ -118,17 +119,17 @@ class BS_tree
                 _print(root->right);
             }
         }
-        value_type _minimum(node* x)
+        node* _most_left(node* x)
         {
             while (x->left)
                 x = x->left;
-            return x->key;
+            return x;
         }
-        value_type _maximum(node* x)
+        node* _most_right(node* x)
         {
             while (x->right)
                 x = x->right;
-            return x->key;
+            return x;
         }
 };
 int rec[1000006];
@@ -146,7 +147,6 @@ void printTree(struct Node<T>* curr,int depth = 0)
             printf("%s   ",rec[i]?"\u23B8":"  ");
     }
     printf("%d\n", curr->key);
-    // std::cout << curr->key << std::endl;
     rec[depth]=1;
     printTree(curr->left,depth+1);
     rec[depth]=0;
@@ -166,10 +166,17 @@ int main()
     tree.print_tree();
 
     BS_tree<int>::node* a = tree.search(3);
-    std::cout << "min is : " << tree.minimum() << std::endl;
-    std::cout << "max is : " << tree.maximum() << std::endl;
-    // std::cout << "successor of " << 14 << " is : " << tree.successor(14) << std::endl;
-    // std::cout << "predecessor of " << 14 << " is : " << tree.predecessor(14) << std::endl;
+    BS_tree<int>::node* min = tree.most_left();
+    BS_tree<int>::node* max = tree.most_right();
+    std::cout << "min is : " << min->key << std::endl;
+    std::cout << "max is : " << max->key << std::endl;
+
+    BS_tree<int>::node* succ = tree.successor(23);
+    BS_tree<int>::node* pred = tree.predecessor(23);
+    if (succ)
+        std::cout << "successor of " << 23 << " is : " << succ->key << std::endl;
+    if (pred)
+        std::cout << "predecessor of " << 23 << " is : " << pred->key << std::endl;
 
     return (0);
 }
