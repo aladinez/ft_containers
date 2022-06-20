@@ -70,6 +70,37 @@ class BS_tree
                 x = x->right;
             return x->key;
         }
+        value_type successor(value_type new_key)
+        {
+            node* x = search(new_key);
+            if (x)
+            {   
+                if (x->right)
+                    return _minimum(x->right);
+                node* y = x->p;
+                while (y && x == y->right)
+                {
+                    x = y;
+                    y = y->p;
+                }
+                return y->key;
+            }
+            return 0;
+        }
+        value_type predecessor(value_type new_key)
+        {
+            node* x = search(new_key);
+
+            if (x->left)
+                return _maximum(x->left);
+            node* y = x->p;
+            while (y && x == y->left)
+            {
+                x = y;
+                y = y->p;
+            }
+            return y->key;
+        }
     private:
         node* _root;
         void _print(node* root)
@@ -80,6 +111,18 @@ class BS_tree
                 std::cout << root->key << std::endl;
                 _print(root->right);
             }
+        }
+        value_type _minimum(node* x)
+        {
+            while (x->left)
+                x = x->left;
+            return x->key;
+        }
+        value_type _maximum(node* x)
+        {
+            while (x->right)
+                x = x->right;
+            return x->key;
         }
 };
 
@@ -96,6 +139,9 @@ int main()
     BS_tree<int>::node* a = tree.search(3);
     std::cout << "min is : " << tree.minimum() << std::endl;
     std::cout << "max is : " << tree.maximum() << std::endl;
+    std::cout << "successor of " << 3 << " is : " << tree.successor(3) << std::endl;
+    std::cout << "predecessor of " << 14 << " is : " << tree.predecessor(14) << std::endl;
+
 
     return (0);
 }
