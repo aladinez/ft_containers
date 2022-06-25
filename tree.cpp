@@ -19,7 +19,7 @@ class BS_tree
         BS_tree (): _root() {}
         void insert(value_type new_key)
         {
-            node* y = nullptr;
+            node* y = NULL;
             node* x = _root;
             while (x)
             {
@@ -34,7 +34,7 @@ class BS_tree
             node* z = new node; //new node to insert
             z->key = new_key;
             z->p = y;
-            z->left = z->right = nullptr;
+            z->left = z->right = NULL;
             if (!y)
                 _root = z; // empty tree;
             else if (z->key < y->key)
@@ -103,7 +103,6 @@ class BS_tree
             }
             return x;
         }
-
         void remove(node* z)
         {
             if (z)
@@ -129,6 +128,34 @@ class BS_tree
             }
         }
 
+        node* remove(int key)
+        {
+            node* z = search(key);
+            if (z)
+            {
+                std::cout << z << std::endl;
+                if (!z->left)
+                    _transplant(z, z->right);
+                else if (!z->right)
+                    _transplant(z, z->left);
+                else
+                {
+                    node* y = _most_left(z->right); //successor of z;
+                    if (y->p != z)
+                    {
+                        _transplant(y, y->right);
+                        y->right = z->right;
+                        y->right->p = y;
+                    }
+                    _transplant(z, y);
+                    y->left = z->left;
+                    y->left->p = y;
+                }
+                delete z;
+                // z = NULL;
+            }
+        }
+     
         void print_tree()
         {
             printTree(_root);
@@ -156,6 +183,18 @@ class BS_tree
                 x = x->right;
             return x;
         }
+        // void _transplant(node* u, node* v)
+        // {
+
+        //     if (!u->p)
+        //         _root = v;
+        //     else if (u == u->p->left)
+        //         u->p->left = v;
+        //     else
+        //         u->p->right = v;
+        //     if (v)
+        //         v->p = u->p;
+        // }
         void _transplant(node* u, node* v)
         {
             if (v && u)
@@ -220,10 +259,14 @@ int main()
         std::cout << "successor of " << 23 << " is : " << succ->key << std::endl;
     if (pred)
         std::cout << "predecessor of " << 23 << " is : " << pred->key << std::endl;
-    tree.remove(pred);
+    std::cout << pred << std::endl;
     tree.remove(succ);
+    std::cout << pred << std::endl;
+    // tree.remove(succ);
+
 
     tree.print_tree();
+    // tree.print();
 
 
 
