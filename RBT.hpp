@@ -13,7 +13,8 @@ namespace ft
         Node* p;
         Node* left;
         Node* right;
-        Node(): left(NULL), right(NULL), p(NULL) {}
+        Node(Node* l = NULL, Node* r = NULL, Node* p = NULL, bool c = BLACK)
+        : left(l), right(r), p(p), color(c) {}
     };
     // template <class T>
     // struct Node<T>* _NIL = new Node;
@@ -25,12 +26,12 @@ namespace ft
         public:
             typedef Node<T>     node;
             typedef T           value_type;
-            RB_tree (): _root() {}
+            RB_tree (): _root(), _NIL(new node), {}
             void left_rotate(node* x)
             {
                 node* y = x->right;
                 x->right = y->left;
-                if (y->left != NULL)
+                if (y->left != _NIL)
                     y->left->p = x;
                 y->p = x->p;
                 if (x->p == NULL)
@@ -44,10 +45,8 @@ namespace ft
             }
             node* _newNode(value_type key)
             {
-                node* z = new node;
-                z->color = RED;
+                node* z = new node(_NIL, _NIL, _NIL, RED);
                 z->key = key;
-                z->left = z->p = z->right = NULL;
                 return z;
             }
             node* insert(value_type key)
