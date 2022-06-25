@@ -42,6 +42,7 @@ class BS_tree
             else
                 y->right = z;
         }
+        
         void print() {_print(_root);}
         node* search(value_type new_key)
         {
@@ -266,6 +267,8 @@ int main()
 
 
     tree.print_tree();
+    tree.print_tree();
+    tree.left_rotate(pred);
     // tree.print();
 
 
