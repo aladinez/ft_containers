@@ -14,7 +14,7 @@ namespace ft
         Node* left;
         Node* right;
         Node(Node* l = NULL, Node* r = NULL, Node* p = NULL, bool c = BLACK)
-        : left(l), right(r), p(p), color(c) {}
+        : left(l), right(r), p(p), color(c), key() {}
     };
 
     template <class T>
@@ -113,7 +113,7 @@ namespace ft
                         }
                         else 
                         {
-                            if (z = z->p->right)
+                            if (z == z->p->right)
                             {
                                 z = z->p;
                                 left_rotate(z);
@@ -135,7 +135,7 @@ namespace ft
                         }
                         else
                         {
-                            if (z = z->p->left)
+                            if (z == z->p->left)
                             {
                                 z = z->p;
                                 right_rotate(z);
@@ -148,6 +148,33 @@ namespace ft
                 }
                 _root->color = BLACK;
             }
+
+            // void remove(value_type key)
+            // {
+            //     node* z = search(key);
+            //     node* y = z;
+            //     node* x = _NIL;
+            //     bool o_color = y->color;
+            //     if (z->left == _NIL) // z has only right child
+            //     {
+            //         x = z->right;
+            //         _transplant(z, z->right);
+            //     }
+            //     else if (z->right == _NIL) // z has only left child
+            //     {
+            //         x = z->left;
+            //         _transplant(z, z->left);
+            //     }
+            //     else
+            //     {
+            //         y = _most_left(z->right); // successor
+            //         o_color = y->color;
+            //         x = y->right;
+            //         if ()
+            //     }
+
+
+            // }
             void print_tree()
             {
                 printTree(_root);
@@ -155,6 +182,28 @@ namespace ft
         private:
             node* _root;
             node* _NIL;
+              node* _most_left(node* x)
+            {
+                while (x->left)
+                    x = x->left;
+                return x;
+            }
+            node* _most_right(node* x)
+            {
+                while (x->right)
+                    x = x->right;
+                return x;
+            }
+            void _transplant(node* u, node* v)
+            {
+                if (u->p == _NIL)
+                    _root = v;
+                else if (u == u->p->left)
+                    u->p->left = v;
+                else
+                    u->p->right = v;
+                v->p = u->p;
+            }
     
     };
     int rec[1000006];
