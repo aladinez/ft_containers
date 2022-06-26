@@ -74,7 +74,7 @@ namespace ft
                 z->key = key;
                 return z;
             }
-            node* insert(value_type key)
+            void insert(value_type key)
             {
                 node* z = _newNode(key);
                 node* y = _NIL;
@@ -94,7 +94,59 @@ namespace ft
                     y->left = z;
                 else 
                     y->right = z;
-                return z;
+                insert_fixup(z);
+            }
+
+            void insert_fixup(node* z)
+            {
+                while (z->p->color == RED)
+                {
+                    if (z->p == z->p->p->left)
+                    {
+                        node* y = z->p->p->right;
+                        if (y->color == RED)
+                        {
+                            z->p->color = BLACK;
+                            y->color = BLACK;
+                            z->p->p->color = RED;
+                            z = z->p->p;
+                        }
+                        else 
+                        {
+                            if (z = z->p->right)
+                            {
+                                z = z->p;
+                                left_rotate(z);
+                            }
+                            z->p->color = BLACK;
+                            z->p->p->color = RED;
+                            right_rotate(z->p->p);
+                        }
+                    }
+                    else
+                    {
+                        node* y = z->p->p->left;
+                        if (y->color == RED)
+                        {
+                            z->p->color = BLACK;
+                            y->color = BLACK;
+                            z->p->p->color = RED;
+                            z = z->p->p;
+                        }
+                        else
+                        {
+                            if (z = z->p->left)
+                            {
+                                z = z->p;
+                                right_rotate(z);
+                            }
+                            z->p->color = BLACK;
+                            z->p->p->color = RED;
+                            left_rotate(z->p->p);
+                        }
+                    }
+                }
+                _root->color = BLACK;
             }
             void print_tree()
             {
