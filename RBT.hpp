@@ -99,26 +99,26 @@ namespace ft
 
             void insert_fixup(node* z)
             {
-                while (z->p->color == RED)
+                while (z->p->color == RED) // violation cuz both z and z.p are red
                 {
                     if (z->p == z->p->p->left)
                     {
-                        node* y = z->p->p->right;
-                        if (y->color == RED)
+                        node* y = z->p->p->right; // y is uncle of z
+                        if (y->color == RED) // uncle is red, recolor z.p and y
                         {
                             z->p->color = BLACK;
                             y->color = BLACK;
-                            z->p->p->color = RED;
-                            z = z->p->p;
+                            z->p->p->color = RED; //recolor z.p.p and recheck.
+                            z = z->p->p; // next loop z will be z.p.p
                         }
-                        else 
+                        else // uncle is black => rotate and recolor
                         {
-                            if (z == z->p->right)
+                            if (z == z->p->right) // z in the right of its parent, so we will left rotate z.p
                             {
                                 z = z->p;
                                 left_rotate(z);
                             }
-                            z->p->color = BLACK;
+                            z->p->color = BLACK; // loop will stop after this.
                             z->p->p->color = RED;
                             right_rotate(z->p->p);
                         }
