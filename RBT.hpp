@@ -27,7 +27,7 @@ namespace ft
             node* search(value_type new_key)
             {
                 node* x = _root;
-                while (x && x->key != new_key)
+                while (x != _NIL && x->key != new_key)
                 {
                     if (x->key < new_key)
                         x = x->right;
@@ -50,6 +50,22 @@ namespace ft
                 else
                     x->p->right = y;
                 y->left = x;
+                x->p = y;
+            }
+            void right_rotate(node* x)
+            {
+                node* y = x->left;
+                x->left = y->right;
+                if (y->right != _NIL)
+                    y->right->p = x;
+                y->p = x->p;
+                if (x->p == _NIL)
+                    _root = y;
+                else if (x == x->p->left)
+                    x->p->left = y;
+                else
+                    x->p->right = y;
+                y->right = x;
                 x->p = y;
             }
             node* _newNode(value_type key)
