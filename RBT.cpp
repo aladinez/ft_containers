@@ -12,7 +12,9 @@ int main()
     ft::Node<int>* zero = tree.insert(0);
     tree.insert(99);
     tree.insert(4);
-    // tree.print();
     tree.print_tree();
-    tree.left_rotate(zero);
+    ft::Node<int>* s = tree.search(6);
+    std::cout << s->key << std::endl;
+    tree.left_rotate(s);
+    tree.print_tree();
 }

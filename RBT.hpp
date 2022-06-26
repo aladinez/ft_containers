@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #define RED 0
-#define BLCAK 1
+#define BLACK 1
 
 namespace ft
 {
@@ -16,9 +16,6 @@ namespace ft
         Node(Node* l = NULL, Node* r = NULL, Node* p = NULL, bool c = BLACK)
         : left(l), right(r), p(p), color(c) {}
     };
-    // template <class T>
-    // struct Node<T>* _NIL = new Node;
-
 
     template <class T>
     class RB_tree
@@ -26,7 +23,19 @@ namespace ft
         public:
             typedef Node<T>     node;
             typedef T           value_type;
-            RB_tree (): _root(), _NIL(new node), {}
+            RB_tree (): _NIL(new node) {_root = _NIL;}
+            node* search(value_type new_key)
+            {
+                node* x = _root;
+                while (x && x->key != new_key)
+                {
+                    if (x->key < new_key)
+                        x = x->right;
+                    else    
+                        x = x->left;
+                }
+                return x;
+            }
             void left_rotate(node* x)
             {
                 node* y = x->right;
@@ -34,7 +43,7 @@ namespace ft
                 if (y->left != _NIL)
                     y->left->p = x;
                 y->p = x->p;
-                if (x->p == NULL)
+                if (x->p == _NIL)
                     _root = y;
                 else if (x == x->p->left)
                     x->p->left = y;
@@ -52,9 +61,9 @@ namespace ft
             node* insert(value_type key)
             {
                 node* z = _newNode(key);
-                node* y = NULL;
+                node* y = _NIL;
                 node* x = _root;
-                while (x != NULL)
+                while (x != _NIL)
                 {
                     y = x;
                     if (z->key < x->key)
@@ -63,7 +72,7 @@ namespace ft
                         x = x->right;
                 }
                 z->p = y;
-                if (y == NULL)
+                if (y == _NIL)
                     _root = z;
                 else if (z->key < y->key)
                     y->left = z;
