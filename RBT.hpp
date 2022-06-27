@@ -149,32 +149,44 @@ namespace ft
                 _root->color = BLACK;
             }
 
-            // void remove(value_type key)
-            // {
-            //     node* z = search(key);
-            //     node* y = z;
-            //     node* x = _NIL;
-            //     bool o_color = y->color;
-            //     if (z->left == _NIL) // z has only right child
-            //     {
-            //         x = z->right;
-            //         _transplant(z, z->right);
-            //     }
-            //     else if (z->right == _NIL) // z has only left child
-            //     {
-            //         x = z->left;
-            //         _transplant(z, z->left);
-            //     }
-            //     else
-            //     {
-            //         y = _most_left(z->right); // successor
-            //         o_color = y->color;
-            //         x = y->right;
-            //         if ()
-            //     }
+            void remove(value_type key)
+            {
+                node* z = search(key);
+                node* y = z;
+                node* x = _NIL;
+                bool o_color = y->color;
+                if (z->left == _NIL) // z has only right child
+                {
+                    x = z->right;
+                    _transplant(z, z->right);
+                }
+                else if (z->right == _NIL) // z has only left child
+                {
+                    x = z->left;
+                    _transplant(z, z->left);
+                }
+                else
+                {
+                    y = _most_left(z->right); // successor of z
+                    o_color = y->color;
+                    x = y->right;
+                    if (y->p == z)
+                        x->p = y;
+                    else
+                    {
+                        _transplant(y, y->right);
+                        y->right = z->right;
+                        y->right->p = y;
+                    }
+                    _transplant(z, y);
+                    y->left = z->left;
+                    y->left->p = y;
+                    y->color = z->color;
+                }
+                // if (o_color == BLACK)
+                    // remove_fixup();
 
-
-            // }
+            }
             void print_tree()
             {
                 printTree(_root);
@@ -184,13 +196,13 @@ namespace ft
             node* _NIL;
               node* _most_left(node* x)
             {
-                while (x->left)
+                while (x->left != _NIL)
                     x = x->left;
                 return x;
             }
             node* _most_right(node* x)
             {
-                while (x->right)
+                while (x->right != _NIL)
                     x = x->right;
                 return x;
             }
