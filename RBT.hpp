@@ -27,7 +27,12 @@ namespace ft
         public:
             typedef Node<T>     node;
             typedef T           value_type;
-            RB_tree (): _NIL(new node) {_root = _NIL;}
+            RB_tree (): _NIL(new node) {
+                _root = _NIL;
+                // _root->left = _NIL;
+                // _root->right = _NIL;
+                // _root->p = _NIL;
+            }
             node* search(value_type new_key)
             {
                 node* x = _root;
@@ -156,40 +161,114 @@ namespace ft
             void remove(value_type key)
             {
                 node* z = search(key);
-                node* y = z;
-                node* x = _NIL;
-                bool o_color = y->color;
-                if (z->left == _NIL) // z has only right child
+                if (z != _NIL)
                 {
-                    x = z->right;
-                    _transplant(z, z->right);
-                }
-                else if (z->right == _NIL) // z has only left child
-                {
-                    x = z->left;
-                    _transplant(z, z->left);
-                }
-                else
-                {
-                    y = _most_left(z->right); // successor of z
-                    o_color = y->color;
-                    x = y->right;
-                    if (y->p == z)
-                        x->p = y;
+                    node* y = z;
+                    node* x = _NIL;
+                    bool o_color = y->color;
+                    if (z->left == _NIL) // z has only right child
+                    {
+                        x = z->right;
+                        _transplant(z, z->right);
+                    }
+                    else if (z->right == _NIL) // z has only left child
+                    {
+                        x = z->left;
+                        _transplant(z, z->left);
+                    }
                     else
                     {
-                        _transplant(y, y->right);
-                        y->right = z->right;
-                        y->right->p = y;
+                        y = _most_left(z->right); // successor of z
+                        o_color = y->color;
+                        x = y->right;
+                        if (y->p == z)
+                            x->p = y;
+                        else
+                        {
+                            _transplant(y, y->right);
+                            y->right = z->right;
+                            y->right->p = y;
+                        }
+                        _transplant(z, y);
+                        y->left = z->left;
+                        y->left->p = y;
+                        y->color = z->color;
                     }
-                    _transplant(z, y);
-                    y->left = z->left;
-                    y->left->p = y;
-                    y->color = z->color;
+                    delete z;
+                    if (o_color == BLACK)
+                        remove_fixup(x);
                 }
-                // if (o_color == BLACK)
-                    // remove_fixup();
 
+            }
+            void remove_fixup(node* x)
+            {
+                node* w;
+                while (x != _root && x->color == BLACK)
+                {
+                    if (x == x->p->left) 
+                    {
+                        w = x->p->right; // z is x's sibling
+                        if (w->color == RED) // case 1
+                        {
+                            w->color = BLACK;
+                            x->p->color = RED;
+                            left_rotate(x->p);
+                            w = x->p->right;
+                        }
+                        if (w->left->color == BLACK && w->right->color == BLACK) // case 2
+                        {
+                            w->color = RED;
+                            x = x->p;
+                        }
+                        else // case 3 and 4
+                        {
+                            if (w->right->color == BLACK) // case 3
+                            {
+                                w->left->color = BLACK;
+                                w->color = RED;
+                                right_rotate(w);
+                                w = x->p->right;
+                            }
+                            w->color = x->p->color;
+                            x->p->color = BLACK;
+                            w->right->color = BLACK;
+                            left_rotate(x->p);
+                            x = _root; // to end the loop.
+                        }
+                    }
+                    else
+                    {
+                        w = x->p->left; // z is x's sibling
+                        if (w->color == RED) // case 1
+                        {
+                            w->color = BLACK;
+                            x->p->color = RED;
+                            right_rotate(x->p);
+                            w = x->p->left;
+                        }
+                        if (w->right->color == BLACK && w->left->color == BLACK) // case 2
+                        {
+                            w->color = RED;
+                            x = x->p;
+                        }
+                        else // case 3 and 4
+                        {
+                            if (w->left->color = BLACK) // case 3
+                            {
+                                w->right->color = BLACK;
+                                w->color = RED;
+                                left_rotate(w);
+                                w = x->p->left;
+                            }
+                            w->color = x->p->color;
+                            x->p->color = BLACK;
+                            w->left->color = BLACK;
+                            right_rotate(x->p);
+                            x = _root; // to end the loop.
+                        }
+                    }
+                }
+                x->color = BLACK;
             }
             void print_tree()
             {
