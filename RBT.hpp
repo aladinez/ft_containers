@@ -4,6 +4,10 @@
 #define RED 0
 #define BLACK 1
 
+#define _RED     "\x1b[31m"
+#define BLUE    "\x1b[34m"
+#define RESET   "\x1b[0m"
+
 namespace ft
 {
     template <typename T>
@@ -216,7 +220,6 @@ namespace ft
                     u->p->right = v;
                 v->p = u->p;
             }
-    
     };
     int rec[1000006];
     template <typename T>
@@ -232,7 +235,10 @@ namespace ft
             else
                 printf("%s   ",rec[i]?"\u23B8":"  ");
         }
-        printf("%d\n", curr->key);
+        if (curr->color == BLACK)
+            printf(BLUE "%d" RESET "\n", curr->key);
+        else
+            printf(_RED "%d" RESET "\n", curr->key);
         rec[depth]=1;
         printTree(curr->left,depth+1);
         rec[depth]=0;

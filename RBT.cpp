@@ -15,7 +15,7 @@ int main()
     tree.print_tree();
     tree.insert(4);
     tree.print_tree();
-    tree.remove(11);
+    tree.remove(7);
     tree.print_tree();
     // ft::Node<int>* s = tree.search(23);
     // std::cout << s->key << std::endl;
