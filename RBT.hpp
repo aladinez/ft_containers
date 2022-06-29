@@ -253,7 +253,7 @@ namespace ft
                         }
                         else // case 3 and 4
                         {
-                            if (w->left->color = BLACK) // case 3
+                            if (w->left->color == BLACK) // case 3
                             {
                                 w->right->color = BLACK;
                                 w->color = RED;
