@@ -29,10 +29,12 @@ namespace ft
 			RBT _tree;
 			size_type _size;
 			value_compare val_comp;
+			Allocator _alloc;
+	
 		
 		public:
 			explicit map(const Compare& comp = Compare(),
-                     	const Allocator& alloc= Allocator()): val_comp(comp), _tree(val_comp, alloc), _size() {}
+                     	const Allocator& alloc= Allocator()): val_comp(comp), _alloc(alloc), _tree(val_comp, alloc), _size() {}
 			void insert(value_type x)
 			{
 				_tree.insert(x);

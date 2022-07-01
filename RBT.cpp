@@ -16,8 +16,9 @@ int main()
     ft::make_pair(10, "alae");
     ft::make_pair(10, "alae");
     
-    // ft::pair<int, std::string> p = ft::make_pair(10, "alae");
-    // tree.insert(p);
+    ft::pair<int, std::string> p = ft::make_pair(10, "alae");
+    tree.insert(p);
+    tree.print();
 
     // ft::RB_tree<int> tree;
     // tree.insert(11);

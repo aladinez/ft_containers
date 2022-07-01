@@ -21,8 +21,8 @@ namespace ft
 		Node* p;
 		Node* left;
 		Node* right;
-		Node(Node* l = NULL, Node* r = NULL, Node* p = NULL, bool c = BLACK)
-		: left(l), right(r), p(p), color(c), key() {}
+		Node(Node* l = NULL, Node* r = NULL, Node* p = NULL, bool c = BLACK, T k = T())
+		: left(l), right(r), p(p), color(c), key(k) {}
 	};
 
 	template <class Pair, class Compare, class Allocator = std::allocator<Pair> >
@@ -31,6 +31,7 @@ namespace ft
 		public:
 			typedef Node<Pair>		node;
 			typedef Pair				value_type;
+			typedef typename Allocator::template rebind<node>::other _Allocator;
 			
 			// RB_tree (): _NIL(new node), _comp() {_root = _NIL;}
 			RB_tree(const Compare& comp = Compare(), const Allocator& alloc = Allocator())
@@ -87,8 +88,11 @@ namespace ft
 			}
 			node* _newNode(value_type key)
 			{
-				node* z = new node(_NIL, _NIL, _NIL, RED);
-				z->key = key;
+
+				// node* z = new node(_NIL, _NIL, _NIL, RED);
+				node* z = _alloc.allocate(1);
+				_alloc.construct(z, node(_NIL, _NIL, _NIL, RED, key));
+				// z->key = key;
 				return z;
 			}
 			void insert(value_type key)
@@ -288,7 +292,7 @@ namespace ft
 			node* _root;
 			node* _NIL;
 			Compare _comp;
-			Allocator _alloc;
+			_Allocator _alloc;
 			
 
 			node* _most_left(node* x)
@@ -328,10 +332,14 @@ namespace ft
 			else
 				printf("%s   ",rec[i]?"\u23B8":"  ");
 		}
+		// if (curr->color == BLACK) // to print mapped type.
+		// 	printf(BLUE "%s" RESET "\n", curr->key.second.c_str());
+		// else
+		// 	printf(_RED "%s" RESET "\n", curr->key.second.c_str());
 		if (curr->color == BLACK)
-			printf(BLUE "%d" RESET "\n", curr->key);
+			printf(BLUE "%s" RESET "\n", curr->key.second.c_str());
 		else
-			printf(_RED "%d" RESET "\n", curr->key);
+			printf(_RED "%s" RESET "\n", curr->key.second.c_str());
 		rec[depth]=1;
 		printTree(curr->left,depth+1);
 		rec[depth]=0;
