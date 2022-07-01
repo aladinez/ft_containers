@@ -41,6 +41,20 @@ namespace ft
 				_alloc.construct(_NIL, node());
 				_root = _NIL;
 			}
+			//copy constructor
+			RB_tree (const RB_tree& rbt): _alloc(rbt._alloc), _comp(rbt._comp) {
+				_NIL = _alloc.allocate(1);
+				_alloc.construct(_NIL, node());
+				_root = _makeCopy(rbt._root, rbt._NIL);
+			}
+			// Copy assignment
+			RB_tree& operator= (const RB_tree& rbt)
+			{
+				clear(_root);
+				_comp = rbt._comp;
+				_root = _makeCopy(rbt._root, rbt._NIL);
+				return *this;
+			}
 			node* search(value_type new_key)
 			{
 				node* x = _root;
@@ -294,6 +308,34 @@ namespace ft
 			Compare _comp;
 			_Allocator _alloc;
 			
+			void delete_node(node* x)
+			{
+				_alloc.destroy(x);
+				_alloc.deallocate(x, 1);
+			}
+
+			void clear(node* x)
+			{
+				if (x == _NIL)
+					return;
+				clear(x->left);
+				clear(x->right);
+				delete_node(x);
+			}
+
+			node* _makeCopy(node* x, node* nil)
+			{
+				if (x == nil)
+					return _NIL;
+				node* new_node = _alloc.allocate(1);
+				_alloc.construct(new_node, node(_makeCopy(x->left, nil), _makeCopy(x->right, nil), _NIL, x->color, x->key));
+				if (new_node->left != _NIL)
+					new_node->left->p = new_node;
+				if (new_node->right != _NIL)
+					new_node->right->p = new_node;
+				return new_node;
+			}
+	
 
 			node* _most_left(node* x)
 			{
@@ -337,9 +379,9 @@ namespace ft
 		// else
 		// 	printf(_RED "%s" RESET "\n", curr->key.second.c_str());
 		if (curr->color == BLACK)
-			printf(BLUE "%s" RESET "\n", curr->key.second.c_str());
+			printf(BLUE "%d" RESET "\n", curr->key.first);
 		else
-			printf(_RED "%s" RESET "\n", curr->key.second.c_str());
+			printf(_RED "%d" RESET "\n", curr->key.first);
 		rec[depth]=1;
 		printTree(curr->left,depth+1);
 		rec[depth]=0;

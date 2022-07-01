@@ -8,17 +8,22 @@ int main()
 {
 
     ft::map<int, std::string> tree;
-    ft::make_pair(10, "alae");
-    ft::make_pair(10, "alae");
-    ft::make_pair(10, "alae");
-    ft::make_pair(10, "alae");
-    ft::make_pair(10, "alae");
-    ft::make_pair(10, "alae");
-    ft::make_pair(10, "alae");
+
     
     ft::pair<int, std::string> p = ft::make_pair(10, "alae");
     tree.insert(p);
     tree.print();
+
+    ft::map<int, std::string> tree2;
+    tree2 = tree;
+    tree2.print();
+
+    p = ft::make_pair(15, "alae");
+    tree.insert(p);
+    tree.print();
+    tree2.print();
+
+
 
     // ft::RB_tree<int> tree;
     // tree.insert(11);
