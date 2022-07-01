@@ -1,4 +1,4 @@
-
+#pragma once
 
 namespace ft {
     template <class T1, class T2>
@@ -51,4 +51,4 @@ namespace ft {
     {
         return ( pair<T1,T2>(x,y) );
     }
-};
+}
