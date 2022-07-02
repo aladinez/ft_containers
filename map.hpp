@@ -97,8 +97,22 @@ namespace ft
 				n = _tree.search(x);
 				return ft::make_pair(iterator(n, _tree.get_nil(), _tree.get_root()), true);
 			}
-			// iterator insert(iterator position, const value_type& x); template <class InputIterator>
-			// 		void insert(InputIterator first, InputIterator last);
+			iterator insert(iterator position, const value_type& x) // position : used as a suggestion as to where to start the search
+			{
+				Node<value_type>* n = _tree.search(x);
+				if (n != _tree.get_nil())
+					return iterator(n, _tree.get_nil(), _tree.get_root());
+				_tree.insert(x);
+				n = _tree.search(x);
+				return iterator(n, _tree.get_nil(), _tree.get_root());
+
+			}
+			template <class InputIterator>
+			void insert(InputIterator first, InputIterator last)
+			{
+				for (; first != last; first++)
+					_tree.insert(*first);
+			}
 			// void erase(iterator position);
 			// size_type erase(const key_type& x);
 			// void erase(iterator first, iterator last); void swap(map<Key,T,Compare,Allocator>&);
@@ -109,6 +123,11 @@ namespace ft
 			// {
 			// 	_tree.insert(x);
 			// }
+			iterator find (const key_type& k)
+			{
+				Node<value_type>* n = _tree.search(ft::make_pair(k, T()));
+				return iterator(n, _tree.get_nil(), _tree.get_root());
+			}
 			void print()
 			{
 				_tree.print_tree();

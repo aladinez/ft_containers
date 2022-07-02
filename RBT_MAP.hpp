@@ -412,9 +412,9 @@ namespace ft
 		// else
 		// 	printf(_RED "%s" RESET "\n", curr->key.second.c_str());
 		if (curr->color == BLACK)
-			printf(BLUE "%d" RESET "\n", curr->key.first);
+			printf(BLUE "%c" RESET "\n", curr->key.first);
 		else
-			printf(_RED "%d" RESET "\n", curr->key.first);
+			printf(_RED "%c" RESET "\n", curr->key.first);
 		rec[depth]=1;
 		printTree(curr->left,depth+1);
 		rec[depth]=0;
