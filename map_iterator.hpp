@@ -37,8 +37,8 @@ namespace ft
 			bool operator== (iterator const& it){return _ptr == it._ptr;}
             bool operator!= (iterator const& it){return _ptr != it._ptr;}
 
-			node_val& operator* () const                    {return *_ptr;}
-			node_ptr  operator->() const                    {return _ptr;}
+			value_type& operator* () const                    {return _ptr->key;}
+			pointer  operator->() const                    {return &(_ptr->key);}
 
 			iterator  operator++(int) /* postfix */        
 			{
@@ -94,12 +94,12 @@ namespace ft
 		}
 		node_ptr successor(node_ptr x)
         {
-            if (x)
+            if (x != _NIL)
             {   
-                if (x->right)
+                if (x->right != _NIL)
                     return _most_left(x->right);
                 node_ptr y = x->p;
-                while (y && x == y->right)
+                while (y != _NIL && x == y->right)
                 {
                     x = y;
                     y = y->p;
@@ -110,12 +110,12 @@ namespace ft
         }
         node_ptr predecessor(node_ptr x)
         {
-            if (x)
+            if (x != _NIL)
             {
-                if (x->left)
+                if (x->left != _NIL)
                     return _most_right(x->left);
                 node_ptr y = x->p;
-                while (y && x == y->left)
+                while (y != _NIL && x == y->left)
                 {
                     x = y;
                     y = y->p;

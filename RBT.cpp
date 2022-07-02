@@ -14,19 +14,19 @@ int main()
     tree.insert(p);
     tree.print();
 
-    ft::map<int, std::string> tree2;
-    tree2 = tree;
-    tree2.print();
+    // ft::map<int, std::string> tree2;
+    // tree2 = tree;
+    // tree2.print();
 
     p = ft::make_pair(15, "alae");
     tree.insert(p);
-    tree.print();
-    tree2.print();
+    // tree.print();
+    // tree2.print();
 
     ft::map<int, std::string>::iterator it = tree.begin();
-    std::cout << (*it).key.first << std::endl;
+    std::cout << it->first << std::endl;
     --it;
-    std::cout << (*it).key.first << std::endl;
+    std::cout << it->first << std::endl;
 
 
 
