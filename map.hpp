@@ -43,11 +43,21 @@ namespace ft
 				const allocator_type& alloc = allocator_type());
 			map (const map& x): val_comp(x.val_comp), _alloc(x._alloc), _size(x._size), _tree(x._tree) {}
 
+			// iterators:
 			iterator begin()
 			{
 				return iterator(_tree.maximum(), _tree.get_nil(), _tree.get_root());
 			}
 			// const_iterator begin() const;
+			iterator end()
+			{
+				return iterator(_tree.get_nil(), _tree.get_nil(), _tree.get_root());
+			}
+			// const_iterator end()const;
+			reverse_iterator rbegin(){return reverse_iterator(end());}
+			// const_reverse_iterator rbegin() const{return const_reverse_iterator(end());}
+			reverse_iterator rend(){return reverse_iterator(begin());}
+			// const_reverse_iterator rend() const{return const_reverse_iterator(begin());}
 
 			void insert(value_type x)
 			{
