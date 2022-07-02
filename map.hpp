@@ -35,15 +35,23 @@ namespace ft
 	
 		
 		public:
+			///---------------------- constructor/Copy/destructor :
 			explicit map(const Compare& comp = Compare(),
                      	const Allocator& alloc= Allocator()): val_comp(comp), _alloc(alloc), _tree(val_comp, _alloc), _size() {}
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last,
 				const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type());
+				const allocator_type& alloc = allocator_type()) : val_comp(comp), _alloc(alloc), _tree(val_comp, _alloc), _size()
+			{
+				for (;first != last; first++)
+					_tree.insert(*first);
+				_size = _tree.size();
+			}
 			map (const map& x): val_comp(x.val_comp), _alloc(x._alloc), _size(x._size), _tree(x._tree) {}
+			~map(){}
+			//-----------------------------------------------------------/
 
-			// iterators:
+			///---------------------- iterators:
 			iterator begin()
 			{
 				return iterator(_tree.maximum(), _tree.get_nil(), _tree.get_root());
@@ -58,11 +66,49 @@ namespace ft
 			// const_reverse_iterator rbegin() const{return const_reverse_iterator(end());}
 			reverse_iterator rend(){return reverse_iterator(begin());}
 			// const_reverse_iterator rend() const{return const_reverse_iterator(begin());}
+			//-----------------------------------------------------------/
 
-			void insert(value_type x)
+			// ------------ capacity:
+			bool empty()const {return _tree.size() == 0;}
+			size_type size() const {return _tree.size();}
+			size_type max_size() const {return _alloc.max_size();}
+			//-----------------------------------------------------------/
+
+			// ------------ element access:
+			T& operator[](const key_type& x)
 			{
-				_tree.insert(x);
+				// find x, if not insert it with default mapped_type T, and return it's second.
+				Node<value_type>* n = _tree.search(ft::make_pair(x, T()));
+				if (n != _tree.get_nil())
+					return (n->key).second;
+				_tree.insert(ft::make_pair(x, T()));
+				n = _tree.search(ft::make_pair(x, T()));
+				return (n->key).second;
 			}
+			//-----------------------------------------------------------/
+
+			// ------------  modifiers:
+			pair<iterator, bool> insert(const value_type& x)
+			{
+				Node<value_type>* n = _tree.search(x);
+				if (n != _tree.get_nil())
+					return ft::make_pair(iterator(n, _tree.get_nil(), _tree.get_root()), false);
+				_tree.insert(x);
+				n = _tree.search(x);
+				return ft::make_pair(iterator(n, _tree.get_nil(), _tree.get_root()), true);
+			}
+			// iterator insert(iterator position, const value_type& x); template <class InputIterator>
+			// 		void insert(InputIterator first, InputIterator last);
+			// void erase(iterator position);
+			// size_type erase(const key_type& x);
+			// void erase(iterator first, iterator last); void swap(map<Key,T,Compare,Allocator>&);
+			// void clear();
+			//-----------------------------------------------------------/
+
+			// void insert(value_type x)
+			// {
+			// 	_tree.insert(x);
+			// }
 			void print()
 			{
 				_tree.print_tree();

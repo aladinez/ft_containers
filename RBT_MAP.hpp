@@ -31,11 +31,12 @@ namespace ft
 		public:
 			typedef Node<Pair>		node;
 			typedef Pair				value_type;
+			typedef typename Allocator::size_type			size_type;
 			typedef typename Allocator::template rebind<node>::other _Allocator;
 			
 			// RB_tree (): _NIL(new node), _comp() {_root = _NIL;}
 			RB_tree(const Compare& comp = Compare(), const Allocator& alloc = Allocator())
-			:_alloc(alloc), _comp(comp) 
+			:_alloc(alloc), _comp(comp), _size() 
 			{
 				_NIL = _alloc.allocate(1);
 				_alloc.construct(_NIL, node());
@@ -46,6 +47,7 @@ namespace ft
 				_NIL = _alloc.allocate(1);
 				_alloc.construct(_NIL, node());
 				_root = _makeCopy(rbt._root, rbt._NIL);
+				_size = rbt._size;
 			}
 			// Copy assignment
 			RB_tree& operator= (const RB_tree& rbt)
@@ -53,12 +55,14 @@ namespace ft
 				clear(_root);
 				_comp = rbt._comp;
 				_root = _makeCopy(rbt._root, rbt._NIL);
+				_size = rbt._size;
 				return *this;
 			}
 			node* search(value_type new_key)
 			{
 				node* x = _root;
-				while (x != _NIL && x->key != new_key) // TODO: COMPARE USING _comp
+				// while (x != _NIL && x->key != new_key) // TODO: COMPARE USING _comp
+				while (x != _NIL && (_comp(x->key, new_key) || _comp(new_key, x->key))) // TODO: COMPARE USING _comp
 				{
 					//if (x->key < new_key) 
 					if (_comp(x->key, new_key))
@@ -67,6 +71,21 @@ namespace ft
 						x = x->left;
 				}
 				return x;
+			}
+			//
+			value_type* val_search(value_type new_key)
+			{
+				node* x = _root;
+				// while (x != _NIL && x->key != new_key) // TODO: COMPARE USING _comp
+				while (x != _NIL && (_comp(x->key, new_key) || _comp(new_key, x->key))) // TODO: COMPARE USING _comp
+				{
+					//if (x->key < new_key) 
+					if (_comp(x->key, new_key))
+						x = x->right;
+					else    
+						x = x->left;
+				}
+				return &(x->key);
 			}
 			void left_rotate(node* x)
 			{
@@ -109,6 +128,20 @@ namespace ft
 				// z->key = key;
 				return z;
 			}
+			void delete_node(node* x)
+			{
+				_alloc.destroy(x);
+				_alloc.deallocate(x, 1);
+			}
+
+			void clear(node* x)
+			{
+				if (x == _NIL)
+					return;
+				clear(x->left);
+				clear(x->right);
+				delete_node(x);
+			}
 			void insert(value_type key)
 			{
 				node* z = _newNode(key);
@@ -132,6 +165,7 @@ namespace ft
 				else 
 					y->right = z;
 				insert_fixup(z);
+				_size++;
 			}
 
 			void insert_fixup(node* z)
@@ -222,11 +256,11 @@ namespace ft
 						y->left->p = y;
 						y->color = z->color;
 					}
-					delete z;
+					delete_node(z);
 					if (o_color == BLACK)
 						remove_fixup(x);
+					_size--;
 				}
-
 			}
 			void remove_fixup(node* x)
 			{
@@ -306,8 +340,9 @@ namespace ft
 			{
 				return _most_left(_root);
 			}
-			node* get_root(){return _root;}
-			node* get_nil(){return _NIL;}
+			node* get_root() {return _root;}
+			node* get_nil() {return _NIL;}
+			size_type size() const {return _size;}
 			void print_tree()
 			{
 				printTree(_root);
@@ -317,21 +352,9 @@ namespace ft
 			node* _NIL;
 			Compare _comp;
 			_Allocator _alloc;
+			size_type _size;
 			
-			void delete_node(node* x)
-			{
-				_alloc.destroy(x);
-				_alloc.deallocate(x, 1);
-			}
-
-			void clear(node* x)
-			{
-				if (x == _NIL)
-					return;
-				clear(x->left);
-				clear(x->right);
-				delete_node(x);
-			}
+			
 
 			node* _makeCopy(node* x, node* nil)
 			{
