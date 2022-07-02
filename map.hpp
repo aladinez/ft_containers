@@ -1,5 +1,7 @@
 #include <functional>
 #include "RBT_MAP.hpp"
+#include "map_iterator.hpp"
+#include "reverse_iterator.hpp"
 #include "pair.hpp"
 
 namespace ft
@@ -8,21 +10,21 @@ namespace ft
 			class Allocator = std::allocator<ft::pair<const Key, T> > >
 	class map {
 		public: // types:
-			typedef Key										key_type;
-			typedef T										mapped_type;
+			typedef Key											key_type;
+			typedef T											mapped_type;
 			typedef ft::pair<const Key, T>						value_type;
-			typedef Compare									key_compare;
-			typedef Allocator								allocator_type;
-			typedef typename Allocator::reference			reference;
-			typedef typename Allocator::const_reference		const_reference;
-			// typedef //										iterator;
-			// typedef // 										const_iterator;
+			typedef Compare										key_compare;
+			typedef Allocator									allocator_type;
+			typedef typename Allocator::reference				reference;
+			typedef typename Allocator::const_reference			const_reference;
+			typedef ft::iterator<value_type>					iterator;							
+			// typedef ft::iterator<const value_type>			const_iterator;	
 			typedef typename Allocator::size_type			size_type;
 			typedef std::ptrdiff_t                  		difference_type;
 			typedef typename Allocator::pointer				pointer;
 			typedef typename Allocator::const_pointer		const_pointer;
-			// typedef std::reverse_iterator<iterator>			reverse_iterator;
-			// typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef ft::reverse_iterator<iterator>			reverse_iterator;
+			// typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 		private:
 			class value_compare;
 			typedef ft::RB_tree<value_type, value_compare, Allocator>	RBT;
@@ -34,7 +36,19 @@ namespace ft
 		
 		public:
 			explicit map(const Compare& comp = Compare(),
-                     	const Allocator& alloc= Allocator()): val_comp(comp), _alloc(alloc), _tree(val_comp, alloc), _size() {}
+                     	const Allocator& alloc= Allocator()): val_comp(comp), _alloc(alloc), _tree(val_comp, _alloc), _size() {}
+			template <class InputIterator>
+			map (InputIterator first, InputIterator last,
+				const key_compare& comp = key_compare(),
+				const allocator_type& alloc = allocator_type());
+			map (const map& x): val_comp(x.val_comp), _alloc(x._alloc), _size(x._size), _tree(x._tree) {}
+
+			iterator begin()
+			{
+				return iterator(_tree.maximum(), _tree.get_nil(), _tree.get_root());
+			}
+			// const_iterator begin() const;
+
 			void insert(value_type x)
 			{
 				_tree.insert(x);

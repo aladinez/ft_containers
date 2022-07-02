@@ -298,6 +298,16 @@ namespace ft
 				}
 				x->color = BLACK;
 			}
+			node* maximum()
+			{
+				return _most_right(_root);
+			}
+			node* minimum()
+			{
+				return _most_left(_root);
+			}
+			node* get_root(){return _root;}
+			node* get_nil(){return _NIL;}
 			void print_tree()
 			{
 				printTree(_root);

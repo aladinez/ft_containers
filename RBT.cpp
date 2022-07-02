@@ -23,6 +23,11 @@ int main()
     tree.print();
     tree2.print();
 
+    ft::map<int, std::string>::iterator it = tree.begin();
+    std::cout << (*it).key.first << std::endl;
+    --it;
+    std::cout << (*it).key.first << std::endl;
+
 
 
     // ft::RB_tree<int> tree;
