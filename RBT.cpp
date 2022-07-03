@@ -7,65 +7,57 @@
 int main()
 {
 
-    ft::map<int, std::string> tree;
+    // ft::map<int, std::string> tree;
 
     
-    ft::pair<int, std::string> p = ft::make_pair(10, "alae");
-    tree.insert(p);
-    tree.print();
-
-    // ft::map<int, std::string> tree2;
-    // tree2 = tree;
-    // tree2.print();
-
-    p = ft::make_pair(15, "coucou");
-    tree.insert(p);
+    // ft::pair<int, std::string> p = ft::make_pair(10, "alae");
+    // tree.insert(p);
     // tree.print();
-    // tree2.print();
 
-    ft::map<int, std::string>::iterator it = tree.begin();
-    std::cout << it->first << std::endl;
-    --it;
-    std::cout << it->first << std::endl;
-    std::cout << tree[15] << " tree.size : " << tree.size() << std::endl;
-    tree[15] = "fofo";
-    std::cout << tree[15] << " tree.size : " << tree.size() << std::endl;
-    std::cout << tree[3] << " tree.size : " << tree.size() << tree[3] << std::endl;
-    tree.print();
+    // // ft::map<int, std::string> tree2;
+    // // tree2 = tree;
+    // // tree2.print();
+
+    // p = ft::make_pair(15, "coucou");
+    // tree.insert(p);
+    // // tree.print();
+    // // tree2.print();
+
+    // ft::map<int, std::string>::iterator it = tree.begin();
+    // std::cout << it->first << std::endl;
+    // --it;
+    // std::cout << it->first << std::endl;
+    // std::cout << tree[15] << " tree.size : " << tree.size() << std::endl;
+    // tree[15] = "fofo";
+    // std::cout << tree[15] << " tree.size : " << tree.size() << std::endl;
+    // std::cout << tree[3] << " tree.size : " << tree.size() << tree[3] << std::endl;
+    // tree.print();
+
+
 
     ft::map<char,int> mymap;
-  // first insert function version (single parameter):
-    mymap.insert ( ft::pair<char,int>('a',100) );
-    mymap.insert ( ft::pair<char,int>('z',200) );
+  ft::map<char,int>::iterator it;
 
-    ft::pair<ft::map<char,int>::iterator,bool> ret;
-    ret = mymap.insert ( ft::pair<char,int>('z',500) );
-    if (ret.second==false) {
-        std::cout << "element 'z' already existed";
-        std::cout << " with a value of " << ret.first->second << '\n';
-    }
+  // insert some values:
+  mymap['a']=10;
+  mymap['b']=20;
+  mymap['c']=30;
+  mymap['d']=40;
+  mymap['e']=50;
+  mymap['f']=60;
 
-    // second insert function version (with hint position):
-    ft::map<char,int>::iterator it1 = mymap.begin();
-    mymap.insert (it1, ft::pair<char,int>('b',300));  // max efficiency inserting
-    mymap.insert (it1, ft::pair<char,int>('c',400));
+  it=mymap.find('b');
+  mymap.erase (it);                   // erasing by iterator
 
+  mymap.erase ('c');                  // erasing by key
+    mymap.print();
+  it=mymap.find ('e');
+  mymap.erase ( it, mymap.end() );    // erasing by range
     mymap.print();
 
-    // third insert function version (range insertion):
-    ft::map<char,int> anothermap;
-    anothermap.insert(mymap.begin(),mymap.find('c'));
-    // anothermap.insert(mymap.begin(), mymap.end());
-    anothermap.print();
-    // std::cout << (mymap.find('c'))->second << std::endl;
-    // showing contents:
-    std::cout << "mymap contains:\n";
-    for (it1=mymap.begin(); it1!=mymap.end(); ++it1)
-        std::cout << it1->first << " => " << it1->second << '\n';
-
-    std::cout << "anothermap contains:\n";
-    for (it1=anothermap.begin(); it1!=anothermap.end(); ++it1)
-        std::cout << it1->first << " => " << it1->second << '\n';
+  // show content:
+  for (it=mymap.begin(); it!=mymap.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
 
 
 

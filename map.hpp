@@ -113,9 +113,32 @@ namespace ft
 				for (; first != last; first++)
 					_tree.insert(*first);
 			}
-			// void erase(iterator position);
-			// size_type erase(const key_type& x);
-			// void erase(iterator first, iterator last); void swap(map<Key,T,Compare,Allocator>&);
+			void erase(iterator position)
+			{
+				_tree.remove(*position);
+			}
+			size_type erase(const key_type& x)
+			{
+				Node<value_type>* n = _tree.search(ft::make_pair(x, T()));
+				if (n != _tree.get_nil())
+				{
+					_tree.remove(n->key);
+					return 1;
+				}
+				return 0;
+			}
+			void erase(iterator first, iterator last)
+			{	
+				iterator it = first;
+				first++;
+				for (; first != last; first++)
+				{
+					_tree.remove(*it);
+					it = first;
+				}
+				_tree.remove(*it);
+			}
+			// void swap(map<Key,T,Compare,Allocator>&);
 			// void clear();
 			//-----------------------------------------------------------/
 
