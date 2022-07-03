@@ -49,6 +49,11 @@ namespace ft
 				_root = _makeCopy(rbt._root, rbt._NIL);
 				_size = rbt._size;
 			}
+			~RB_tree ()
+			{
+				clear(_root);
+				delete_node(_NIL);
+			}
 			// Copy assignment
 			RB_tree& operator= (const RB_tree& rbt)
 			{

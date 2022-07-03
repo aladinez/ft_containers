@@ -54,7 +54,7 @@ namespace ft
 			///---------------------- iterators:
 			iterator begin()
 			{
-				return iterator(_tree.maximum(), _tree.get_nil(), _tree.get_root());
+				return iterator(_tree.minimum(), _tree.get_nil(), _tree.get_root());
 			}
 			// const_iterator begin() const;
 			iterator end()
