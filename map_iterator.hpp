@@ -6,44 +6,51 @@
 
 namespace ft
 {
-	template <class Pair>
-	class iterator
+	template <class Pair, class N>
+	class map_iterator
 	{
 		public:
+		
 			typedef ft::Node<Pair>						node_val;
-			typedef ft::Node<Pair>*                     node_ptr;
+			// typedef ft::Node<Pair>*                     node_ptr;
+			typedef N*				                     node_ptr;
+			typedef const N*               const_node_ptr;
+			// typedef const ft::Node<Pair>*               const_node_ptr;
 			typedef std::ptrdiff_t						difference_type;
 			typedef Pair                            	value_type;   
 			typedef Pair*                             	pointer;   
 			typedef Pair&                             	reference;
 			typedef std::bidirectional_iterator_tag		iterator_category;
-			
+		private:
+			node_ptr _ptr;
+			node_ptr _root;
+			node_ptr _NIL;
+		public:
 			// iterator(): _ptr(NULL), _NIL(NULL), _root(NULL){}
-            iterator(node_ptr ptr = NULL, node_ptr root = NULL): _ptr(ptr),_root(root) {
+            map_iterator(node_ptr ptr = NULL, node_ptr root = NULL): _ptr(ptr),_root(root) {
 				if (root)
 					_NIL = root->p;
 				else
 					_NIL = NULL;
 			}
-            iterator(iterator const& it) : _ptr(it._ptr), _root(it._root), _NIL(it._NIL) {}
-            ~iterator(){}
+            map_iterator(map_iterator const& it) : _ptr(it._ptr), _root(it._root), _NIL(it._NIL) {}
+            ~map_iterator(){}
+
+			operator map_iterator<value_type, const N>() const
+            { 
+                return map_iterator<value_type, const N>((_ptr), (_root));
+            }
+			
 
 			// template<typename U>
-			// operator iterator<U>() const
-            // { 
-            //     return iterator<U>(reinterpret_cast<ft::Node<U>*>(_ptr), reinterpret_cast<ft::Node<U>*>(_root));
-            // }
-
-			// https://stackoverflow.com/questions/71965838/no-suitable-user-defined-conversion-but-the-convertion-is-specified
-			// template<typename U>
-  			// iterator(iterator<U> it)
+  			// map_iterator(map_iterator<U> it)
 			// {
 			// 	_ptr = (ft::Node<const Pair>*)it._ptr;
 			// 	_root = (ft::Node<const Pair>*)it._root;
 			// 	_NIL = (ft::Node<const Pair>*)it._NIL;
 			// }
 			
-			iterator &operator=(iterator const& it)
+			map_iterator &operator=(map_iterator const& it)
             {
                 _ptr = it._ptr;
 				_root = it._root;
@@ -51,21 +58,21 @@ namespace ft
                 return *this;
             }
 
-			bool operator== (iterator const& it){return _ptr == it._ptr;}
-            bool operator!= (iterator const& it){return _ptr != it._ptr;}
+			bool operator== (map_iterator const& it){return _ptr == it._ptr;}
+            bool operator!= (map_iterator const& it){return _ptr != it._ptr;}
 
 			value_type& operator* () const                    {return _ptr->key;}
 			pointer  operator->() const                    {return &(_ptr->key);}
 
-			iterator  operator++(int) /* postfix */        
+			map_iterator  operator++(int) /* postfix */        
 			{
 				// if (_ptr == _NIL)
 				// 	return _ptr;
-				iterator it(*this); 
+				map_iterator it(*this); 
 				_ptr = successor(_ptr);
 				return it;
 			}
-            iterator& operator++()    /* prefix */          
+            map_iterator& operator++()    /* prefix */          
 			{
 				// if (_ptr == _NIL)
 				// 	return _ptr;
@@ -73,16 +80,16 @@ namespace ft
 				return *this;
 			}
 
-			iterator  operator--(int) /* postfix */         
+			map_iterator  operator--(int) /* postfix */         
 			{
-				iterator it(*this);
+				map_iterator it(*this);
 				if (_ptr == _NIL)
 					_ptr = _most_right(_root);
 				else
 					_ptr = predecessor(_ptr);
 				return it;
 			}
-            iterator& operator--()    /* prefix */          
+            map_iterator& operator--()    /* prefix */          
 			{
 				if (_ptr == _NIL)
 					_ptr = _most_right(_root);
@@ -93,9 +100,6 @@ namespace ft
 
 
 		private:
-			node_ptr _ptr;
-			node_ptr _NIL;
-			node_ptr _root;
 
 		node_ptr _most_left(node_ptr x)
 		{

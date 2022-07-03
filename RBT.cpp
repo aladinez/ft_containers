@@ -1,6 +1,7 @@
 #include <string>       // std::string
 #include <iostream>
 #include "map.hpp"
+#include "vector.hpp"
 #include "pair.hpp"
 #include <map>
 
@@ -39,27 +40,28 @@ int main()
     // std::cout << tree[3] << " tree.size : " << tree.size() << tree[3] << std::endl;
     // tree.print();
 
-    ft::map<char,int> mymap;
-    char c;
-
+    ft::map<char,int>  mymap;
+    // ft::map<char,int>::const_iterator it;
+    ft::vector<int> vec;
 
     mymap ['a']=101;
     mymap ['c']=202;
     mymap ['f']=303;
+    // mymap.begin();
     func(mymap);
 
     // std::map<char,int>::const_iterator it = mymap.begin();
     // std::cout << it->first << std::endl;
     // it++;
     // std::cout << it->first << std::endl;
-    for (c='a'; c<'h'; c++)
-    {
-        std::cout << c;
-        if (mymap.count(c)>0)
-        std::cout << " is an element of mymap.\n";
-        else 
-        std::cout << " is not an element of mymap.\n";
-    }
+    // for (c='a'; c<'h'; c++)
+    // {
+    //     std::cout << c;
+    //     if (mymap.count(c)>0)
+    //     std::cout << " is an element of mymap.\n";
+    //     else 
+    //     std::cout << " is not an element of mymap.\n";
+    // }
         // ft::RB_tree<int> tree;
     // tree.insert(11);
     // tree.insert(2);

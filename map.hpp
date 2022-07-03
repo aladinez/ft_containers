@@ -4,35 +4,37 @@
 #include "reverse_iterator.hpp"
 #include "pair.hpp"
 
+
 namespace ft
 {
 	template <class Key, class T, class Compare = std::less<Key>,
 			class Allocator = std::allocator<ft::pair<const Key, T> > >
 	class map {
 		public: // types:
-			typedef Key											key_type;
-			typedef T											mapped_type;
-			typedef ft::pair<const Key, T>						value_type;
-			typedef Compare										key_compare;
-			typedef Allocator									allocator_type;
-			typedef typename Allocator::reference				reference;
-			typedef typename Allocator::const_reference			const_reference;
-			typedef ft::iterator<value_type>					iterator;							
-			typedef ft::iterator<const value_type>			const_iterator;	
-			typedef typename Allocator::size_type			size_type;
-			typedef std::ptrdiff_t                  		difference_type;
-			typedef typename Allocator::pointer				pointer;
-			typedef typename Allocator::const_pointer		const_pointer;
-			typedef ft::reverse_iterator<iterator>			reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef Key															key_type;
+			typedef T															mapped_type;
+			typedef ft::pair<const Key, T>										value_type;
+			typedef Compare														key_compare;
+			typedef Allocator													allocator_type;
+			typedef typename Allocator::reference								reference;
+			typedef typename Allocator::const_reference							const_reference;
+			typedef ft::map_iterator<value_type, ft::Node<value_type> >					iterator;							
+			typedef ft::map_iterator<const value_type, const ft::Node<value_type> >		const_iterator;	
+			typedef typename Allocator::size_type								size_type;
+			typedef std::ptrdiff_t                  							difference_type;
+			typedef typename Allocator::pointer									pointer;
+			typedef typename Allocator::const_pointer							const_pointer;
+			typedef ft::reverse_iterator<iterator>								reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
+		
 		private:
 			class value_compare;
 			typedef ft::RB_tree<value_type, value_compare, Allocator>	RBT;
-			RBT _tree;
-			size_type _size;
 			key_compare _comp;
 			value_compare val_comp;
 			Allocator _alloc;
+			RBT _tree;
+			size_type _size;
 	
 		
 		public:
@@ -48,7 +50,7 @@ namespace ft
 					_tree.insert(*first);
 				_size = _tree.size();
 			}
-			map (const map& x): _comp(x._comp), val_comp(x.val_comp), _alloc(x._alloc), _size(x._size), _tree(x._tree) {}
+			map (const map& x): _comp(x._comp), val_comp(x.val_comp), _alloc(x._alloc), _tree(x._tree), _size(x._size) {}
 			~map(){}
 			//-----------------------------------------------------------/
 
@@ -61,7 +63,6 @@ namespace ft
 			const_iterator begin() const
 			{
 				return const_iterator(_tree.minimum(), _tree.get_root());
-
 			}
 			iterator end()
 			{
@@ -108,6 +109,7 @@ namespace ft
 			}
 			iterator insert(iterator position, const value_type& x) // position : used as a suggestion as to where to start the search
 			{
+				(void)position;
 				Node<value_type>* n = _tree.search(x);
 				if (n != _tree.get_nil())
 					return iterator(n, _tree.get_root());
@@ -170,7 +172,8 @@ namespace ft
 			}
 			const_iterator find(const key_type& x) const
 			{
-				return const_iterator(_tree.get_nil(), _tree.get_root());
+				Node<value_type>* n = _tree.search(value_type(x, T()));
+				return iterator(n, _tree.get_root());
 			}
 			size_type count(const key_type& x) const
 			{
@@ -180,13 +183,13 @@ namespace ft
 				return 0;
 			}
 			iterator lower_bound(const key_type& x);
-			// const_iterator lower_bound(const key_type& x) const;
+			const_iterator lower_bound(const key_type& x) const;
 			iterator upper_bound(const key_type& x);
-			// const_iterator upper_bound(const key_type& x) const;
-			// pair<iterator,iterator>
-			// equal_range(const key_type& x);
-			// pair<const_iterator,const_iterator>
-			// equal_range(const key_type& x) const;
+			const_iterator upper_bound(const key_type& x) const;
+			pair<iterator,iterator>
+			equal_range(const key_type& x);
+			pair<const_iterator,const_iterator>
+			equal_range(const key_type& x) const;
 			//-----------------------------------------------------------/
 
 

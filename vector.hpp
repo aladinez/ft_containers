@@ -27,8 +27,8 @@ namespace ft {
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
             // 23.2.4.1 construct/copy/destroy:
-            explicit vector(const allocator_type& alloc = Allocator()) : _alloc(alloc), _array(), _size(), _capacity(){}
-			explicit vector(size_type n, const T& value = T(), const allocator_type& alloc = Allocator()): _alloc(alloc), _size(n), _capacity(n)
+            explicit vector(const allocator_type& alloc = Allocator()) : _array(), _size(), _capacity(), _alloc(alloc) {}
+			explicit vector(size_type n, const T& value = T(), const allocator_type& alloc = Allocator()): _size(n), _capacity(n),  _alloc(alloc)
 			{
 				_array = _alloc.allocate(_size);
 				for (size_type i = 0; i < _size; i++)
@@ -400,6 +400,8 @@ namespace ft {
 
 			template <class InputIterator>
 			difference_type _distance(InputIterator first, InputIterator last, std::input_iterator_tag) {
+				(void)first;
+				(void)last;
 				return -1;
 			}
 			

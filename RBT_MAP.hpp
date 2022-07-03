@@ -5,23 +5,23 @@
 #include <memory>
 #include "pair.hpp"
 
-#define RED 0
-#define BLACK 1
+#define RED__ 0
+#define BLACK__ 1
 
-#define _RED     "\x1b[31m"
-#define BLUE    "\x1b[34m"
-#define RESET   "\x1b[0m"
+// #define _RED     "\x1b[31m"
+// #define BLUE    "\x1b[34m"
+// #define RESET   "\x1b[0m"
 
 namespace ft
 {
 	template <typename T>
 	struct Node {
-		T key;
-		bool color;
-		Node* p;
 		Node* left;
 		Node* right;
-		Node(Node* l = NULL, Node* r = NULL, Node* p = NULL, bool c = BLACK, T k = T())
+		Node* p;
+		bool color;
+		T key;
+		Node(Node* l = NULL, Node* r = NULL, Node* p = NULL, bool c = BLACK__, T k = T())
 		: left(l), right(r), p(p), color(c), key(k) {}
 	};
 
@@ -33,17 +33,23 @@ namespace ft
 			typedef Pair				value_type;
 			typedef typename Allocator::size_type			size_type;
 			typedef typename Allocator::template rebind<node>::other _Allocator;
-			
+		private:
+			node* _root;
+			node* _NIL;
+			Compare _comp;
+			_Allocator _alloc;
+			size_type _size;
+		public:
 			// RB_tree (): _NIL(new node), _comp() {_root = _NIL;}
 			RB_tree(const Compare& comp = Compare(), const Allocator& alloc = Allocator())
-			:_alloc(alloc), _comp(comp), _size() 
+			: _comp(comp), _alloc(alloc), _size() 
 			{
 				_NIL = _alloc.allocate(1);
 				_alloc.construct(_NIL, node());
 				_root = _NIL;
 			}
 			//copy constructor
-			RB_tree (const RB_tree& rbt): _alloc(rbt._alloc), _comp(rbt._comp) {
+			RB_tree (const RB_tree& rbt):  _comp(rbt._comp), _alloc(rbt._alloc) {
 				_NIL = _alloc.allocate(1);
 				_alloc.construct(_NIL, node());
 				_root = _makeCopy(rbt._root, rbt._NIL);
@@ -127,9 +133,9 @@ namespace ft
 			node* _newNode(value_type key)
 			{
 
-				// node* z = new node(_NIL, _NIL, _NIL, RED);
+				// node* z = new node(_NIL, _NIL, _NIL, RED__);
 				node* z = _alloc.allocate(1);
-				_alloc.construct(z, node(_NIL, _NIL, _NIL, RED, key));
+				_alloc.construct(z, node(_NIL, _NIL, _NIL, RED__, key));
 				// z->key = key;
 				return z;
 			}
@@ -183,38 +189,38 @@ namespace ft
 
 			void insert_fixup(node* z)
 			{
-				while (z->p->color == RED) // violation cuz both z and z.p are red
+				while (z->p->color == RED__) // violation cuz both z and z.p are red__
 				{
 					if (z->p == z->p->p->left)
 					{
 						node* y = z->p->p->right; // y is uncle of z
-						if (y->color == RED) // uncle is red, recolor z.p and y
+						if (y->color == RED__) // uncle is red__, recolor z.p and y
 						{
-							z->p->color = BLACK;
-							y->color = BLACK;
-							z->p->p->color = RED; //recolor z.p.p and recheck.
+							z->p->color = BLACK__;
+							y->color = BLACK__;
+							z->p->p->color = RED__; //recolor z.p.p and recheck.
 							z = z->p->p; // next loop z will be z.p.p
 						}
-						else // uncle is black => rotate and recolor
+						else // uncle is black__ => rotate and recolor
 						{
 							if (z == z->p->right) // z in the right of its parent, so we will left rotate z.p
 							{
 								z = z->p;
 								left_rotate(z);
 							}
-							z->p->color = BLACK; // loop will stop after this.
-							z->p->p->color = RED;
+							z->p->color = BLACK__; // loop will stop after this.
+							z->p->p->color = RED__;
 							right_rotate(z->p->p);
 						}
 					}
 					else
 					{
 						node* y = z->p->p->left;
-						if (y->color == RED)
+						if (y->color == RED__)
 						{
-							z->p->color = BLACK;
-							y->color = BLACK;
-							z->p->p->color = RED;
+							z->p->color = BLACK__;
+							y->color = BLACK__;
+							z->p->p->color = RED__;
 							z = z->p->p;
 						}
 						else
@@ -224,13 +230,13 @@ namespace ft
 								z = z->p;
 								right_rotate(z);
 							}
-							z->p->color = BLACK;
-							z->p->p->color = RED;
+							z->p->color = BLACK__;
+							z->p->p->color = RED__;
 							left_rotate(z->p->p);
 						}
 					}
 				}
-				_root->color = BLACK;
+				_root->color = BLACK__;
 			}
 
 			void remove(value_type key)
@@ -270,7 +276,7 @@ namespace ft
 						y->color = z->color;
 					}
 					delete_node(z);
-					if (o_color == BLACK)
+					if (o_color == BLACK__)
 						remove_fixup(x);
 					_size--;
 				}
@@ -278,35 +284,35 @@ namespace ft
 			void remove_fixup(node* x)
 			{
 				node* w;
-				while (x != _root && x->color == BLACK)
+				while (x != _root && x->color == BLACK__)
 				{
 					if (x == x->p->left) 
 					{
 						w = x->p->right; // z is x's sibling
-						if (w->color == RED) // case 1
+						if (w->color == RED__) // case 1
 						{
-							w->color = BLACK;
-							x->p->color = RED;
+							w->color = BLACK__;
+							x->p->color = RED__;
 							left_rotate(x->p);
 							w = x->p->right;
 						}
-						if (w->left->color == BLACK && w->right->color == BLACK) // case 2
+						if (w->left->color == BLACK__ && w->right->color == BLACK__) // case 2
 						{
-							w->color = RED;
+							w->color = RED__;
 							x = x->p;
 						}
 						else // case 3 and 4
 						{
-							if (w->right->color == BLACK) // case 3
+							if (w->right->color == BLACK__) // case 3
 							{
-								w->left->color = BLACK;
-								w->color = RED;
+								w->left->color = BLACK__;
+								w->color = RED__;
 								right_rotate(w);
 								w = x->p->right;
 							}
 							w->color = x->p->color;
-							x->p->color = BLACK;
-							w->right->color = BLACK;
+							x->p->color = BLACK__;
+							w->right->color = BLACK__;
 							left_rotate(x->p);
 							x = _root; // to end the loop.
 						}
@@ -314,42 +320,42 @@ namespace ft
 					else
 					{
 						w = x->p->left; // z is x's sibling
-						if (w->color == RED) // case 1
+						if (w->color == RED__) // case 1
 						{
-							w->color = BLACK;
-							x->p->color = RED;
+							w->color = BLACK__;
+							x->p->color = RED__;
 							right_rotate(x->p);
 							w = x->p->left;
 						}
-						if (w->right->color == BLACK && w->left->color == BLACK) // case 2
+						if (w->right->color == BLACK__ && w->left->color == BLACK__) // case 2
 						{
-							w->color = RED;
+							w->color = RED__;
 							x = x->p;
 						}
 						else // case 3 and 4
 						{
-							if (w->left->color == BLACK) // case 3
+							if (w->left->color == BLACK__) // case 3
 							{
-								w->right->color = BLACK;
-								w->color = RED;
+								w->right->color = BLACK__;
+								w->color = RED__;
 								left_rotate(w);
 								w = x->p->left;
 							}
 							w->color = x->p->color;
-							x->p->color = BLACK;
-							w->left->color = BLACK;
+							x->p->color = BLACK__;
+							w->left->color = BLACK__;
 							right_rotate(x->p);
 							x = _root; // to end the loop.
 						}
 					}
 				}
-				x->color = BLACK;
+				x->color = BLACK__;
 			}
-			node* maximum()
+			node* maximum() const
 			{
 				return _most_right(_root);
 			}
-			node* minimum()
+			node* minimum() const
 			{
 				return _most_left(_root);
 			}
@@ -361,14 +367,7 @@ namespace ft
 				printTree(_root);
 			}
 		private:
-			node* _root;
-			node* _NIL;
-			Compare _comp;
-			_Allocator _alloc;
-			size_type _size;
 			
-			
-
 			node* _makeCopy(node* x, node* nil)
 			{
 				if (x == nil)
@@ -383,13 +382,13 @@ namespace ft
 			}
 	
 
-			node* _most_left(node* x)
+			node* _most_left(node* x) const
 			{
 				while (x->left != _NIL)
 					x = x->left;
 				return x;
 			}
-			node* _most_right(node* x)
+			node* _most_right(node* x) const
 			{
 				while (x->right != _NIL)
 					x = x->right;
@@ -420,14 +419,14 @@ namespace ft
 			else
 				printf("%s   ",rec[i]?"\u23B8":"  ");
 		}
-		// if (curr->color == BLACK) // to print mapped type.
+		// if (curr->color == BLACK__) // to print mapped type.
 		// 	printf(BLUE "%s" RESET "\n", curr->key.second.c_str());
 		// else
-		// 	printf(_RED "%s" RESET "\n", curr->key.second.c_str());
-		if (curr->color == BLACK)
-			printf(BLUE "%c" RESET "\n", curr->key.first);
+		// 	printf(_RED__ "%s" RESET "\n", curr->key.second.c_str());
+		if (curr->color == BLACK__)
+			printf("%c\n", curr->key.first);
 		else
-			printf(_RED "%c" RESET "\n", curr->key.first);
+			printf("%c\n", curr->key.first);
 		rec[depth]=1;
 		printTree(curr->left,depth+1);
 		rec[depth]=0;
