@@ -37,11 +37,11 @@ namespace ft
 		public:
 			///---------------------- constructor/Copy/destructor :
 			explicit map(const Compare& comp = Compare(),
-                     	const Allocator& alloc= Allocator()): val_comp(comp), _alloc(alloc), _tree(val_comp, _alloc), _size() {}
+                     	const Allocator& alloc= Allocator()): val_comp(comp), _alloc(alloc), _tree(comp, alloc), _size() {}
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last,
 				const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type()) : val_comp(comp), _alloc(alloc), _tree(val_comp, _alloc), _size()
+				const allocator_type& alloc = allocator_type()) : val_comp(comp), _alloc(alloc), _tree(comp, alloc), _size()
 			{
 				for (;first != last; first++)
 					_tree.insert(*first);

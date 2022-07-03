@@ -18,7 +18,7 @@ namespace ft
 			typedef Pair&                             	reference;
 			typedef std::bidirectional_iterator_tag		iterator_category;
 			
-			iterator(): _ptr(){}
+			iterator(): _ptr(NULL), _NIL(NULL), _root(NULL){}
             iterator(node_ptr ptr, node_ptr nil, node_ptr root): _ptr(ptr), _NIL(nil), _root(root) {}
             iterator(iterator const& it) 
 			{
@@ -81,16 +81,22 @@ namespace ft
 			node_ptr _root;
 
 		node_ptr _most_left(node_ptr x)
-			{
-				while (x->left != _NIL)
-					x = x->left;
+		{
+			if (x == _NIL)
 				return x;
-			}
+			node_ptr y = x;
+			while (y->left != _NIL)
+				y = y->left;
+			return y;
+		}
 		node_ptr _most_right(node_ptr x)
 		{
-			while (x->right != _NIL)
-				x = x->right;
-			return x;
+			if (x == _NIL)
+				return x;
+			node_ptr y = x;
+			while (y->right != _NIL)
+				y = y->right;
+			return y;
 		}
 		node_ptr successor(node_ptr x)
         {

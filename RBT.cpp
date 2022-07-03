@@ -53,9 +53,9 @@ int main()
     mymap.print();
 
     // third insert function version (range insertion):
-    ft::map<char,int> anothermap;
+    ft::map<char,int> anothermap(mymap.begin(), mymap.end());
     // anothermap.insert(mymap.begin(),mymap.find('c'));
-    anothermap.insert(mymap.begin(), mymap.end());
+    // anothermap.insert(mymap.begin(), mymap.end());
     anothermap.print();
     // std::cout << (mymap.find('c'))->second << std::endl;
     // showing contents:
@@ -63,9 +63,9 @@ int main()
     for (it1=mymap.begin(); it1!=mymap.end(); ++it1)
         std::cout << it1->first << " => " << it1->second << '\n';
 
-    // std::cout << "anothermap contains:\n";
-    // for (it1=anothermap.begin(); it1!=anothermap.end(); ++it1)
-    //     std::cout << it1->first << " => " << it1->second << '\n';
+    std::cout << "anothermap contains:\n";
+    for (it1=anothermap.begin(); it1!=anothermap.end(); ++it1)
+        std::cout << it1->first << " => " << it1->second << '\n';
 
 
 
