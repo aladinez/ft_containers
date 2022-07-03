@@ -63,7 +63,7 @@ namespace ft
 				_size = rbt._size;
 				return *this;
 			}
-			node* search(value_type new_key)
+			node* search(value_type new_key) const
 			{
 				node* x = _root;
 				// while (x != _NIL && x->key != new_key) // TODO: COMPARE USING _comp
@@ -353,8 +353,8 @@ namespace ft
 			{
 				return _most_left(_root);
 			}
-			node* get_root() {return _root;}
-			node* get_nil() {return _NIL;}
+			node* get_root() const {return _root;}
+			node* get_nil() const {return _NIL;}
 			size_type size() const {return _size;}
 			void print_tree()
 			{

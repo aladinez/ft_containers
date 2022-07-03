@@ -148,23 +148,41 @@ namespace ft
 				_tree.clear();
 			}
 			//-----------------------------------------------------------/
+			// observers:
+			key_compare key_comp() const {return _comp;}
+			value_compare value_comp() const {return val_comp;}
+			//-----------------------------------------------------------/
 
-			// void insert(value_type x)
-			// {
-			// 	_tree.insert(x);
-			// }
-			iterator find (const key_type& k)
+
+			// ----------------- map operations:
+			iterator find(const key_type& x)
 			{
-				Node<value_type>* n = _tree.search(ft::make_pair(k, T()));
+				Node<value_type>* n = _tree.search(value_type(x, T()));
 				return iterator(n, _tree.get_root());
 			}
+			// const_iterator find(const key_type& x) const;
+			size_type count(const key_type& x) const
+			{
+				Node<value_type>* n = _tree.search(value_type(x, T()));
+				if (n != _tree.get_nil())
+					return 1;
+				return 0;
+			}
+			iterator lower_bound(const key_type& x);
+			// const_iterator lower_bound(const key_type& x) const;
+			iterator upper_bound(const key_type& x);
+			// const_iterator upper_bound(const key_type& x) const;
+			// pair<iterator,iterator>
+			// equal_range(const key_type& x);
+			// pair<const_iterator,const_iterator>
+			// equal_range(const key_type& x) const;
+			//-----------------------------------------------------------/
+
+
 			void print()
 			{
 				_tree.print_tree();
 			}
-			// observers:
-			key_compare key_comp() const {return _comp;}
-			value_compare value_comp() const {return val_comp;}
 	};
 
 
