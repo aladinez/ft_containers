@@ -3,13 +3,45 @@
 #include "map.hpp"
 #include "vector.hpp"
 #include "pair.hpp"
+#include <vector>
 #include <map>
-
+int _ratio = 10000;
 void func(const ft::map<char,int> mymap)
 {
     for(ft::map<char,int>::const_iterator it = mymap.begin(); it != mymap.end(); it++)
         std::cout << it->first << std::endl;
 
+}
+template <class T, class V>
+void erase_test(ft::map<T, V> mp)
+{
+    std::vector<int> v;
+    v.push_back(mp.erase(3));
+    for (int i = 0, j = 0; i < 30 * _ratio; ++i, ++j)
+        mp.insert(ft::make_pair(i, j));
+    typename ft::map<T, V>::iterator it = mp.begin();
+    v.push_back(it->first);
+    v.push_back(mp.erase(-5));
+    v.push_back(mp.size());
+    v.push_back(mp.erase(0));
+    v.push_back(mp.size());
+    it = mp.begin();
+    v.push_back(it->first);
+    typename ft::map<T, V>::iterator it4 = mp.begin();
+    for (; it4 != mp.end(); it4 = mp.begin())
+        mp.erase(it4->first);
+    v.push_back(mp.erase(30 * _ratio - 1));
+    v.push_back(mp.size());
+    ft::map<int, int> mp2;
+    for (int i = 0, j = 0; i < 10 ; ++i, ++j)
+        mp2.insert(ft::make_pair(i, j));
+    mp2.erase(2);
+    mp2.erase(7);
+    typename ft::map<T, V>::iterator it3 = mp2.begin();
+    for (; it3 != mp2.end(); ++it3) {
+        v.push_back(it3->first);
+        v.push_back(it3->second);
+    }
 }
 int main()
 {
@@ -39,20 +71,8 @@ int main()
     // std::cout << tree[15] << " tree.size : " << tree.size() << std::endl;
     // std::cout << tree[3] << " tree.size : " << tree.size() << tree[3] << std::endl;
     // tree.print();
-
-    ft::map<char,int> foo,bar, bir;
-    foo['a']=100;
-    foo['b']=200;
-    bar['a']=10;
-    bar['z']=1000;
-    bir = foo;
-    // foo ({{a,100},{b,200}}) vs bar ({a,10},{z,1000}}):
-    if (foo==bir) std::cout << "foo and bar are equal\n";
-    if (foo!=bar) std::cout << "foo and bar are not equal\n";
-    if (foo< bar) std::cout << "foo is less than bar\n";
-    if (foo> bar) std::cout << "foo is greater than bar\n";
-    if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
-    if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+    ft::map<int, int> my_map;
+    erase_test(my_map);
 
     // std::map<char,int>::const_iterator it = mymap.begin();
     // std::cout << it->first << std::endl;

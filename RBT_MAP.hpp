@@ -384,14 +384,20 @@ namespace ft
 
 			node* _most_left(node* x) const
 			{
-				while (x->left != _NIL)
-					x = x->left;
+				if (x != _NIL)
+				{
+					while (x->left != _NIL)
+						x = x->left;
+				}
 				return x;
 			}
 			node* _most_right(node* x) const
 			{
-				while (x->right != _NIL)
-					x = x->right;
+				if (x != _NIL)
+				{
+					while (x->right != _NIL)
+						x = x->right;
+				}
 				return x;
 			}
 			void _transplant(node* u, node* v)
