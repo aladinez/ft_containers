@@ -40,15 +40,19 @@ int main()
     // std::cout << tree[3] << " tree.size : " << tree.size() << tree[3] << std::endl;
     // tree.print();
 
-    ft::map<char,int>  mymap;
-    // ft::map<char,int>::const_iterator it;
-    ft::vector<int> vec;
-
-    mymap ['a']=101;
-    mymap ['c']=202;
-    mymap ['f']=303;
-    // mymap.begin();
-    func(mymap);
+    ft::map<char,int> foo,bar, bir;
+    foo['a']=100;
+    foo['b']=200;
+    bar['a']=10;
+    bar['z']=1000;
+    bir = foo;
+    // foo ({{a,100},{b,200}}) vs bar ({a,10},{z,1000}}):
+    if (foo==bir) std::cout << "foo and bar are equal\n";
+    if (foo!=bar) std::cout << "foo and bar are not equal\n";
+    if (foo< bar) std::cout << "foo is less than bar\n";
+    if (foo> bar) std::cout << "foo is greater than bar\n";
+    if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
+    if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
 
     // std::map<char,int>::const_iterator it = mymap.begin();
     // std::cout << it->first << std::endl;

@@ -3,6 +3,7 @@
 #include "map_iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "pair.hpp"
+#include "equal.hpp"
 
 
 namespace ft
@@ -198,6 +199,54 @@ namespace ft
 				_tree.print_tree();
 			}
 	};
+
+	
+	template <class Key, class T, class Compare, class Allocator>
+	bool operator==(const map<Key,T,Compare,Allocator>& x, const map<Key,T,Compare,Allocator>& y)
+	{
+		if (x.size() == y.size()){
+			return (ft::equal(x.begin(), x.end(), y.begin()));
+		}
+		return false;
+	}
+
+	template <class Key, class T, class Compare, class Allocator>
+	bool operator!=(const map<Key,T,Compare,Allocator>& x, const map<Key,T,Compare,Allocator>& y)
+	{
+		if (x.size() == y.size()){
+			return (!ft::equal(x.begin(), x.end(), y.begin()));
+		}
+		return true;
+	}
+
+		template <class Key, class T, class Compare, class Allocator>
+	bool operator< (const map<Key,T,Compare,Allocator>& x, const map<Key,T,Compare,Allocator>& y)
+	{
+		return ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
+	}
+
+	template <class Key, class T, class Compare, class Allocator>
+	bool operator> (const map<Key,T,Compare,Allocator>& x, const map<Key,T,Compare,Allocator>& y)
+	{
+		return ft::lexicographical_compare(y.begin(), y.end(), x.begin(), x.end());
+	}
+	template <class Key, class T, class Compare, class Allocator>
+	bool operator>=(const map<Key,T,Compare,Allocator>& x, const map<Key,T,Compare,Allocator>& y)
+	{
+		return !(ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end()));
+	}
+	template <class Key, class T, class Compare, class Allocator>
+	bool operator<=(const map<Key,T,Compare,Allocator>& x, const map<Key,T,Compare,Allocator>& y)
+	{
+		return !(ft::lexicographical_compare(y.begin(), y.end(), x.begin(), x.end()));
+	}
+
+	
+
+
+	
+
+
 
 
 	template <class Key, class T, class Compare, class Alloc>
