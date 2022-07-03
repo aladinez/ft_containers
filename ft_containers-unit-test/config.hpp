@@ -7,7 +7,7 @@
 /**************************************************/
 #define VECTOR			"../../../vector.hpp"
 #define STACK			"../../../stack.hpp"
-#define MAP			  	"../../../Map.hpp"
+#define MAP			  	"../../../map.hpp"
 #define SET			  	"../../../Set.hpp"
 #define UTILITIES		"../../../Utility.hpp"
 
@@ -19,7 +19,7 @@
 /**************************************************/
 #define	_vector 			ft::vector
 #define	_stack	 			ft::stack
-#define	_map 				ft::Map
+#define	_map 				ft::map
 #define	_set	 			ft::Set
 #define	_is_integral 		ft::is_integral
 #define	_enable_if 			ft::enable_if

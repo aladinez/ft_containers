@@ -34,25 +34,22 @@ int main()
     // tree.print();
 
 
-
     ft::map<char,int> mymap;
 
-    mymap['x']=100;
-    mymap['y']=200;
-    mymap['z']=300;
+    mymap['x']=1001;
+    mymap['y']=2002;
+    mymap['z']=3003;
 
     std::cout << "mymap contains:\n";
-    for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+
+    ft::pair<char,int> highest = *mymap.rbegin();          // last element
+
+    ft::map<char,int>::iterator it = mymap.begin();
+    do {
         std::cout << it->first << " => " << it->second << '\n';
+    } while ( mymap.value_comp()(*it++, highest) );
 
-    mymap.clear();
-    mymap['a']=1101;
-    mymap['b']=2202;
-
-    std::cout << "mymap contains:\n";
-    for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
-
+    return 0;
     // ft::RB_tree<int> tree;
     // tree.insert(11);
     // tree.insert(2);

@@ -30,6 +30,7 @@ namespace ft
 			typedef ft::RB_tree<value_type, value_compare, Allocator>	RBT;
 			RBT _tree;
 			size_type _size;
+			key_compare _comp;
 			value_compare val_comp;
 			Allocator _alloc;
 	
@@ -37,17 +38,17 @@ namespace ft
 		public:
 			///---------------------- constructor/Copy/destructor :
 			explicit map(const Compare& comp = Compare(),
-                     	const Allocator& alloc= Allocator()): val_comp(comp), _alloc(alloc), _tree(comp, alloc), _size() {}
+                     	const Allocator& alloc= Allocator()): _comp(comp), val_comp(comp), _alloc(alloc), _tree(comp, alloc), _size() {}
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last,
 				const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type()) : val_comp(comp), _alloc(alloc), _tree(comp, alloc), _size()
+				const allocator_type& alloc = allocator_type()) : _comp(comp), val_comp(comp), _alloc(alloc), _tree(comp, alloc), _size()
 			{
 				for (;first != last; first++)
 					_tree.insert(*first);
 				_size = _tree.size();
 			}
-			map (const map& x): val_comp(x.val_comp), _alloc(x._alloc), _size(x._size), _tree(x._tree) {}
+			map (const map& x): _comp(x._comp), val_comp(x.val_comp), _alloc(x._alloc), _size(x._size), _tree(x._tree) {}
 			~map(){}
 			//-----------------------------------------------------------/
 
@@ -161,7 +162,9 @@ namespace ft
 			{
 				_tree.print_tree();
 			}
-
+			// observers:
+			key_compare key_comp() const {return _comp;}
+			value_compare value_comp() const {return val_comp;}
 	};
 
 
