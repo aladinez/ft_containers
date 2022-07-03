@@ -1,33 +1,33 @@
-In file included from ../map_tests/equal_range().cpp:2:
+In file included from ../map_tests/operator >=.cpp:2:
 In file included from ../map_tests/__service.ipp:3:
-In file included from ../map_tests/../../../map.hpp:2:
-In file included from ../map_tests/../../../RBT_MAP.hpp:6:
-../map_tests/../../../pair.hpp:16:41: error: no matching constructor for initialization of 'ft::pair<ft::map_iterator<const ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > >, ft::map_iterator<const ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > > >::first_type' (aka 'ft::map_iterator<const ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > >')
-            pair (const pair<U,V>& pr): first(pr.first), second(pr.second){}
-                                        ^     ~~~~~~~~
-../map_tests/equal_range().cpp:43:90: note: in instantiation of function template specialization 'ft::pair<ft::map_iterator<const ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > >, ft::map_iterator<const ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > > >::pair<ft::map_iterator<ft::pair<const int, int>, ft::Node<ft::pair<const int, int> > >, ft::map_iterator<ft::pair<const int, int>, ft::Node<ft::pair<const int, int> > > >' requested here
-    const _pair<_map<int, int>::const_iterator , _map<int, int>::const_iterator>& pair = mp.equal_range(10);
-                                                                                         ^
-../map_tests/equal_range().cpp:64:73: note: in instantiation of function template specialization 'equal_range_test<int, int>' requested here
-    exit(run_map_unit_test<int, int>("equal_range()", equal_range_test, equal_range_test));
-                                                                        ^
-../map_tests/../../../map_iterator.hpp:30:13: note: candidate constructor not viable: no known conversion from 'const ft::pair<ft::map_iterator<ft::pair<const int, int>, ft::Node<ft::pair<const int, int> > >, ft::map_iterator<ft::pair<const int, int>, ft::Node<ft::pair<const int, int> > > >::first_type' (aka 'const ft::map_iterator<ft::pair<const int, int>, ft::Node<ft::pair<const int, int> > >') to 'ft::map_iterator<const ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > >::node_ptr' (aka 'const ft::Node<ft::pair<const int, int> > *') for 1st argument
-            map_iterator(node_ptr ptr = NULL, node_ptr root = NULL): _ptr(ptr),_root(root) {
-            ^
-../map_tests/../../../map_iterator.hpp:36:13: note: candidate constructor not viable: no known conversion from 'const map_iterator<pair<...>, Node<...>>' to 'const map_iterator<const pair<...>, const Node<...>>' for 1st argument
-            map_iterator(map_iterator const& it) : _ptr(it._ptr), _root(it._root), _NIL(it._NIL) {}
-            ^
-In file included from ../map_tests/equal_range().cpp:2:
+In file included from ../map_tests/../../../map.hpp:3:
+../map_tests/../../../map_iterator.hpp:64:62: error: binding value of type 'const pair<...>' to reference to type 'pair<...>' drops 'const' qualifier
+                        value_type& operator* () const                    {return _ptr->key;}
+                                                                                  ^~~~~~~~~
+../map_tests/../../../equal.hpp:30:25: note: in instantiation of member function 'ft::map_iterator<ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > >::operator*' requested here
+                        if (first2==last2 || *first2<*first1)
+                                             ^
+../map_tests/../../../map.hpp:261:16: note: in instantiation of function template specialization 'ft::lexicographical_compare<ft::map_iterator<ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > >, ft::map_iterator<ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > > >' requested here
+                return !(ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end()));
+                             ^
+../map_tests/operator >=.cpp:19:27: note: in instantiation of function template specialization 'ft::operator>=<int, int, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >' requested here
+        result2.push_back(mt.mp1 >= mt.mp1); result2.push_back(mt.mp3 >= mt.mp3); result2.push_back(mt.mp5 >= mt.mp9);
+                                 ^
+In file included from ../map_tests/operator >=.cpp:2:
 In file included from ../map_tests/__service.ipp:3:
-In file included from ../map_tests/../../../map.hpp:2:
-In file included from ../map_tests/../../../RBT_MAP.hpp:6:
-../map_tests/../../../pair.hpp:16:58: error: no matching constructor for initialization of 'ft::pair<ft::map_iterator<const ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > >, ft::map_iterator<const ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > > >::second_type' (aka 'ft::map_iterator<const ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > >')
-            pair (const pair<U,V>& pr): first(pr.first), second(pr.second){}
-                                                         ^      ~~~~~~~~~
-../map_tests/../../../map_iterator.hpp:30:13: note: candidate constructor not viable: no known conversion from 'const ft::pair<ft::map_iterator<ft::pair<const int, int>, ft::Node<ft::pair<const int, int> > >, ft::map_iterator<ft::pair<const int, int>, ft::Node<ft::pair<const int, int> > > >::second_type' (aka 'const ft::map_iterator<ft::pair<const int, int>, ft::Node<ft::pair<const int, int> > >') to 'ft::map_iterator<const ft::pair<const int, int>, const ft::Node<ft::pair<const int, int> > >::node_ptr' (aka 'const ft::Node<ft::pair<const int, int> > *') for 1st argument
-            map_iterator(node_ptr ptr = NULL, node_ptr root = NULL): _ptr(ptr),_root(root) {
-            ^
-../map_tests/../../../map_iterator.hpp:36:13: note: candidate constructor not viable: no known conversion from 'const map_iterator<pair<...>, Node<...>>' to 'const map_iterator<const pair<...>, const Node<...>>' for 1st argument
-            map_iterator(map_iterator const& it) : _ptr(it._ptr), _root(it._root), _NIL(it._NIL) {}
-            ^
+In file included from ../map_tests/../../../map.hpp:3:
+../map_tests/../../../map_iterator.hpp:64:62: error: binding value of type 'const pair<...>' to reference to type 'pair<...>' drops 'const' qualifier
+                        value_type& operator* () const                    {return _ptr->key;}
+                                                                                  ^~~~~~~~~
+../map_tests/../../../equal.hpp:30:25: note: in instantiation of member function 'ft::map_iterator<ft::pair<const std::__1::basic_string<char>, std::__1::basic_string<char> >, const ft::Node<ft::pair<const std::__1::basic_string<char>, std::__1::basic_string<char> > > >::operator*' requested here
+                        if (first2==last2 || *first2<*first1)
+                                             ^
+../map_tests/../../../map.hpp:261:16: note: in instantiation of function template specialization 'ft::lexicographical_compare<ft::map_iterator<ft::pair<const std::__1::basic_string<char>, std::__1::basic_string<char> >, const ft::Node<ft::pair<const std::__1::basic_string<char>, std::__1::basic_string<char> > > >, ft::map_iterator<ft::pair<const std::__1::basic_string<char>, std::__1::basic_string<char> >, const ft::Node<ft::pair<const std::__1::basic_string<char>, std::__1::basic_string<char> > > > >' requested here
+                return !(ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end()));
+                             ^
+../map_tests/operator >=.cpp:19:101: note: in instantiation of function template specialization 'ft::operator>=<std::__1::basic_string<char>, std::__1::basic_string<char>, std::__1::less<std::__1::basic_string<char> >, std::__1::allocator<ft::pair<const std::__1::basic_string<char>, std::__1::basic_string<char> > > >' requested here
+        result2.push_back(mt.mp1 >= mt.mp1); result2.push_back(mt.mp3 >= mt.mp3); result2.push_back(mt.mp5 >= mt.mp9);
+                                                                                                           ^
+2 errors generated.
+  ^
 2 errors generated.

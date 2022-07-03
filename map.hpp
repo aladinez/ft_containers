@@ -4,6 +4,7 @@
 #include "reverse_iterator.hpp"
 #include "pair.hpp"
 #include "equal.hpp"
+#include <stdexcept>
 
 
 namespace ft
@@ -102,6 +103,23 @@ namespace ft
 				n = _tree.search(ft::make_pair(x, T()));
 				return (n->key).second;
 			}
+
+			// mapped_type& at (const key_type& x)
+			// {
+			// 	Node<value_type>* n = _tree.search(ft::make_pair(x, T()));
+			// 	if (n != _tree.get_nil())
+			// 		return (n->key).second;
+			// 	else
+			// 		throw std::out_of_range("map");
+			// }
+			// const mapped_type& at (const key_type& x) const
+			// {
+			// 	Node<value_type>* n = _tree.search(ft::make_pair(x, T()));
+			// 	if (n != _tree.get_nil())
+			// 		return (n->key).second;
+			// 	else
+			// 		throw std::out_of_range("map");
+			// }
 			//-----------------------------------------------------------/
 
 			// ------------  modifiers:
