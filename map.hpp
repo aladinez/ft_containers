@@ -33,7 +33,7 @@ namespace ft
 			typedef ft::RB_tree<value_type, value_compare, Allocator>	RBT;
 			key_compare _comp;
 			value_compare val_comp;
-			Allocator _alloc;
+			allocator_type _alloc;
 			RBT _tree;
 			size_type _size;
 	
@@ -53,6 +53,12 @@ namespace ft
 			}
 			map (const map& x): _comp(x._comp), val_comp(x.val_comp), _alloc(x._alloc), _tree(x._tree), _size(x._size) {}
 			~map(){}
+			map& operator= (const map& x)
+			{
+				clear();
+				_tree = x._tree;
+				return *this;
+			}
 			//-----------------------------------------------------------/
 
 			
@@ -162,6 +168,7 @@ namespace ft
 			// observers:
 			key_compare key_comp() const {return _comp;}
 			value_compare value_comp() const {return val_comp;}
+			allocator_type get_allocator() const { return _alloc;}
 			//-----------------------------------------------------------/
 
 

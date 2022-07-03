@@ -36,7 +36,7 @@ namespace ft {
 					_alloc.construct(_array + i, value);
 			}
 			template <class InputIterator>
-         		vector (InputIterator first, typename enable_if<Identify<typename std::iterator_traits<InputIterator>::iterator_category>::is_true, InputIterator>::type last, const allocator_type& alloc = allocator_type()): _array(), _alloc(alloc), _size(), _capacity()
+         		vector (InputIterator first, typename enable_if<Identify<typename std::iterator_traits<InputIterator>::iterator_category>::is_true, InputIterator>::type last, const allocator_type& alloc = allocator_type()): _array(), _size(), _capacity(), _alloc(alloc)
 				{
 					difference_type ret = _distance(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
 					if (ret != -1 && (_capacity = (size_type)ret))
