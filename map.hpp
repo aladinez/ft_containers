@@ -18,13 +18,13 @@ namespace ft
 			typedef typename Allocator::reference				reference;
 			typedef typename Allocator::const_reference			const_reference;
 			typedef ft::iterator<value_type>					iterator;							
-			// typedef ft::iterator<const value_type>			const_iterator;	
+			typedef ft::iterator<const value_type>			const_iterator;	
 			typedef typename Allocator::size_type			size_type;
 			typedef std::ptrdiff_t                  		difference_type;
 			typedef typename Allocator::pointer				pointer;
 			typedef typename Allocator::const_pointer		const_pointer;
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
-			// typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 		private:
 			class value_compare;
 			typedef ft::RB_tree<value_type, value_compare, Allocator>	RBT;
@@ -52,21 +52,29 @@ namespace ft
 			~map(){}
 			//-----------------------------------------------------------/
 
+			
 			///---------------------- iterators:
 			iterator begin()
 			{
 				return iterator(_tree.minimum(), _tree.get_root());
 			}
-			// const_iterator begin() const;
+			const_iterator begin() const
+			{
+				return const_iterator(_tree.minimum(), _tree.get_root());
+
+			}
 			iterator end()
 			{
 				return iterator(_tree.get_nil(), _tree.get_root());
 			}
-			// const_iterator end()const;
+			const_iterator end()const
+			{
+				return const_iterator(_tree.get_nil(), _tree.get_root());
+			}
 			reverse_iterator rbegin(){return reverse_iterator(end());}
-			// const_reverse_iterator rbegin() const{return const_reverse_iterator(end());}
+			const_reverse_iterator rbegin() const{return const_reverse_iterator(end());}
 			reverse_iterator rend(){return reverse_iterator(begin());}
-			// const_reverse_iterator rend() const{return const_reverse_iterator(begin());}
+			const_reverse_iterator rend() const{return const_reverse_iterator(begin());}
 			//-----------------------------------------------------------/
 
 			// ------------ capacity:
@@ -160,7 +168,10 @@ namespace ft
 				Node<value_type>* n = _tree.search(value_type(x, T()));
 				return iterator(n, _tree.get_root());
 			}
-			// const_iterator find(const key_type& x) const;
+			const_iterator find(const key_type& x) const
+			{
+				return const_iterator(_tree.get_nil(), _tree.get_root());
+			}
 			size_type count(const key_type& x) const
 			{
 				Node<value_type>* n = _tree.search(value_type(x, T()));

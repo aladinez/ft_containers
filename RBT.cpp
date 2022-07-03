@@ -2,8 +2,14 @@
 #include <iostream>
 #include "map.hpp"
 #include "pair.hpp"
+#include <map>
 
+void func(const ft::map<char,int> mymap)
+{
+    for(ft::map<char,int>::const_iterator it = mymap.begin(); it != mymap.end(); it++)
+        std::cout << it->first << std::endl;
 
+}
 int main()
 {
 
@@ -36,10 +42,16 @@ int main()
     ft::map<char,int> mymap;
     char c;
 
+
     mymap ['a']=101;
     mymap ['c']=202;
     mymap ['f']=303;
+    func(mymap);
 
+    // std::map<char,int>::const_iterator it = mymap.begin();
+    // std::cout << it->first << std::endl;
+    // it++;
+    // std::cout << it->first << std::endl;
     for (c='a'; c<'h'; c++)
     {
         std::cout << c;

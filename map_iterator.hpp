@@ -27,6 +27,21 @@ namespace ft
 			}
             iterator(iterator const& it) : _ptr(it._ptr), _root(it._root), _NIL(it._NIL) {}
             ~iterator(){}
+
+			// template<typename U>
+			// operator iterator<U>() const
+            // { 
+            //     return iterator<U>(reinterpret_cast<ft::Node<U>*>(_ptr), reinterpret_cast<ft::Node<U>*>(_root));
+            // }
+
+			// https://stackoverflow.com/questions/71965838/no-suitable-user-defined-conversion-but-the-convertion-is-specified
+			// template<typename U>
+  			// iterator(iterator<U> it)
+			// {
+			// 	_ptr = (ft::Node<const Pair>*)it._ptr;
+			// 	_root = (ft::Node<const Pair>*)it._root;
+			// 	_NIL = (ft::Node<const Pair>*)it._NIL;
+			// }
 			
 			iterator &operator=(iterator const& it)
             {
