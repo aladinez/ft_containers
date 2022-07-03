@@ -18,19 +18,21 @@ namespace ft
 			typedef Pair&                             	reference;
 			typedef std::bidirectional_iterator_tag		iterator_category;
 			
-			iterator(): _ptr(NULL), _NIL(NULL), _root(NULL){}
-            iterator(node_ptr ptr, node_ptr nil, node_ptr root): _ptr(ptr), _NIL(nil), _root(root) {}
-            iterator(iterator const& it) 
-			{
-				_ptr = it._ptr;
-				_NIL = it._NIL;
-				_root = it._root;
+			// iterator(): _ptr(NULL), _NIL(NULL), _root(NULL){}
+            iterator(node_ptr ptr = NULL, node_ptr root = NULL): _ptr(ptr),_root(root) {
+				if (root)
+					_NIL = root->p;
+				else
+					_NIL = NULL;
 			}
+            iterator(iterator const& it) : _ptr(it._ptr), _root(it._root), _NIL(it._NIL) {}
             ~iterator(){}
 			
 			iterator &operator=(iterator const& it)
             {
                 _ptr = it._ptr;
+				_root = it._root;
+				_NIL = it._NIL;
                 return *this;
             }
 

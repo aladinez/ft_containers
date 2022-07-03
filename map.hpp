@@ -54,12 +54,12 @@ namespace ft
 			///---------------------- iterators:
 			iterator begin()
 			{
-				return iterator(_tree.minimum(), _tree.get_nil(), _tree.get_root());
+				return iterator(_tree.minimum(), _tree.get_root());
 			}
 			// const_iterator begin() const;
 			iterator end()
 			{
-				return iterator(_tree.get_nil(), _tree.get_nil(), _tree.get_root());
+				return iterator(_tree.get_nil(), _tree.get_root());
 			}
 			// const_iterator end()const;
 			reverse_iterator rbegin(){return reverse_iterator(end());}
@@ -92,19 +92,19 @@ namespace ft
 			{
 				Node<value_type>* n = _tree.search(x);
 				if (n != _tree.get_nil())
-					return ft::make_pair(iterator(n, _tree.get_nil(), _tree.get_root()), false);
+					return ft::make_pair(iterator(n, _tree.get_root()), false);
 				_tree.insert(x);
 				n = _tree.search(x);
-				return ft::make_pair(iterator(n, _tree.get_nil(), _tree.get_root()), true);
+				return ft::make_pair(iterator(n, _tree.get_root()), true);
 			}
 			iterator insert(iterator position, const value_type& x) // position : used as a suggestion as to where to start the search
 			{
 				Node<value_type>* n = _tree.search(x);
 				if (n != _tree.get_nil())
-					return iterator(n, _tree.get_nil(), _tree.get_root());
+					return iterator(n, _tree.get_root());
 				_tree.insert(x);
 				n = _tree.search(x);
-				return iterator(n, _tree.get_nil(), _tree.get_root());
+				return iterator(n, _tree.get_root());
 
 			}
 			template <class InputIterator>
@@ -126,7 +126,7 @@ namespace ft
 			iterator find (const key_type& k)
 			{
 				Node<value_type>* n = _tree.search(ft::make_pair(k, T()));
-				return iterator(n, _tree.get_nil(), _tree.get_root());
+				return iterator(n, _tree.get_root());
 			}
 			void print()
 			{

@@ -53,8 +53,8 @@ int main()
     mymap.print();
 
     // third insert function version (range insertion):
-    ft::map<char,int> anothermap(mymap.begin(), mymap.end());
-    // anothermap.insert(mymap.begin(),mymap.find('c'));
+    ft::map<char,int> anothermap;
+    anothermap.insert(mymap.begin(),mymap.find('c'));
     // anothermap.insert(mymap.begin(), mymap.end());
     anothermap.print();
     // std::cout << (mymap.find('c'))->second << std::endl;
