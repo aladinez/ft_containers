@@ -147,6 +147,14 @@ namespace ft
 				clear(x->right);
 				delete_node(x);
 			}
+			void clear()
+			{
+				node* x = _root;
+				clear(x->left);
+				clear(x->right);
+				delete_node(x);
+				_root = _NIL;
+			}
 			void insert(value_type key)
 			{
 				node* z = _newNode(key);

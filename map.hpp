@@ -138,8 +138,14 @@ namespace ft
 				}
 				_tree.remove(*it);
 			}
-			// void swap(map<Key,T,Compare,Allocator>&);
-			// void clear();
+			void swap(map<Key,T,Compare,Allocator>& x)
+			{
+				std::swap(_tree, x._tree);
+			}
+			void clear()
+			{
+				_tree.clear();
+			}
 			//-----------------------------------------------------------/
 
 			// void insert(value_type x)
