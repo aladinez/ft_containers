@@ -229,9 +229,15 @@ namespace ft
 				return iterator(y, _tree.get_root());
 			}
 			pair<iterator,iterator>
-			equal_range(const key_type& x);
+			equal_range(const key_type& x)
+			{
+				return ft::pair<iterator, iterator>(lower_bound(x), upper_bound(x));
+			}
 			pair<const_iterator,const_iterator>
-			equal_range(const key_type& x) const;
+			equal_range(const key_type& x) const
+			{
+				return ft::pair<iterator, iterator>(lower_bound(x), upper_bound(x));
+			}
 			//-----------------------------------------------------------/
 
 
