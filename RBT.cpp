@@ -18,7 +18,7 @@ void func(const ft::map<char,int> mymap)
     std::vector<int> v;
     mp.clear();
     int i, j;
-    for ( i = 0, j = 0; i < 25 * 10; ++i, ++j)
+    for ( i = 0, j = 0; i < 3; ++i, ++j)
         mp.insert(ft::make_pair(i, j));
     v.push_back(mp.size());
     mp.clear();

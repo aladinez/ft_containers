@@ -147,24 +147,23 @@ namespace ft
 
 			void clear(node* x)
 			{
-				node* z = search(x->key);
-				if (z != _NIL)
-				{
-					clear(z->left);
-					clear(z->right);
-					delete_node(z);
-				}
+				// node* z = search(x->key);
+				if (x == _NIL)
+					return;
+				clear(x->left);
+				clear(x->right);
+				delete_node(x);
+				
 			}
 			void clear()
 			{
-				node* x = _root;
-				if (x != _NIL)
-				{
-					clear(x->left);
-					clear(x->right);
-					delete_node(x);
-					_root = _NIL;
-				}
+				// node* x = _root;
+				if (_root == _NIL)
+					return;
+				clear(_root->left);
+				clear(_root->right);
+				delete_node(_root);
+				_root = _NIL;
 			}
 			void insert(value_type key)
 			{

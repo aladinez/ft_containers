@@ -276,6 +276,7 @@ namespace ft
 
 	template <class Key, class T, class Compare, class Alloc>
 	class map<Key,T,Compare,Alloc>::value_compare
+		: public std::binary_function<value_type, value_type, bool>
 	{   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
 		friend class map;
 		protected:
