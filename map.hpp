@@ -21,7 +21,7 @@ namespace ft
 			typedef typename Allocator::reference								reference;
 			typedef typename Allocator::const_reference							const_reference;
 			typedef ft::map_iterator<value_type, ft::Node<value_type> >					iterator;							
-			typedef ft::map_iterator<value_type, const ft::Node<value_type> >		const_iterator;	
+			typedef ft::map_iterator<const value_type, ft::Node<value_type> >		const_iterator;	
 			typedef typename Allocator::size_type								size_type;
 			typedef std::ptrdiff_t                  							difference_type;
 			typedef typename Allocator::pointer									pointer;

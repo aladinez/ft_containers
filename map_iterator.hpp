@@ -1,6 +1,7 @@
 #ifndef _MAP_ITERATOR_HPP
 #define _MAP_ITERATOR_HPP
 #include "RBT_MAP.hpp"
+#include "iterator_traits.hpp"
 
 #include <iterator>
 
@@ -12,10 +13,10 @@ namespace ft
 		public:
 		
 			typedef ft::Node<Pair>						node_val;
-			typedef ft::Node<Pair>*                     node_ptr;
-			// typedef N*				                     node_ptr;
+			// typedef ft::Node<Pair>*                     node_ptr;
+			typedef N*				                     node_ptr;
 			// typedef const N*               const_node_ptr;
-			typedef const ft::Node<Pair>*               const_node_ptr;
+			typedef ft::Node<const Pair>*               const_node_ptr;
 			typedef std::ptrdiff_t						difference_type;
 			typedef Pair                            	value_type;   
 			typedef Pair*                             	pointer;   
@@ -36,10 +37,23 @@ namespace ft
             map_iterator(map_iterator const& it) : _ptr(it._ptr), _root(it._root), _NIL(it._NIL) {}
             ~map_iterator(){}
 
-			operator map_iterator<value_type, const N>() const
+			operator map_iterator<const Pair, N> () const
             { 
-                return map_iterator<value_type, const N>((_ptr), (_root));
+                return map_iterator<const Pair, N>((_ptr), (_root));
             }
+
+			// template <class U>
+			// map_iterator(const map_iterator<U>& it,
+			// typename ft::enable_if<std::is_convertible<U, Pair>::value>::type = 0)
+			// {
+			// 	_ptr = (const_node_ptr)it.get_ptr();
+			// 	_root = (const_node_ptr)it.get_root();
+			// 	_NIL = (const_node_ptr)it.get_nil();
+			// }
+
+			node_ptr get_root() const {return _root;}
+			node_ptr get_nil() const {return _NIL;}
+			node_ptr get_ptr() const {return _ptr;}
 			
 
 			// template<typename U>

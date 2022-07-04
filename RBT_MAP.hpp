@@ -101,11 +101,14 @@ namespace ft
 			}
 			node* find(node *x, value_type new_key) const
 			{
+				// node* min = minimum();
+				// if (_comp(min->key, new_key))
+				// 	return min;
 				while (x != _NIL)
 				{
-					if (_comp(x->key, new_key) && x->right != _NIL)
+					if (_comp(x->key, new_key))
 						x = x->right;
-					else if (_comp(new_key, new_key) && x->right != _NIL)
+					else if (_comp(new_key, x->key) && x->left != _NIL)
 						x = x->left;
 					else
 						return x;
@@ -132,6 +135,7 @@ namespace ft
 					return successor(y);
 				node* x = _root;
 				return find(x, new_key);
+				return x;
 			}
 			void left_rotate(node* x)
 			{
