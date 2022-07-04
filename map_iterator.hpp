@@ -63,6 +63,8 @@ namespace ft
 
 			value_type& operator* () const                    {return _ptr->key;}
 			pointer  operator->() const                    {return &(_ptr->key);}
+			//temp solution
+			// pointer  operator->() const                    {return const_cast<Pair*>(&(_ptr->key));}
 
 			map_iterator  operator++(int) /* postfix */        
 			{

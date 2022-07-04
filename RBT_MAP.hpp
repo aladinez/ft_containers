@@ -69,6 +69,7 @@ namespace ft
 				_size = rbt._size;
 				return *this;
 			}
+			
 			node* search(value_type new_key) const
 			{
 				node* x = _root;
@@ -98,6 +99,17 @@ namespace ft
 				}
 				return &(x->key);
 			}
+
+			// node* lower_bound(value_type new_key)
+			// {
+			// 	node* x = search(new_key);
+			// 	if (x != _NIL)
+			// 		return successor(x);
+			// 	node* y = minimum();
+			// 	for (node* y = minimum(); _comp()
+
+				
+			// }
 			void left_rotate(node* x)
 			{
 				node* y = x->right;
@@ -404,6 +416,40 @@ namespace ft
 				}
 				return x;
 			}
+			
+			node* successor(node* x)
+			{
+				if (x != _NIL)
+				{   
+					if (x->right != _NIL)
+						return _most_left(x->right);
+					node* y = x->p;
+					while (y != _NIL && x == y->right)
+					{
+						x = y;
+						y = y->p;
+					}
+					return y;
+				}
+				return x;
+			}
+			node* predecessor(node* x)
+			{
+				if (x != _NIL)
+				{
+					if (x->left != _NIL)
+						return _most_right(x->left);
+					node* y = x->p;
+					while (y != _NIL && x == y->left)
+					{
+						x = y;
+						y = y->p;
+					}
+					return y;
+				}
+				return x;
+			}
+
 			void _transplant(node* u, node* v)
 			{
 				if (u->p == _NIL)
