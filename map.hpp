@@ -21,7 +21,7 @@ namespace ft
 			typedef typename Allocator::reference								reference;
 			typedef typename Allocator::const_reference							const_reference;
 			typedef ft::map_iterator<value_type, ft::Node<value_type> >					iterator;							
-			typedef ft::map_iterator<value_type, const ft::Node<value_type> >		const_iterator;	
+			typedef ft::map_iterator<const value_type, const ft::Node<value_type> >		const_iterator;	
 			typedef typename Allocator::size_type								size_type;
 			typedef std::ptrdiff_t                  							difference_type;
 			typedef typename Allocator::pointer									pointer;
@@ -208,10 +208,26 @@ namespace ft
 					return 1;
 				return 0;
 			}
-			iterator lower_bound(const key_type& x);
-			const_iterator lower_bound(const key_type& x) const;
-			iterator upper_bound(const key_type& x);
-			const_iterator upper_bound(const key_type& x) const;
+			iterator lower_bound(const key_type& x)
+			{
+				Node<value_type>* y = _tree.lower_bound(ft::make_pair(x, T()));
+				return iterator(y, _tree.get_root());
+			}
+			const_iterator lower_bound(const key_type& x) const
+			{
+				Node<value_type>* y = _tree.lower_bound(ft::make_pair(x, T()));
+				return const_iterator(y, _tree.get_root());
+			}
+			iterator upper_bound(const key_type& x)
+			{
+				Node<value_type>* y = _tree.upper_bound(ft::make_pair(x, T()));
+				return iterator(y, _tree.get_root());
+			}
+			const_iterator upper_bound(const key_type& x) const
+			{
+				Node<value_type>* y = _tree.upper_bound(ft::make_pair(x, T()));
+				return iterator(y, _tree.get_root());
+			}
 			pair<iterator,iterator>
 			equal_range(const key_type& x);
 			pair<const_iterator,const_iterator>

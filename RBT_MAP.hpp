@@ -99,17 +99,40 @@ namespace ft
 				}
 				return &(x->key);
 			}
-
-			// node* lower_bound(value_type new_key)
-			// {
-			// 	node* x = search(new_key);
-			// 	if (x != _NIL)
-			// 		return successor(x);
-			// 	node* y = minimum();
-			// 	for (node* y = minimum(); _comp()
-
+			node* find(node *x, value_type new_key) const
+			{
+				while (x != _NIL)
+				{
+					if (_comp(x->key, new_key) && x->right != _NIL)
+						x = x->right;
+					else if (_comp(new_key, new_key) && x->right != _NIL)
+						x = x->left;
+					else
+						return x;
+				}
+				return x;
+			}
+			node* lower_bound(value_type new_key) const
+			{
+				if (_root == _NIL)
+					return _root;
+				node* y = search(new_key);
+				if (y != _NIL)
+					return y;
+				node* x = _root;
+				return find(x, new_key);
 				
-			// }
+			}
+			node* upper_bound(value_type new_key) const
+			{
+				if (_root == _NIL)
+					return _root;
+				node* y = search(new_key);
+				if (y != _NIL)
+					return successor(y);
+				node* x = _root;
+				return find(x, new_key);
+			}
 			void left_rotate(node* x)
 			{
 				node* y = x->right;
@@ -417,7 +440,7 @@ namespace ft
 				return x;
 			}
 			
-			node* successor(node* x)
+			node* successor(node* x) const
 			{
 				if (x != _NIL)
 				{   
@@ -433,7 +456,7 @@ namespace ft
 				}
 				return x;
 			}
-			node* predecessor(node* x)
+			node* predecessor(node* x) const
 			{
 				if (x != _NIL)
 				{
