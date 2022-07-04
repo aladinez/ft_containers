@@ -38,14 +38,14 @@ int main()
     // ft::map<int, char>::iterator my_it, my_it1, tmp;
     // ft::map<int, char>::const_iterator c_it, c_ob(my_it);
 
-    ft::map<char,int> mymap;
+    std::map<char,int> mymap;
 
     mymap['a']=10;
     mymap['b']=20;
     mymap['c']=30;
 
-    ft::pair<ft::map<char,int>::iterator,ft::map<char,int>::iterator> ret;
-    ret = mymap.equal_range('b');
+    std::pair<std::map<char,int>::iterator,std::map<char,int>::iterator> ret;
+    ret = mymap.equal_range(4);
 
     std::cout << "lower bound points to: ";
     std::cout << ret.first->first << " => " << ret.first->second << '\n';

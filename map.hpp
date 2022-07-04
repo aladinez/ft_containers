@@ -228,6 +228,7 @@ namespace ft
 				Node<value_type>* y = _tree.upper_bound(ft::make_pair(x, T()));
 				return iterator(y, _tree.get_root());
 			}
+			// TODO: fix return if it's less or greater than min and max
 			pair<iterator,iterator>
 			equal_range(const key_type& x)
 			{
