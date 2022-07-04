@@ -199,6 +199,7 @@ namespace ft
 				clear(_root->right);
 				delete_node(_root);
 				_root = _NIL;
+				_size = 0;
 			}
 			void insert(value_type key)
 			{

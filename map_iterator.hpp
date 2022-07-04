@@ -12,10 +12,10 @@ namespace ft
 		public:
 		
 			typedef ft::Node<Pair>						node_val;
-			// typedef ft::Node<Pair>*                     node_ptr;
-			typedef N*				                     node_ptr;
-			typedef const N*               const_node_ptr;
-			// typedef const ft::Node<Pair>*               const_node_ptr;
+			typedef ft::Node<Pair>*                     node_ptr;
+			// typedef N*				                     node_ptr;
+			// typedef const N*               const_node_ptr;
+			typedef const ft::Node<Pair>*               const_node_ptr;
 			typedef std::ptrdiff_t						difference_type;
 			typedef Pair                            	value_type;   
 			typedef Pair*                             	pointer;   

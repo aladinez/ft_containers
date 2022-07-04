@@ -21,7 +21,7 @@ namespace ft
 			typedef typename Allocator::reference								reference;
 			typedef typename Allocator::const_reference							const_reference;
 			typedef ft::map_iterator<value_type, ft::Node<value_type> >					iterator;							
-			typedef ft::map_iterator<const value_type, const ft::Node<value_type> >		const_iterator;	
+			typedef ft::map_iterator<value_type, const ft::Node<value_type> >		const_iterator;	
 			typedef typename Allocator::size_type								size_type;
 			typedef std::ptrdiff_t                  							difference_type;
 			typedef typename Allocator::pointer									pointer;
@@ -232,12 +232,12 @@ namespace ft
 			pair<iterator,iterator>
 			equal_range(const key_type& x)
 			{
-				return ft::pair<iterator, iterator>(lower_bound(x), upper_bound(x));
+				return ft::make_pair(lower_bound(x), upper_bound(x));
 			}
 			pair<const_iterator,const_iterator>
 			equal_range(const key_type& x) const
 			{
-				return ft::pair<iterator, iterator>(lower_bound(x), upper_bound(x));
+				return ft::make_pair(lower_bound(x), upper_bound(x));
 			}
 			//-----------------------------------------------------------/
 
