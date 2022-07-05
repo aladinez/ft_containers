@@ -126,41 +126,41 @@ int main()
         }
     } 
 
-    std::map<char,int> mymap;
-    std::map<char,int>::iterator itlow,itup;
-
-    mymap['a']=20;
-    mymap['b']=40;
-    mymap['c']=60;
-    mymap['d']=80;
-    mymap['e']=100;
-
-    itlow=mymap.lower_bound ('c');  // itlow points to b
-    itup=mymap.upper_bound ('c');   // itup points to e (not d!)
-
-    std::cout << "lowr : " << itlow->first << std::endl;
-    std::cout << "upp : " << itup->first << std::endl;
-    // ft::map<int, int> my_map;
-    // lower_bound_test(my_map);
-
-    // compilation error in mosan's tester
-    ft::map<int, char>::iterator my_it, my_it1, tmp;
-    ft::map<int, char>::const_iterator c_it, c_ob(my_it);
-
     // std::map<char,int> mymap;
+    // std::map<char,int>::iterator itlow,itup;
 
-    // mymap['a']=10;
-    // mymap['b']=20;
-    // mymap['c']=30;
+    // mymap['a']=20;
+    // mymap['b']=40;
+    // mymap['c']=60;
+    // mymap['d']=80;
+    // mymap['e']=100;
 
-    // std::pair<std::map<char,int>::iterator,std::map<char,int>::iterator> ret;
-    // ret = mymap.equal_range(120);
+    // itlow=mymap.lower_bound ('c');  // itlow points to b
+    // itup=mymap.upper_bound ('c');   // itup points to e (not d!)
 
-    // std::cout << "lower bound points to: ";
-    // std::cout << ret.first->first << " => " << ret.first->second << '\n';
+    // std::cout << "lowr : " << itlow->first << std::endl;
+    // std::cout << "upp : " << itup->first << std::endl;
+    // // ft::map<int, int> my_map;
+    // // lower_bound_test(my_map);
 
-    // std::cout << "upper bound points to: ";
-    // std::cout << ret.second->first << " => " << ret.second->second << '\n';
+    // // compilation error in mosan's tester
+    // ft::map<int, char>::iterator my_it, my_it1, tmp;
+    // ft::map<int, char>::const_iterator c_it, c_ob(my_it);
+
+    ft::map<char,int> mymap;
+
+    mymap['a']=10;
+    mymap['b']=20;
+    mymap['c']=30;
+
+    ft::pair<ft::map<char,int>::iterator,ft::map<char,int>::iterator> ret;
+    ret = mymap.equal_range(120);
+
+    std::cout << "lower bound points to: ";
+    std::cout << ret.first->first << " => " << ret.first->second << '\n';
+
+    std::cout << "upper bound points to: ";
+    std::cout << ret.second->first << " => " << ret.second->second << '\n';
     
     
     // ft::map<char,int> mymap;

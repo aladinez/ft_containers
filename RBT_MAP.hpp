@@ -69,7 +69,7 @@ namespace ft
 				_size = rbt._size;
 				return *this;
 			}
-			void swap(RB_tree rbt)
+			void swap(RB_tree& rbt)
 			{
 				std::swap(_root, rbt._root);
 				std::swap(_NIL, rbt._NIL);
@@ -109,6 +109,9 @@ namespace ft
 			}
 			node* find(node *x, value_type new_key) const
 			{
+				node* min = minimum();
+				if (_comp(min->key, new_key))
+					return min;
 				node* y = _NIL;
 				while (x != _NIL)
 				{
@@ -126,24 +129,29 @@ namespace ft
 			}
 			node* lower_bound(value_type new_key) const
 			{
-				if (_root == _NIL)
-					return _root;
-				node* y = search(new_key);
-				if (y != _NIL)
-					return y;
 				node* x = _root;
-				return find(x, new_key);
-				
+				node* y = _NIL;
+				while (x != _NIL)
+				{
+					if (_comp(new_key, x->key))
+					{
+						y = x;
+						x = x->left;
+					}
+					else if (_comp(x->key, new_key))
+						x = x->right;
+					else
+						return x;
+				}
+				return y;
 			}
+
 			node* upper_bound(value_type new_key) const
 			{
-				if (_root == _NIL)
-					return _root;
-				node* y = search(new_key);
-				if (y != _NIL)
-					return successor(y);
-				y = find(y, new_key);
-				return successor(y);
+				node* x = lower_bound(new_key);
+				if (!_comp(x->key, new_key) && !_comp(new_key, x->key))
+					return successor(x);
+				return (x);
 			}
 			void left_rotate(node* x)
 			{
