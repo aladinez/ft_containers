@@ -101,19 +101,20 @@ namespace ft
 			}
 			node* find(node *x, value_type new_key) const
 			{
-				// node* min = minimum();
-				// if (_comp(min->key, new_key))
-				// 	return min;
+				node* y = _NIL;
 				while (x != _NIL)
 				{
+					y = x;
 					if (_comp(x->key, new_key))
+					{
 						x = x->right;
-					else if (_comp(new_key, x->key) && x->left != _NIL)
-						x = x->left;
+					}
 					else
-						return x;
+					{
+						x = x->left;
+					}
 				}
-				return x;
+				return (y);
 			}
 			node* lower_bound(value_type new_key) const
 			{
@@ -133,9 +134,8 @@ namespace ft
 				node* y = search(new_key);
 				if (y != _NIL)
 					return successor(y);
-				node* x = _root;
-				return find(x, new_key);
-				return x;
+				y = lower_bound(new_key);
+				return successor(y);
 			}
 			void left_rotate(node* x)
 			{
