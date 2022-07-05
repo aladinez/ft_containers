@@ -176,7 +176,10 @@ namespace ft
 			}
 			void swap(map<Key,T,Compare,Allocator>& x)
 			{
-				std::swap(_tree, x._tree);
+				_tree.swap(x._tree);
+				std::swap(_comp, x._comp);
+				// std::swap(val_comp, x.val_comp);
+				std::swap(_alloc, x._alloc);
 			}
 			void clear()
 			{
@@ -289,7 +292,11 @@ namespace ft
 		return !(ft::lexicographical_compare(y.begin(), y.end(), x.begin(), x.end()));
 	}
 
-	
+	template <class Key, class T, class Compare, class Alloc>
+  void swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y)
+  {
+	x.swap(y);
+  }
 
 
 	

@@ -69,6 +69,14 @@ namespace ft
 				_size = rbt._size;
 				return *this;
 			}
+			void swap(RB_tree rbt)
+			{
+				std::swap(_root, rbt._root);
+				std::swap(_NIL, rbt._NIL);
+				std::swap(_alloc, rbt._alloc);
+				std::swap(_comp, rbt._comp);
+				std::swap(_size, rbt._size);
+			}
 			
 			node* search(value_type new_key) const
 			{
@@ -104,13 +112,13 @@ namespace ft
 				node* y = _NIL;
 				while (x != _NIL)
 				{
-					y = x;
 					if (_comp(x->key, new_key))
 					{
 						x = x->right;
 					}
 					else
 					{
+						y = x;
 						x = x->left;
 					}
 				}
@@ -134,7 +142,7 @@ namespace ft
 				node* y = search(new_key);
 				if (y != _NIL)
 					return successor(y);
-				y = lower_bound(new_key);
+				y = find(y, new_key);
 				return successor(y);
 			}
 			void left_rotate(node* x)
