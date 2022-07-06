@@ -20,7 +20,7 @@
 #define	_vector 			ft::vector
 #define	_stack	 			ft::stack
 #define	_map 				ft::map
-#define	_set	 			ft::Set
+#define	_set	 			ft::set
 #define	_is_integral 		ft::is_integral
 #define	_enable_if 			ft::enable_if
 #define	_pair 				ft::pair
