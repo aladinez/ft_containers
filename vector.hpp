@@ -4,11 +4,12 @@
 #include <memory>
 #include <cstddef>
 #include "Iterator.hpp"
-#include "iterator_traits.hpp"
-#include "reverse_iterator.hpp"
+#include "Utility.hpp"
+// #include "iterator_traits.hpp"
+// #include "reverse_iterator.hpp"
 #include <iostream>
 #include <typeinfo>
-#include "equal.hpp"
+// #include "equal.hpp"
 
 namespace ft {
 	template <class T, class Allocator = std::allocator<T> >

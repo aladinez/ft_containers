@@ -1,7 +1,7 @@
 #ifndef _ITERATOR_HPP
 #define _ITERATOR_HPP
 
-#include <iterator>
+// #include <iterator>
 
 namespace ft
 {
@@ -11,7 +11,8 @@ namespace ft
         public:
             typedef T                               value_type;
             typedef std::ptrdiff_t                  difference_type;
-            typedef T*                              pointer;   
+            typedef T*                              pointer;
+			typedef pointer							iterator_type;
             typedef T&                              reference;
             typedef std::random_access_iterator_tag  iterator_category;
             

@@ -8,40 +8,15 @@
 
 int main()
 {
-    // ft::vector<int> second(4,100);
-    // std::cout << second.capacity() << std::endl;
-  other::vector<int> myvector (3,100);
-  other::vector<int>::iterator it;
+	std::vector<std::string> res;
+	std::vector<std::string> res2;
 
-std::cout << "\nmyvector contains: cap= " << myvector.capacity() << "\n";
-  for (it=myvector.begin(); it<myvector.end(); it++)
-    std::cout << ' ' << *it;
+	res.push_back(typeid(std::vector<int>::iterator::iterator_type).name());
+	res2.push_back(typeid(ft::vector<int>::iterator::iterator_type).name());
 
-  it = myvector.begin();
-  it = myvector.insert ( it , 200 );
-
-
-  myvector.insert (it,2,300);
-
-  // "it" no longer valid, get a new one:
-  it = myvector.begin();
-
-
-  other::vector<int> anothervector (2,400);
-  myvector.insert (it+2,anothervector.begin(),anothervector.end());
-
-  std::cout << "\nmyvector contains: cap= " << myvector.capacity() << "\n";
-  for (it=myvector.begin(); it<myvector.end(); it++)
-    std::cout << ' ' << *it;
-
-  int myarray [] = { 501,502,503 };
-  myvector.insert (myvector.begin(), myarray, myarray+3);
-  myvector.insert (myvector.begin(), myarray, myarray+3);
-
-  std::cout << "\nmyvector contains: cap= " << myvector.capacity() << "\n";
-  for (it=myvector.begin(); it<myvector.end(); it++)
-    std::cout << ' ' << *it;
-  std::cout << '\n';
+  std::cout << *(res.begin()) << std::endl;
+  std::cout << *(res2.begin()) << std::endl;
+  
    
     return (0);    
 }
