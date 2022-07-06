@@ -3,14 +3,11 @@
 #include <iostream>
 #include <stdio.h>
 #include <memory>
-#include "Utility.hpp"
+#include "../Utility.hpp"
 
 #define RED__ 0
 #define BLACK__ 1
 
-// #define _RED     "\x1b[31m"
-// #define BLUE    "\x1b[34m"
-// #define RESET   "\x1b[0m"
 
 namespace ft
 {
@@ -428,10 +425,6 @@ namespace ft
 			node* const* get_root() const {return &_root;}
 			node* get_nil() const {return _NIL;}
 			size_type size() const {return _size;}
-			void print_tree()
-			{
-				printTree(_root);
-			}
 		private:
 			
 			node* _makeCopy(node* x, node* nil)
@@ -511,32 +504,5 @@ namespace ft
 				v->p = u->p;
 			}
 	};
-	int rec[1000006];
-	template <typename T>
-	void printTree(struct Node<T>* curr,int depth = 0)
-	{
-		int i;
-		if(!curr)return;
-		printf("\t");
-		for(i=0;i<depth;i++)
-		{
-			if(i==depth-1)
-				printf("%s\u2014\u2014\u2014",rec[depth-1]?"\u0371":"\u221F");
-			else
-				printf("%s   ",rec[i]?"\u23B8":"  ");
-		}
-		// if (curr->color == BLACK__) // to print mapped type.
-		// 	printf(BLUE "%s" RESET "\n", curr->key.second.c_str());
-		// else
-		// 	printf(_RED__ "%s" RESET "\n", curr->key.second.c_str());
-		if (curr->color == BLACK__)
-			printf("%d\n", curr->key.first);
-		else
-			printf("%d\n", curr->key.first);
-		rec[depth]=1;
-		printTree(curr->left,depth+1);
-		rec[depth]=0;
-		printTree(curr->right,depth+1);
-	}
 		
 }

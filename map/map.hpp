@@ -1,11 +1,8 @@
 #include <functional>
+#include <stdexcept>
 #include "RBT_MAP.hpp"
 #include "map_iterator.hpp"
-#include "Utility.hpp"
-// #include "reverse_iterator.hpp"
-// #include "pair.hpp"
-// #include "equal.hpp"
-#include <stdexcept>
+#include "../Utility.hpp"
 
 
 namespace ft
@@ -154,18 +151,10 @@ namespace ft
 			{
 				_tree.remove(position.get_ptr());
 
-				// erase(position->first);
 			}
 			size_type erase(const key_type& x)
 			{
 				return _tree.remove(ft::make_pair(x, T()));
-				// Node<value_type>* n = _tree.search(ft::make_pair(x, T()));
-				// if (n != _tree.get_nil())
-				// {
-				// 	_tree.remove(n);
-				// 	return 1;
-				// }
-				// return 0;
 			}
 			void erase(iterator first, iterator last)
 			{	
@@ -248,11 +237,6 @@ namespace ft
 			}
 			//-----------------------------------------------------------/
 
-
-			void print()
-			{
-				_tree.print_tree();
-			}
 	};
 
 	

@@ -1,9 +1,7 @@
 #ifndef _MAP_ITERATOR_HPP
 #define _MAP_ITERATOR_HPP
-#include "RBT_MAP.hpp"
-// #include "iterator_traits.hpp"
 
-#include <iterator>
+// #include <iterator>
 
 namespace ft
 {
@@ -13,9 +11,7 @@ namespace ft
 		public:
 		
 			typedef ft::Node<Pair>						node_val;
-			// typedef ft::Node<Pair>*                     node_ptr;
 			typedef N*				                     node_ptr;
-			// typedef const N*               const_node_ptr;
 			typedef ft::Node<const Pair>*               const_node_ptr;
 			typedef std::ptrdiff_t						difference_type;
 			typedef Pair                            	value_type;   
@@ -42,27 +38,9 @@ namespace ft
                 return map_iterator<const Pair, N>((_ptr), (_root));
             }
 
-			// template <class U>
-			// map_iterator(const map_iterator<U>& it,
-			// typename ft::enable_if<std::is_convertible<U, Pair>::value>::type = 0)
-			// {
-			// 	_ptr = (const_node_ptr)it.get_ptr();
-			// 	_root = (const_node_ptr)it.get_root();
-			// 	_NIL = (const_node_ptr)it.get_nil();
-			// }
-
 			node_ptr get_root() const {return *_root;}
 			node_ptr get_nil() const {return _NIL;}
 			node_ptr get_ptr() const {return _ptr;}
-			
-
-			// template<typename U>
-  			// map_iterator(map_iterator<U> it)
-			// {
-			// 	_ptr = (ft::Node<const Pair>*)it._ptr;
-			// 	_root = (ft::Node<const Pair>*)it._root;
-			// 	_NIL = (ft::Node<const Pair>*)it._NIL;
-			// }
 			
 			map_iterator &operator=(map_iterator const& it)
             {
@@ -77,22 +55,15 @@ namespace ft
 
 			value_type& operator* () const                    {return _ptr->key;}
 			pointer  operator->() const                    {return &(operator*());}
-			// pointer  operator->() const                    {return &(_ptr->key);}
-			//temp solution
-			// pointer  operator->() const                    {return const_cast<Pair*>(&(_ptr->key));}
 
 			map_iterator  operator++(int) /* postfix */        
 			{
-				// if (_ptr == _NIL)
-				// 	return _ptr;
 				map_iterator it(*this); 
 				_ptr = successor(_ptr);
 				return it;
 			}
             map_iterator& operator++()    /* prefix */          
 			{
-				// if (_ptr == _NIL)
-				// 	return _ptr;
 				_ptr = successor(_ptr);
 				return *this;
 			}
