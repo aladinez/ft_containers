@@ -5,130 +5,76 @@
 #include "pair.hpp"
 #include <vector>
 #include <map>
-int _ratio = 10000;
+
+// #include <iostream>
+ 
+// template<typename T> // primary template
+// class is_void
+// : public std::false_type 
+// {};
+// template<>           // explicit specialization for T = void
+// class is_void<void>
+// : public std::true_type 
+// {};
+ 
+// int main()
+// {
+//     // for any type T other than void, the class is derived from false_type
+//     std::cout << is_void<char>::value << '\n'; 
+//     // but when T is void, the class is derived from true_type
+//     std::cout << is_void<void>::value << '\n';
+// }
 
 
+template <bool>
+struct foo;
 
-template <typename Iter1, typename Iter2>
-bool compareMaps(Iter1 first1, Iter1 last1, Iter2 first2, Iter2 last2)
+template <>
+struct foo<true>
+ { typedef int myType1; }; // or using myType1 = int;
+
+template <>
+struct foo<false>
+ { };
+
+template <class T> struct is_integral_base
 {
-    for (; (first1 != last1) && (first2 != last2); ++first1, ++first2){
-        if (first1->first != first2->first || first1->second != first2->second)
-        {
-            std::cout << "false \n" << std::endl;
-            std::cout << "first1 : " <<first1->first << " first2 : " << first2->first << std::endl;
-            std::cout << "second1 : " << first1->second << " second2 : " << first2->second << "\n" << std::endl;
-            // return false;
-        }
-        else {
-            std::cout << " true \n" << std::endl;
-            std::cout << "first1 : " <<first1->first << " first2 : " << first2->first << std::endl;
-            std::cout << "second1 : " << first1->second << " second2 : " << first2->second << "\n" << std::endl;
-        }
-    }
-    return true;
+    X<float, int, 10> a;
+    if (a.f())
+        typedef
 }
 
-int main()
-{
-    bool cond(true);
-    std::map<int, std::string> m2;
-    ft::map<int, std::string> ft_m2;
-
-    for (size_t i = 0; i < 5; i++)
-    {
-        m2.insert(std::make_pair(i, "string1"));
-        ft_m2.insert(ft::make_pair(i, "string1"));
-    }
-
-    std::map<int, std::string>::reverse_iterator it2 = m2.rbegin();
-    ft::map<int, std::string>::reverse_iterator ft_it2 = ft_m2.rbegin();
-
-    std::map<int, std::string>::iterator it22 = m2.begin();
-    ft::map<int, std::string>::iterator ft_it22 = ft_m2.begin();
-
-    it22++;
-    ft_it22++;
-
-    std::cout << " rev it 2 : " << it2->first << std::endl;
-    std::cout << " rev it 2 : " << ft_it2->first << std::endl << std::endl;
-    std::cout << " m2 begin : " << it22->first << std::endl;
-    std::cout << " ft_m2 begin : " << ft_it22->first << std::endl;
-    
-    m2.erase(m2.begin());
-    ft_m2.erase(ft_m2.begin());
-
-    ft_m2.print();
-
-    std::cout << std::endl;
-
-    std::cout << "rev it 2 : " << it2->first << std::endl;
-    std::cout << "rev it 2 : " << ft_it2->first << std::endl << std::endl;
-    std::cout << "m2 begin : " << it22->first << std::endl;
-    std::cout << "ft_m2 begin : " << ft_it22->first << std::endl;
-    
-    // m2.erase(it2->first);
-    // ft_m2.erase(ft_it2->first);
-    // it22++;
-    // ft_it22++;
-
-    for (; it2 != m2.rend(); it2++)
-    {
-        std::cout << "it 2 : " << it2->first << std::endl;
-    }
-    std::cout << std::endl;
-    for (; ft_it2 != ft_m2.rend(); ft_it2++)
-    {
-        std::cout << "ft_it 2 : " << ft_it2->first << std::endl;
-    }
-
-    std::cout << std::endl;
-
-
-    for (; it22 != m2.end(); it22++)
-    {
-        std::cout << "it 2 : " << it22->first << std::endl;
-    }
-    std::cout << std::endl;
-    for (; ft_it22 != ft_m2.end(); ft_it22++)
-    {
-        std::cout << "ft_it 2 : " << ft_it22->first << std::endl;
-    }
-    
-
-    // for (; it2 != m2.rend(); it2++)
-    // {
-    //     std::cout << "it 2 : " << it2->first << std::endl;
-    //     m2.erase(it2->first);
-    // }
-    // std::cout << std::endl;
-    // for (; ft_it2 != ft_m2.rend(); ft_it2++)
-    // {
-    //     std::cout << "it 2 : " << ft_it2->first << std::endl;
-    //     ft_m2.erase(ft_it2->first);
-    // }
-
-    // m2.erase(m2.begin());
-    // ft_m2.erase(ft_m2.begin());
-    // std::cout << "cond1 is : " << cond << std::endl;
-
-    // // cond = cond && m2.size() == ft_m2.size() && compareMaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
-    // std::cout << "it 2 : " << it2->first <<  "size : " << m2.size() << std::endl;
-    // std::cout << "ft it 2 : " << ft_it2->first<<  "size : " << ft_m2.size() << std::endl;
+#include <iostream>
+using namespace std;
 
 
 
+template<class T, class U, int I> struct X
+  { bool f() { return false; } };
 
-    // m2.erase(it2->first);
-    // ft_m2.erase(ft_it2->first);
+template<class T, int I> struct X<T, T*, I>
+  { bool f() { return true;
+  } };
 
-    // std::cout << "cond2 is : " << cond << std::endl;
-    // cond = cond  && compareMaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
-    // //  && compareMaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end())
+template<class T, class U, int I> struct X<T*, U, I>
+  { bool f() { return true;
+  } };
 
-    // std::cout << "cond3 is : " << cond << std::endl;
+template<class T> struct X<int, T*, 10>
+  { bool f() { return true;
+  } };
 
+template<class T, class U, int I> struct X<T, U*, I>
+  { bool f() { return true;
+  } };
 
-    return 0;
-    
+int main() {
+   X<float, int, 10> a;
+//    X<int, int*, 5> b;
+//    X<int*, float, 10> c;
+//    X<int, char*, 10> d;
+//    X<float, int*, 10> e;
+//   X<int, int*, 10> f;
+   a.f(); 
+//    b.f(); c.f(); d.f(); e.f();
 }
