@@ -187,37 +187,37 @@ namespace ft
 					return 1;
 				return 0;
 			}
-			iterator lower_bound(const key_type& x)
+			iterator lower_bound(const key_type& x) const
 			{
 				Node<value_type>* y = _tree.lower_bound(x);
 				return iterator(y, _tree.get_root());
 			}
-			const_iterator lower_bound(const key_type& x) const
-			{
-				Node<value_type>* y = _tree.lower_bound(x);
-				return const_iterator(y, _tree.get_root());
-			}
-			iterator upper_bound(const key_type& x)
-			{
-				Node<value_type>* y = _tree.upper_bound(x);
-				return iterator(y, _tree.get_root());
-			}
-			const_iterator upper_bound(const key_type& x) const
+			// const_iterator lower_bound(const key_type& x) const
+			// {
+			// 	Node<value_type>* y = _tree.lower_bound(x);
+			// 	return const_iterator(y, _tree.get_root());
+			// }
+			iterator upper_bound(const key_type& x) const
 			{
 				Node<value_type>* y = _tree.upper_bound(x);
 				return iterator(y, _tree.get_root());
 			}
+			// const_iterator upper_bound(const key_type& x) const
+			// {
+			// 	Node<value_type>* y = _tree.upper_bound(x);
+			// 	return iterator(y, _tree.get_root());
+			// }
 			// TODO: fix return if it's less or greater than min and max
 			pair<iterator,iterator>
-			equal_range(const key_type& x)
-			{
-				return ft::make_pair(lower_bound(x), upper_bound(x));
-			}
-			pair<const_iterator,const_iterator>
 			equal_range(const key_type& x) const
 			{
 				return ft::make_pair(lower_bound(x), upper_bound(x));
 			}
+			// pair<const_iterator,const_iterator>
+			// equal_range(const key_type& x) const
+			// {
+			// 	return ft::make_pair(lower_bound(x), upper_bound(x));
+			// }
 			//-----------------------------------------------------------/
 
 	};
