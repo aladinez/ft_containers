@@ -1,1 +1,16 @@
-
+../vector_tests/capacity().cpp:15:18: error: redefinition of 'capacity_test'
+std::vector<int> capacity_test(_vector<T> vector) {
+                 ^
+../vector_tests/capacity().cpp:5:18: note: previous definition is here
+std::vector<int> capacity_test(std::vector<T> vector) {
+                 ^
+../vector_tests/capacity().cpp:26:10: error: no matching function for call to 'run_vector_unit_test'
+    exit(run_vector_unit_test<int>("capacity()", capacity_test, capacity_test));
+         ^~~~~~~~~~~~~~~~~~~~~~~~~
+../vector_tests/__service.ipp:6:5: note: candidate function template not viable: no overload of 'capacity_test' matching 'std::vector<int> (*)(std::vector<int>)' for 2nd argument
+int run_vector_unit_test(std::string test_name, std::vector<int> (func1)(std::vector<T>), std::vector<int> (func2)(_vector<T>)) {
+    ^
+2 errors generated.
+me, std::vector<int> (func1)(std::vector<T>), std::vector<int> (func2)(_vector<T>)) {
+    ^
+2 errors generated.
