@@ -24,13 +24,13 @@ namespace ft
 			typedef std::bidirectional_iterator_tag		iterator_category;
 		private:
 			node_ptr _ptr;
-			node_ptr _root;
+			N* const * _root;
 			node_ptr _NIL;
 		public:
 			// iterator(): _ptr(NULL), _NIL(NULL), _root(NULL){}
-            map_iterator(node_ptr ptr = NULL, node_ptr root = NULL): _ptr(ptr),_root(root) {
+            map_iterator(node_ptr ptr = NULL, N* const* root = NULL): _ptr(ptr),_root(root) {
 				if (root)
-					_NIL = root->p;
+					_NIL = (*root)->p;
 				else
 					_NIL = NULL;
 			}
@@ -51,7 +51,7 @@ namespace ft
 			// 	_NIL = (const_node_ptr)it.get_nil();
 			// }
 
-			node_ptr get_root() const {return _root;}
+			node_ptr get_root() const {return *_root;}
 			node_ptr get_nil() const {return _NIL;}
 			node_ptr get_ptr() const {return _ptr;}
 			
@@ -76,7 +76,8 @@ namespace ft
             bool operator!= (map_iterator const& it){return _ptr != it._ptr;}
 
 			value_type& operator* () const                    {return _ptr->key;}
-			pointer  operator->() const                    {return &(_ptr->key);}
+			pointer  operator->() const                    {return &(operator*());}
+			// pointer  operator->() const                    {return &(_ptr->key);}
 			//temp solution
 			// pointer  operator->() const                    {return const_cast<Pair*>(&(_ptr->key));}
 
@@ -100,7 +101,7 @@ namespace ft
 			{
 				map_iterator it(*this);
 				if (_ptr == _NIL)
-					_ptr = _most_right(_root);
+					_ptr = _most_right(*_root);
 				else
 					_ptr = predecessor(_ptr);
 				return it;
@@ -108,7 +109,7 @@ namespace ft
             map_iterator& operator--()    /* prefix */          
 			{
 				if (_ptr == _NIL)
-					_ptr = _most_right(_root);
+					_ptr = _most_right(*_root);
 				else
 					_ptr = predecessor(_ptr);
 				return *this;

@@ -298,10 +298,14 @@ namespace ft
 				}
 				_root->color = BLACK__;
 			}
-
-			void remove(value_type key)
+			size_t remove(value_type key)
 			{
 				node* z = search(key);
+				return (remove(z));
+			}
+			
+			size_t remove(node* z)
+			{
 				if (z != _NIL)
 				{
 					node* y = z;
@@ -339,7 +343,9 @@ namespace ft
 					if (o_color == BLACK__)
 						remove_fixup(x);
 					_size--;
+					return 1;
 				}
+				return 0;
 			}
 			void remove_fixup(node* x)
 			{
@@ -419,7 +425,7 @@ namespace ft
 			{
 				return _most_left(_root);
 			}
-			node* get_root() const {return _root;}
+			node* const* get_root() const {return &_root;}
 			node* get_nil() const {return _NIL;}
 			size_type size() const {return _size;}
 			void print_tree()
@@ -524,9 +530,9 @@ namespace ft
 		// else
 		// 	printf(_RED__ "%s" RESET "\n", curr->key.second.c_str());
 		if (curr->color == BLACK__)
-			printf("%c\n", curr->key.first);
+			printf("%d\n", curr->key.first);
 		else
-			printf("%c\n", curr->key.first);
+			printf("%d\n", curr->key.first);
 		rec[depth]=1;
 		printTree(curr->left,depth+1);
 		rec[depth]=0;

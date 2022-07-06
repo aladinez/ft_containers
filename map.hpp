@@ -151,17 +151,20 @@ namespace ft
 			}
 			void erase(iterator position)
 			{
-				_tree.remove(*position);
+				_tree.remove(position.get_ptr());
+
+				// erase(position->first);
 			}
 			size_type erase(const key_type& x)
 			{
-				Node<value_type>* n = _tree.search(ft::make_pair(x, T()));
-				if (n != _tree.get_nil())
-				{
-					_tree.remove(n->key);
-					return 1;
-				}
-				return 0;
+				return _tree.remove(ft::make_pair(x, T()));
+				// Node<value_type>* n = _tree.search(ft::make_pair(x, T()));
+				// if (n != _tree.get_nil())
+				// {
+				// 	_tree.remove(n);
+				// 	return 1;
+				// }
+				// return 0;
 			}
 			void erase(iterator first, iterator last)
 			{	
@@ -169,10 +172,10 @@ namespace ft
 				first++;
 				for (; first != last; first++)
 				{
-					_tree.remove(*it);
+					_tree.remove(it.get_ptr());
 					it = first;
 				}
-				_tree.remove(*it);
+				_tree.remove(it.get_ptr());
 			}
 			void swap(map<Key,T,Compare,Allocator>& x)
 			{
